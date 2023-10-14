@@ -7,15 +7,34 @@ export const apiJobs={
     getAllJobs:async()=>{
         try{
             const response=await axios.get(`${baseURL}jobs`)
-            return response.data
+            if(response.data){
+                return response.data
+            }
+            if (!response.data) {
+                throw new Error('Erro na solicitação');
+              }
         }catch(e){
-            return e
+            console.log(e)
         }
     },
     getJobId:async(id:number)=>{
         try{
             const response=await axios.get(`${baseURL}jobs/${id}`)
             return response.data
+        }catch(e){
+            return e
+        }
+    },
+    updateJobId:async()=>{
+        try{
+          
+        }catch(e){
+            return e
+        }
+    },
+    deleteJobId:async()=>{
+        try{
+          
         }catch(e){
             return e
         }

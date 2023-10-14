@@ -8,7 +8,7 @@ background-color: ${GlobalStyle.bgTheme};
 padding:22px;
 border-radius: 5px;
 margin: 23px 0;
-
+box-shadow: 0 0 8px #aaa;
 .top{
     .header{
         display: flex;

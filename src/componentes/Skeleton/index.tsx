@@ -1,14 +1,16 @@
-// Skeleton.tsx
-import React from "react";
-import Skeleton from "react-loading-skeleton";
-import './style.css'
-const SkeletonComponent: React.FC = () => {
+import './style.css';
+
+const Skeleton = () => {
   return (
-    <div>
-      <Skeleton count={3} height={30} className="custom-skeleton" />
-      <Skeleton width={'80%'} height={30} />
+    <div className="skeleton">
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line"></div>
     </div>
   );
 };
 
-export default SkeletonComponent;
+export default Skeleton;

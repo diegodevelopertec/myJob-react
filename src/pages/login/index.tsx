@@ -6,7 +6,7 @@ import { Page } from "./style"
 import { toast } from "react-toastify"
 import * as Yup from 'yup'
 import { useUserContext } from "../../context/authcontext"
-import { useNavigate } from "react-router-dom"
+import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useState } from "react"
 import { apiAuth } from "../../actions/auth.action"
 import { Link } from "react-router-dom"
@@ -22,8 +22,9 @@ const schemaValidate = Yup.object().shape({
 
 export const Login=()=>{
     const {loginAuth}=useUserContext()
+    const {type}=useParams()
     const navigate=useNavigate()
-    const [radioValue, setRadioValue] = useState<string>('');
+    const [radioValue, setRadioValue] = useState<string>(type ? type : '');
     const Formik=useFormik(
        { initialValues:{
             email:'',
@@ -85,7 +86,7 @@ export const Login=()=>{
                         <input type="submit" value={'Entrar'} />
                         <div className="about">
                           <Link to=''>Esqueci minha senha</Link>
-                          <Link to='/register'>Não tem uma conta ainda ? Clique aqui</Link>
+                          <Link to={`/cadastro/${type}?`}>Não tem uma conta ainda ? Clique aqui</Link>
                         </div>
                     </div>
                     <hr />

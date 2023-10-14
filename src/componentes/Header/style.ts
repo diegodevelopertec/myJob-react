@@ -13,7 +13,12 @@ align-items: center;
 justify-content: space-between;
 padding: 10px 20px;
 
-
+.left{
+    h2{
+        font-size: 32px;
+        color: ${GlobalStyle.bgThemeSecondary};
+    }
+}
 .cx-btn{
       display: none;
       button{

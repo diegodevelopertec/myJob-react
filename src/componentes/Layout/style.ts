@@ -7,7 +7,7 @@ export const Container=styled.div`
 
 main{
     background-color:${GlobalStyle.bgApp};
-    min-height: 900px;
+    min-height: 940px;
 }
 
 `

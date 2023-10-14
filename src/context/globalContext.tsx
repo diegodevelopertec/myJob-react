@@ -6,21 +6,26 @@ type props={
 }
 type ContextType={
     stateMobile:boolean,
-    handleStateMobile:(newState:boolean)=>void
+    handleStateMobile:(newState:boolean)=>void,
+    stateModal:boolean,
+    handleStateModal:(newState:boolean)=>void
 }
 
 
 const context=createContext<ContextType>({
     stateMobile:false,
-    handleStateMobile:()=>{}
+    handleStateMobile:()=>{},
+    stateModal:false,
+    handleStateModal:()=>{}
 })
 
 export const ContextProvider=({children}:props)=>{
     const [stateMobile,handleStateMobile]=useState<boolean>(false)
+    const [stateModal,handleStateModal]=useState<boolean>(false)
 
 
 const values={
-    stateMobile,handleStateMobile
+    stateMobile,handleStateMobile,stateModal,handleStateModal
 }
     return <context.Provider value={values}>
         {children}

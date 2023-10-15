@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { useFormik } from "formik"
 import { apiAuth } from "../../actions/auth.action"
 import { toast } from "react-toastify"
+import { Layout } from "../../componentes/Layout"
 
 
 const schemaValidate = Yup.object().shape({
@@ -65,67 +66,69 @@ const Formik=useFormik({
   };
    
    
-   return <ContentPage >
+   return <Layout>
+    <ContentPage >
       
-        <Page>
-         <h3>Cadastro  {type ? <span>{`>> ${type}`}</span>  : null} </h3>
-         <p>Preencha os campos com suas informações para criar sua conta:</p>
-         <form onSubmit={Formik.handleSubmit} >
-          <div className="cx-inputs">
-            <div className="cx-input">
-              <Input type="text" placeholder="Digite seu nome" name="name" value={Formik.values.name} 
-                onChange={Formik.handleChange}  
-              />
-              {Formik.errors.name && <p>{Formik.errors.name}</p>}
-            </div>
-            <div className="cx-input">
-              <Input type="text" placeholder="Digite seu sobrenome" id="lastname" name="lastname" 
-                  value={Formik.values.lastname} onChange={Formik.handleChange}   
-              />
-                {Formik.errors.lastname && <p>{Formik.errors.lastname}</p>}
-            </div>
-            <div className="cx-input">
-              <Input type="tel" placeholder="Digite seu telefone" id="tel" name="tel" 
-                  value={Formik.values.tel} onChange={Formik.handleChange}   
-              />
-                {Formik.errors.tel && <p>{Formik.errors.tel}</p>}
-            </div>
-            <div className="cx-input">
-                <Input type="email" required placeholder="Digite seu email" id="email"  name="email"
-                 value={Formik.values.email} onChange={Formik.handleChange}   
-                />
-                   {Formik.errors.email && <p>{Formik.errors.email}</p>}
-            </div>
-            <div className="cx-input">
-               <Input type="password" placeholder="Digite sua senha" id="password" name="password" 
-                value={Formik.values.password} onChange={Formik.handleChange}   
-               />
-                 {Formik.errors.password && <p>{Formik.errors.password}</p>}
-            </div>
-            <div className="cx-radios">
-            <div className="radio-item">
-              <input type="radio"  
-                checked={radioValue === 'candidato'}
-                value='candidato'
-                onChange={handleRadioChange}
-
-              />sou candidato
-            </div>
-            <div className="radio-item">
-              <input type="radio" 
-                checked={radioValue === 'recrutador'}
-                 value={'recrutador'}
-                 onChange={handleRadioChange} 
-              />sou recrutador
-            </div>
-            </div>
-            <button type='submit'>criar conta</button>
-            <div className="divider"></div>
-            <div className="actions">
-              <p>Já tem uma conta ?<Link to='/login'>Clique aqui</Link></p>
-            </div>
+      <Page>
+       <h3>Cadastro  {type ? <span>{`>> ${type}`}</span>  : null} </h3>
+       <p>Preencha os campos com suas informações para criar sua conta:</p>
+       <form onSubmit={Formik.handleSubmit} >
+        <div className="cx-inputs">
+          <div className="cx-input">
+            <Input type="text" placeholder="Digite seu nome" name="name" value={Formik.values.name} 
+              onChange={Formik.handleChange}  
+            />
+            {Formik.errors.name && <p>{Formik.errors.name}</p>}
           </div>
-         </form>
-        </Page>
-    </ContentPage>
+          <div className="cx-input">
+            <Input type="text" placeholder="Digite seu sobrenome" id="lastname" name="lastname" 
+                value={Formik.values.lastname} onChange={Formik.handleChange}   
+            />
+              {Formik.errors.lastname && <p>{Formik.errors.lastname}</p>}
+          </div>
+          <div className="cx-input">
+            <Input type="tel" placeholder="Digite seu telefone" id="tel" name="tel" 
+                value={Formik.values.tel} onChange={Formik.handleChange}   
+            />
+              {Formik.errors.tel && <p>{Formik.errors.tel}</p>}
+          </div>
+          <div className="cx-input">
+              <Input type="email" required placeholder="Digite seu email" id="email"  name="email"
+               value={Formik.values.email} onChange={Formik.handleChange}   
+              />
+                 {Formik.errors.email && <p>{Formik.errors.email}</p>}
+          </div>
+          <div className="cx-input">
+             <Input type="password" placeholder="Digite sua senha" id="password" name="password" 
+              value={Formik.values.password} onChange={Formik.handleChange}   
+             />
+               {Formik.errors.password && <p>{Formik.errors.password}</p>}
+          </div>
+          <div className="cx-radios">
+          <div className="radio-item">
+            <input type="radio"  
+              checked={radioValue === 'candidato'}
+              value='candidato'
+              onChange={handleRadioChange}
+
+            />sou candidato
+          </div>
+          <div className="radio-item">
+            <input type="radio" 
+              checked={radioValue === 'recrutador'}
+               value={'recrutador'}
+               onChange={handleRadioChange} 
+            />sou recrutador
+          </div>
+          </div>
+          <button type='submit'>criar conta</button>
+          <div className="divider"></div>
+          <div className="actions">
+            <p>Já tem uma conta ?<Link to='/login'>Clique aqui</Link></p>
+          </div>
+        </div>
+       </form>
+      </Page>
+  </ContentPage>
+   </Layout>
 }

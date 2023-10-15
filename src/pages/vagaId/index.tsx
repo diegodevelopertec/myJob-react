@@ -6,6 +6,7 @@ import { apiJobs } from "../../actions/jobs.action"
 import { toast } from "react-toastify"
 import { useUserContext } from "../../context/authcontext"
 import { Page, SectionDetailsJobs } from "./style"
+import { Layout } from "../../componentes/Layout"
 
 
 
@@ -38,7 +39,8 @@ export const VagaId=()=>{
         }
     }
 
-    return <ContentPage titlePage={`${jobId?.title}/ ${jobId?.level}`}>
+    return <Layout>
+        <ContentPage titlePage={`${jobId?.title}/ ${jobId?.level}`}>
         <Page>
                 {/*userApplicationJob && <p>
                      Você se candidatou em {userApplicationJob.dateapplied} ✅
@@ -151,4 +153,5 @@ export const VagaId=()=>{
             </Page>
     
     </ContentPage>
+    </Layout>
 }

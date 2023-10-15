@@ -8,6 +8,7 @@ import { CardJob } from "../../componentes/CardJob"
 import Skeleton from "../../componentes/Skeleton"
 import { useUserContext } from "../../context/authcontext"
 import SkeletonItem from "react-loading-skeleton"
+import { Layout } from "../../componentes/Layout"
 
 
 
@@ -29,17 +30,19 @@ export const Vagas=()=>{
      },200)
    },[])
 
-    return <ContentPage titlePage="Vagas">
+    return <Layout>
+        <ContentPage titlePage="Vagas">
        
-        <ContainerJobs>
-            <p>{user?.name} Acompanhe as vagas abertas</p>
-            <div className="cx-jobs">
-                {!loading  ? jobs.map((i,k)=><CardJob key={k} job={i} />) 
-                         : 
-                 <Skeleton />
-                }
-              
-            </div>
-        </ContainerJobs>
-    </ContentPage>
+       <ContainerJobs>
+           <p>{user?.name} Acompanhe as vagas abertas</p>
+           <div className="cx-jobs">
+               {!loading  ? jobs.map((i,k)=><CardJob key={k} job={i} />) 
+                        : 
+                <Skeleton />
+               }
+             
+           </div>
+       </ContainerJobs>
+   </ContentPage>
+    </Layout>
 }

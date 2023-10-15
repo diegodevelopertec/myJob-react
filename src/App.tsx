@@ -6,10 +6,9 @@ import useScrollToTop from './hooks/useScrollTop'
 
 function App() {
   useScrollToTop()
-  return <Layout>
-     <Routes />
+  return <Routes />
      
-  </Layout>
+ 
 }
 
 export default App

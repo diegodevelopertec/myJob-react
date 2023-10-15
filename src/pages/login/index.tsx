@@ -10,6 +10,7 @@ import { useLoaderData, useLocation, useNavigate, useParams } from "react-router
 import { useState } from "react"
 import { apiAuth } from "../../actions/auth.action"
 import { Link } from "react-router-dom"
+import { Layout } from "../../componentes/Layout"
 
 
 
@@ -44,7 +45,8 @@ export const Login=()=>{
 
 
       
-    return <Page>
+    return <Layout>
+        <Page>
             <form action="" method="POST" onSubmit={Formik.handleSubmit} >
                 <h2>Entrar</h2>
                 <p>Preencha os campos para entrar na sua conta:</p>
@@ -102,5 +104,6 @@ export const Login=()=>{
                 </div>
             </form>
         </Page>
+    </Layout>
     
 }

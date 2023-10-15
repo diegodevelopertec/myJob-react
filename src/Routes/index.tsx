@@ -7,6 +7,13 @@ import { Cadastro } from "../pages/cadastro"
 import { Home } from "../pages/home"
 import { VagaId } from "../pages/vagaId"
 import { useUserContext } from "../context/authcontext"
+import { HomePainel } from "../pages/painel/home"
+import { CandidatosPainel } from "../pages/painel/candidatos"
+import { VagasPostadasPainel } from "../pages/painel/vagasPostadas"
+import { NovaVagaPainel } from "../pages/painel/novaVaga"
+import { ContaPainel } from "../pages/painel/conta"
+import { EmpresaPainel } from "../pages/painel/empresa"
+
 
 
 export const Routes=()=>{
@@ -18,7 +25,13 @@ export const Routes=()=>{
             <Route path="/vagas/:id" element={<VagaId />}/>
             <Route path="/login/:type?" element={<Login />}/>
             <Route path="/cadastro/:type?" element={<Cadastro />}/>
-        
+            //recurtador
+            <Route path="/painel/recrutador" element={<HomePainel />}/>
+            <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>
+            <Route path="/painel/recrutador/vagaspostadas" element={<VagasPostadasPainel />}/>
+            <Route path="/painel/recrutador/novavaga" element={<NovaVagaPainel />}/>
+            <Route path="/painel/recrutador/minha-conta" element={<ContaPainel />}/>
+            <Route path="/painel/recrutador/sobre-empresa" element={<EmpresaPainel />}/>
         </>
        }
         {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { ContentPage } from "../../componentes/ContentPage"
-import { JobType } from "../../types/job"
+import { IJob } from "../../interfaces/job"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { apiJobs } from "../../actions/jobs.action"
 import { toast } from "react-toastify"
@@ -12,7 +12,7 @@ import { Layout } from "../../componentes/Layout"
 
 
 export const VagaId=()=>{
-    const [jobId,setJobId]=useState<JobType | null>(null)
+    const [jobId,setJobId]=useState<IJob | null>(null)
     const params=useParams()
     const {user}=useUserContext()
     const location=useLocation()
@@ -24,7 +24,7 @@ export const VagaId=()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
                 setJobId(job)
-             
+             console.log(job)
               
         }
         getJobById()
@@ -40,7 +40,7 @@ export const VagaId=()=>{
     }
 
     return <Layout>
-        <ContentPage titlePage={`${jobId?.title}/ ${jobId?.level}`}>
+        <ContentPage titlePage={`${jobId?.title}/ ${jobId?.category?.name}`}>
         <Page>
                 {/*userApplicationJob && <p>
                      Você se candidatou em {userApplicationJob.dateapplied} ✅
@@ -62,7 +62,7 @@ export const VagaId=()=>{
                     <div className="card-detail">
                         <div className="card-title">Salário</div>
                         <div className="card-body">
-                            <p>R$ {jobId?.salary?.toFixed(2).replace('.',',')}</p>
+                            <p>{jobId?.salary  ? `R$ ${jobId.salary.toString().replace('.',',')}` : 'Salário não especificado'}</p>
                         </div>
                     </div>
                     <div className="card-detail">
@@ -80,7 +80,7 @@ export const VagaId=()=>{
                     <div className="card-detail">
                         <div className="card-title">Tipo de contrato</div>
                         <div className="card-body">
-                            <p className="card-contrato">{jobId?.tipoContrato}</p>
+                            <p className="card-contrato">{jobId?.contractType}</p>
                         </div>
                     </div>
 
@@ -88,11 +88,16 @@ export const VagaId=()=>{
                         <div className="card-title">Sobre a Empresa</div>
                         <div className="card-body-company">
                             <div className="cx-img">
-                              <img src={jobId?.companyModel?.logo} alt="" />
+                               <img src={jobId?.company?.logo || ''} alt="" />
                             </div>
                             <div className="data">
-                              <h3>{  jobId?.companyModel?.name as string}</h3>
-                              <p>{  jobId?.companyModel?.about}</p>
+                           {
+                            jobId?.company !== undefined && <>
+                               <h3>{jobId?.company &&  jobId?.company.name}</h3>
+                               <p>{jobId?.company.about}</p>
+                            </>
+                           }
+
                             </div>
                         </div>
                     </div>

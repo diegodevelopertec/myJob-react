@@ -65,7 +65,8 @@ nav{
     .links{
         display: flex;
         a{
-            font-size: 19px;
+            font-size: 16px;
+            font-family: 'Poppins';
             margin:0 12px;
             color: #DEDEDE;
             transition:all ease 0.2s;
@@ -88,7 +89,9 @@ nav{
         nav{
             .close-menu{
                 display:flex;
+               
             }
+            z-index: 1;
             display:${props=>props.activeMobile ? 'auto' : 'hidden'};
             transition: all ease .3s;
             padding: 190px 0;
@@ -100,10 +103,16 @@ nav{
             height: 100vh;
             background-color:${GlobalStyle.bgThemeSecondary};
             .links{
+                display:${props=>props.activeMobile ? 'auto' : 'none'};
                 flex-direction: column;
                 a{
                     font-size: 17px;
-                    margin:16px auto;
+                    padding: 22px;
+                    display: flex;
+                    justify-content: center;
+                    width:${props=>props.activeMobile ? 'auto' : ''};
+                    margin:0;
+                    border-top: 1px solid #DEDEDE;
                 }
             }
         }

@@ -96,31 +96,37 @@ box-shadow: 0 0 8px #aaa;
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 698px) {
 
     .top{
         .header{
             align-items: center;
             h2{
-                font-size: 23px;
+                font-size: 19px;
                 justify-content: center;
             }
             span{
-                font-size: 11px;
+                font-size: 8px;
+                text-align: center;
             }
         }
     }
     .info{
      flex-direction: column;
         .left{
-            display: flex;
-            flex-wrap: wrap;
-            width:auto;
-            margin:10px 0;
-            font-size:13px;
+           flex-direction: column;
+            span{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 8px;
+                font-size: 11px;
+                text-align: justify;
+              
+            }
             img{
-                height: 26px;
-                width: 26px;
+                height: 20px;
+                width: 25px;
             }
         }
         .right{

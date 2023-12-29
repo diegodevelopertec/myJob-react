@@ -6,13 +6,9 @@ import { baseURL } from "../services/axios.config"
 export const apiJobs={
     getAllJobs:async()=>{
         try{
-            const response=await axios.get(`${baseURL}jobs`)
-            if(response.data){
-                return response.data
-            }
-            if (!response.data) {
-                throw new Error('Erro na solicitação');
-              }
+            let response=await  axios.get(`${baseURL}jobs`)
+            let jobs=response.data
+            return jobs
         }catch(e){
             console.log(e)
         }

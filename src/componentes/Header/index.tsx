@@ -34,9 +34,9 @@ export const Header=()=>{
                 {!user && <>
                   <Link to={'/'} onClick={conditionLinkClick}>inicio</Link>
                   <Link to={'/vagas'} onClick={conditionLinkClick}>vagas</Link>
+                  <Link to={'/cursos'} onClick={conditionLinkClick}>cursos</Link>
                   <Link to={'/login'} onClick={conditionLinkClick}>entrar</Link>
                   <Link to={'/cadastro'} onClick={conditionLinkClick} >cadastrar</Link>
-                  <Link to={'/painel/recrutador'} onClick={conditionLinkClick} >Painel</Link>
                 </>}
 
                  {

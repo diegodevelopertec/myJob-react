@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Gabarito&family=Poppins:wght@300&family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&family=Poppins&family=Roboto+Slab:wght@600&display=swap');
+  
 *{
   margin: 0;
   padding: 0;
   text-decoration: none;
   list-style: none;
-  font-family:'Gabarito', sans-serif, 'Roboto';
+  scroll-behavior: smooth;
+  font-family:'Poppins', sans-serif, 'Roboto';
 }

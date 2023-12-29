@@ -82,14 +82,14 @@ export const SectionDetailsJobs=styled.div`
             color: #FFF;
             padding:32px 22px;
             font-size: 17px;
-            background-color: ${GlobalStyle.bgThemeSecondary};
+            background-color:#0EA293;
             width: 30%;
             transition: all ease .4s;
             cursor: pointer;
             border-radius: 3px;
             border: none;
             &:hover{
-                background:linear-gradient( to right,#00DFA2,#0C356A);
+                background:#14C38E;
                 box-shadow: 0 0 12px ${GlobalStyle.colorTitles};
                 color: ${GlobalStyle.colorTitles};
 

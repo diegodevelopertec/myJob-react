@@ -13,6 +13,8 @@ import { VagasPostadasPainel } from "../pages/painel/vagasPostadas"
 import { NovaVagaPainel } from "../pages/painel/novaVaga"
 import { ContaPainel } from "../pages/painel/conta"
 import { EmpresaPainel } from "../pages/painel/empresa"
+import { Cursos } from "../pages/cursos"
+import { CursoId } from "../pages/cursoId"
 
 
 
@@ -25,6 +27,8 @@ export const Routes=()=>{
             <Route path="/vagas/:id" element={<VagaId />}/>
             <Route path="/login/:type?" element={<Login />}/>
             <Route path="/cadastro/:type?" element={<Cadastro />}/>
+            <Route path="/cursos" element={<Cursos />}/>
+            <Route path="/cursos/:id" element={<CursoId />}/>
             //recurtador
             <Route path="/painel/recrutador" element={<HomePainel />}/>
             <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>

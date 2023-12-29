@@ -7,8 +7,6 @@ const Skeleton = () => {
       <div className="skeleton-line"></div>
       <div className="skeleton-line"></div>
       <div className="skeleton-line"></div>
-      <div className="skeleton-line"></div>
-      <div className="skeleton-line"></div>
     </div>
   );
 };

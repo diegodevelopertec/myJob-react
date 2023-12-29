@@ -1,7 +1,7 @@
 
 import { Container } from "./style"
 import { useState } from "react"
-import { JobType } from "../../types/job"
+import { IJob } from "../../interfaces/job"
 import { useLocation, useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import SalaryIcon from './../../assets/icons/salary.png'
@@ -9,7 +9,7 @@ import LocationIcon from './../../assets/icons/location.png'
 import CompanyIcon from './../../assets/icons/company.png'
 
 type Props={
-    job:JobType
+  job:IJob
 
 }
 export const CardJob=({job}:Props)=>{
@@ -22,7 +22,7 @@ export const CardJob=({job}:Props)=>{
         <div className="top">
            <div className="header">
                 <h2>{job.title}</h2>
-                <span>{job.level}</span>
+                <span>{job?.category?.name}</span>
             
            </div>
            <div className="data-job">
@@ -38,7 +38,7 @@ export const CardJob=({job}:Props)=>{
             <div className="left">
                 <span>
                     <img src={SalaryIcon} />
-                    {job.salary ? `R$ ${job.salary.toFixed(2).replace('.',',')}` : 'Salário não especificado'}
+                    {job.salary  ? `R$ ${job.salary.toString().replace('.',',')}` : 'Salário não especificado'}
                 </span>
                 {!location.pathname.includes('/painel') && <span>
                     <img src={LocationIcon} />
@@ -47,7 +47,7 @@ export const CardJob=({job}:Props)=>{
                 }
                   <span> 
                    <img src={CompanyIcon} />
-                    {job.companyModel && job.companyModel.name}
+                    {job.company && job.company.name}
                 </span>
 
                

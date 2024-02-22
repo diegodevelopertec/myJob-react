@@ -1,5 +1,5 @@
-import { GlobalStyle } from "@/styles/GlobalStyle";
-import { deleteAppClientCache } from "next/dist/server/lib/render-server";
+import { GlobalStyle } from "../../globalStyle";
+
 
 export default ()=>{
 	return <svg fill={GlobalStyle.bgTheme} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" className="svg"

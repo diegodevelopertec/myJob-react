@@ -8,8 +8,9 @@ import gsap from "gsap"
 import { BannerSlide } from "../../componentes/BannerSlide"
 import { bannersCourses } from "../../data/banner"
 
-export const Cursos=()=>{
 
+
+export const Cursos=()=>{
 
 useEffect(()=>{
   gsap.fromTo('.grid',
@@ -19,19 +20,28 @@ useEffect(()=>{
   
 },[])
 
+useEffect(()=>{
+  document.title='MyJobs/Cursos'
+},[])
+
 
     return <Layout>
-    <ContentPage titlePage="">
-      <BannerSlide banners={bannersCourses} />
-     <GridCourses className="grid">
+    
+<ContentPage titlePage="">
+<BannerSlide banners={bannersCourses} />
+      <div className="cx-filter">
+       
+      </div>
+     <GridCourses >
        {Courses.map((i,k)=>(
         <CardCourse key={k} course={i} />
        ))}
 
 
      </GridCourses>
-    </ContentPage>
+</ContentPage>
+
     
-    
+     
     </Layout>
 }

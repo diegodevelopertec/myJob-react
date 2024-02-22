@@ -15,6 +15,10 @@ import { ContaPainel } from "../pages/painel/conta"
 import { EmpresaPainel } from "../pages/painel/empresa"
 import { Cursos } from "../pages/cursos"
 import { CursoId } from "../pages/cursoId"
+import Platform from "../pages/platform"
+import { MeusCursos } from "../pages/meuscursos"
+import { CandidaturaId } from "../pages/candidaturaId"
+
 
 
 
@@ -28,7 +32,7 @@ export const Routes=()=>{
             <Route path="/login/:type?" element={<Login />}/>
             <Route path="/cadastro/:type?" element={<Cadastro />}/>
             <Route path="/cursos" element={<Cursos />}/>
-            <Route path="/cursos/:id" element={<CursoId />}/>
+           
             //recurtador
             <Route path="/painel/recrutador" element={<HomePainel />}/>
             <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>
@@ -39,11 +43,16 @@ export const Routes=()=>{
         </>
        }
         {
-            user && <>
+         user && <>
              <Route path="/vagas" element={<Vagas/>}/>
               <Route path="/vagas/:id" element={<VagaId />}/>
              <Route path="/candidaturas" element={<Candidaturas />}/>
+             {<Route path="/candidaturas/:id" element={<CandidaturaId />}/>}
              <Route path="/conta" element={<Conta />}/>
+             <Route path="/cursos" element={<Cursos />}/>
+            <Route path="/cursos/:id" element={<CursoId />}/>
+            <Route path="/meus_cursos" element={<MeusCursos />}/>
+            <Route path="/plataforma_ead/curso/:cursoid" element={<Platform />}/>
             </>
         }
     </Router>

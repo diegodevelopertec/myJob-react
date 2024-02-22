@@ -1,12 +1,11 @@
 
 import { Container } from "./style"
-import { useState } from "react"
 import { IJob } from "../../interfaces/job"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation} from "react-router-dom"
 import { Link } from "react-router-dom"
-import SalaryIcon from './../../assets/icons/salary.png'
-import LocationIcon from './../../assets/icons/location.png'
-import CompanyIcon from './../../assets/icons/company.png'
+import SalaryIcon from './../../assets/svgs/salary'
+import LocationIcon from './../../assets/svgs/location'
+import CompanyIcon from './../../assets/svgs/company'
 
 type Props={
   job:IJob
@@ -15,9 +14,7 @@ type Props={
 export const CardJob=({job}:Props)=>{
    const location=useLocation()
   
-   
 
-    
     return <Container>
         <div className="top">
            <div className="header">
@@ -37,16 +34,16 @@ export const CardJob=({job}:Props)=>{
         <div className="info">
             <div className="left">
                 <span>
-                    <img src={SalaryIcon} />
+                    <SalaryIcon />
                     {job.salary  ? `R$ ${job.salary.toString().replace('.',',')}` : 'Salário não especificado'}
                 </span>
                 {!location.pathname.includes('/painel') && <span>
-                    <img src={LocationIcon} />
+                    <LocationIcon />
                     {job.location}
                   </span>
                 }
                   <span> 
-                   <img src={CompanyIcon} />
+                   <CompanyIcon />
                     {job.company && job.company.name}
                 </span>
 

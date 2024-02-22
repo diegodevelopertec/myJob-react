@@ -12,11 +12,18 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 padding: 10px 20px;
-
+box-shadow: 0 0 32px #222;
 .left{
     h2{
         font-size: 32px;
+        display: flex;
+        align-items: center;
         color: ${GlobalStyle.bgThemeSecondary};
+        .svg{
+            height: 40px;
+            width: 40px;
+         
+        }
     }
 }
 .cx-btn{
@@ -30,7 +37,6 @@ padding: 10px 20px;
         height: auto;
         border-radius: 3px;
         padding: 8px;
-        box-shadow:0 0 3px #EDED;
         img{
           height: 30px;
          }
@@ -39,6 +45,7 @@ padding: 10px 20px;
     }
 
 nav{
+   
     .close-menu{
         display: none;
         position: fixed;
@@ -64,14 +71,17 @@ nav{
     }
     .links{
         display: flex;
+      
         a{
             font-size: 16px;
             font-family: 'Poppins';
             margin:0 12px;
             color: #DEDEDE;
+            padding: 13px 24px;
+            border-radius: 23px;
             transition:all ease 0.2s;
             &:hover{
-                color:${GlobalStyle.bgThemeSecondary};
+                background-color:${GlobalStyle.bgThemeSecondary};
               
             }
         }
@@ -82,6 +92,12 @@ nav{
 
 @media screen and (max-width: 768px) {
     padding: 12px 8px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-bottom:100px;
+    z-index: 1;
     .right {
         .cx-btn{
             display:${props=>props.activeMobile === false ? 'flex' : ' none'};
@@ -101,7 +117,7 @@ nav{
             top: 0;
             right: 0;
             height: 100vh;
-            background-color:${GlobalStyle.bgThemeSecondary};
+            background-color:#0F1035;
             .links{
                 display:${props=>props.activeMobile ? 'auto' : 'none'};
                 flex-direction: column;
@@ -112,6 +128,7 @@ nav{
                     justify-content: center;
                     width:${props=>props.activeMobile ? 'auto' : ''};
                     margin:0;
+                    border-radius: 0;
                     border-top: 1px solid #DEDEDE;
                 }
             }

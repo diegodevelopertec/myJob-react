@@ -4,11 +4,18 @@ import styled from "styled-components";
 export const Container=styled.div`
 display: flex;
 flex-direction: column;
-background-color: ${GlobalStyle.bgTheme};
+background-color:${GlobalStyle.bgTheme};
 padding:22px;
 border-radius: 5px;
 margin: 23px 0;
 box-shadow: 0 0 8px #aaa;
+transition:all ease .3s;
+
+
+&:hover{
+    box-shadow:  0 0 22px #222;
+    outline: 2px solid ${GlobalStyle.bgThemeSecondary};
+}
 .top{
     .header{
         display: flex;
@@ -58,7 +65,7 @@ box-shadow: 0 0 8px #aaa;
         justify-content:space-between;
         width: 70%;
         span{
-            img{
+            .svg{
                 height:29px;
                 margin-right: 5px;
             }
@@ -88,9 +95,8 @@ box-shadow: 0 0 8px #aaa;
             border-radius: 3px;
             &:hover{
                 box-shadow:0 0 9px #181D31;
-                background: linear-gradient(to bottom ,${GlobalStyle.bgThemeSecondary},#0E8388);
-                //background-color:#03C988;
-
+                background: #0E8388;
+                
             }
         }
     }

@@ -5,87 +5,83 @@ export const Courses=[
     {
         id:1,
         img:'/imgs/css-course.png',
-        name:'Estilizando com CSS',
-        price:'Gratuito',
-        category:'TI'
-    },
-    {
-        id:2,
-        img:'/imgs/react-course.png',
-        name:'Criação de Aplicações com React',
-        price:28.99,
-        category:'TI'
-    },
-    {
-        id:3,
-        img:'/imgs/spring-boot.jpg',
-        name:'Criação de Apis com Spring Boot',
-        price:59.00,
-        category:'TI'
-    },
-    
-    {
-        id:5,
-        img:'/imgs/css-course.png',
-        name:'Estilizando com CSS',
-        price:'Gratuito',
-        category:'TI'
-    },
-    {
-        id:4,
-        img:'/imgs/react-course.png',
-        name:'Criação de Aplicações com React',
-        price:28.99,
-        category:'TI'
-    },
-    {
-        id:6,
-        img:'/imgs/spring-boot.jpg',
-        name:'Criação de Apis com Spring Boot',
-        price:59.00,
+        name:'Estilização com CSS',
+        price:0,
+        free:true,
         category:'TI'
     },
     {
         id:1,
-        img:'/imgs/css-course.png',
-        name:'Estilizando com CSS',
-        price:'Gratuito',
+        img:'/imgs/devnode.jpg',
+        name:'Apis com Node JS',
+        price:0,
+        free:true,
         category:'TI'
     },
     {
-        id:2,
+        id:1,
         img:'/imgs/react-course.png',
-        name:'Criação de Aplicações com React',
-        price:28.99,
+        name:'Front-ends com React',
+        price:0,
+        free:true,
         category:'TI'
     },
     {
-        id:3,
-        img:'/imgs/spring-boot.jpg',
-        name:'Criação de Apis com Spring Boot',
-        price:59.00,
+        id:1,
+        img:'/imgs/pydev.jpg',
+        name:'Python Apps',
+        price:22.32,
+        free:false,
+        category:'TI'
+    },
+    {
+        id:1,
+        img:'/imgs/jsdev.png',
+        name:'Aplicacoes web com JS',
+        price:10.45,
+        free:false,
         category:'TI'
     },
     
     {
-        id:5,
+        id:1,
         img:'/imgs/css-course.png',
-        name:'Estilizando com CSS',
-        price:'Gratuito',
+        name:'Estilização com CSS',
+        price:0,
+        free:true,
         category:'TI'
     },
     {
-        id:4,
+        id:1,
+        img:'/imgs/devnode.jpg',
+        name:'Apis com Node JS',
+        price:0,
+        free:true,
+        category:'TI'
+    },
+    {
+        id:1,
         img:'/imgs/react-course.png',
-        name:'Criação de Aplicações com React',
-        price:28.99,
+        name:'Front-ends com React',
+        price:0,
+        free:true,
         category:'TI'
     },
     {
-        id:6,
-        img:'/imgs/spring-boot.jpg',
-        name:'Criação de Apis com Spring Boot',
-        price:59.00,
+        id:1,
+        img:'/imgs/pydev.jpg',
+        name:'Python Apps',
+        price:22.32,
+        free:false,
         category:'TI'
-    }
+    },
+    {
+        id:1,
+        img:'/imgs/jsdev.png',
+        name:'Aplicacoes web com JS',
+        price:10.45,
+        free:false,
+        category:'TI'
+    },
+   
 ]

@@ -6,35 +6,35 @@ type Props={
 }
 export const Container=styled.div<Props>`
 background-color: #F0F0F0;
-border-radius:5px;
 height:max-content;
 
+border-radius: 12px;
 .top{
- height: 250px;
- background-repeat:no-repeat;
- background-position: center;
- background-size: cover;
- background-image:url(${props=>props.bgImage ? props.bgImage : ''});
- 
- .opacity{
-    width: 100%;
-    height: 100%;
-    background:rgba(0, 0, 0, 0.5);
- }
- img{
-    height: 100%;
-    width: 100%;
- }
+    height: 250px;
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image:url(${props=>props.bgImage ? props.bgImage : ''});
+    .opacity{
+        width: 100%;
+        height: 100%;
+        background:rgba(0, 0, 0, 0.5);
+    }
+    img{
+        height: 100%;
+        border-top-right-radius: 12px;
+        border-top-left-radius: 12px;
+        width: 100%;
+    }
 }
 
 
 
 .bottom{
-padding: 22px;
-height: 280px;
-background-color: red;
-background-color: #F5F7F8;
-border: 1px solid #aaa;
+    padding: 22px 12px;
+    height: 280px;
+    background-color: #F5F7F8;
+    border: 1px solid #aaa;
     .content{
         h3{
             font-size: 17px;
@@ -64,8 +64,10 @@ border: 1px solid #aaa;
     }
 }
 
+
 &:hover{
-    transition: all ease 0.2s;
+    transition: all ease .3s;
+    box-shadow:  0 0 22px #222;
     .top{
         .opacity{
             background:rgba(0, 0, 0, 0);
@@ -73,4 +75,13 @@ border: 1px solid #aaa;
     }
 }
 
+@media screen and (max-width:750px) {
+    width: 90%;
+    margin:10px 0;
+    .bottom{
+        .data{
+          display: none;
+        }
+    }
+}
 `

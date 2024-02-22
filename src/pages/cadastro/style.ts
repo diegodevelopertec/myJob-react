@@ -29,7 +29,7 @@ form{
     width:70%;
     flex-direction: column;
     .cx-input{
-      margin:12px;
+      margin:5x;
       p{
         font-size: 12px;
         margin: 3px 0;
@@ -37,6 +37,7 @@ form{
       }
        input{
         height: auto;
+        padding: 12px;
          background-color: #D8D9DA;
        }
     }

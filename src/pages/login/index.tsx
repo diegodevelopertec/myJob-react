@@ -5,12 +5,12 @@ import { GlobalStyle } from "../../globalStyle"
 import { Page } from "./style"
 import { toast } from "react-toastify"
 import * as Yup from 'yup'
-import { useUserContext } from "../../context/authcontext"
-import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom"
-import { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { apiAuth } from "../../actions/auth.action"
 import { Link } from "react-router-dom"
 import { Layout } from "../../componentes/Layout"
+import { useUserContext } from "../../context/authcontext"
 
 
 
@@ -18,14 +18,20 @@ const schemaValidate = Yup.object().shape({
     email: Yup.string().email('Email inválido').required('O email é obrigatório').trim(),
     password: Yup.string().max(8,'A senha deve ter no máximo 8 caracteres').trim().required('A senha é obrigatória'),
     type:Yup.string().trim().required('selecione seu tipo de usuário'),
-});
+}).required()
+
 
 
 export const Login=()=>{
-    const {loginAuth}=useUserContext()
+    const {LoginAuth}=useUserContext()
+
+    useEffect(()=>{
+        document.title='MyJobs/Login'
+      },[])
+
     const {type}=useParams()
     const navigate=useNavigate()
-    const [radioValue, setRadioValue] = useState<string>(type ? type : '');
+    const [radioValue, setRadioValue] = useState<string>(!type ? '' : type);
     const Formik=useFormik(
        { initialValues:{
             email:'',
@@ -34,8 +40,29 @@ export const Login=()=>{
         },
         validationSchema:schemaValidate,
         onSubmit:async (values,{resetForm})=>{
-            
-        }}
+              const response=await apiAuth.signIn({...values})
+              const {user,token}=response.data
+           if(user && token ){
+                if(user.type ==='candidato'){
+                    LoginAuth(user,token)
+                    setTimeout(()=>{     
+                    },2000)
+                   
+                    navigate('/vagas')
+                    toast.success('Logado com sucesso')
+                  
+                }else if(user.type === 'recrutador'){
+                    LoginAuth(user,token)
+                     navigate('/painel/admin/')
+                    toast.success('Logado com sucesso')
+   
+                }
+
+           }else{
+             toast.error('Usuário não possui uma conta')
+           }  
+        }
+    }
     )
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;

@@ -1,33 +1,37 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ContentPage } from "../../componentes/ContentPage"
 import { Input } from "../../componentes/Input"
-import { useUserContext } from "../../context/authcontext"
 import { Page } from "./style"
 import { Link,useNavigate, useParams } from "react-router-dom"
 import * as Yup from 'yup';
 import { useFormik } from "formik"
-import { apiAuth } from "../../actions/auth.action"
 import { toast } from "react-toastify"
 import { Layout } from "../../componentes/Layout"
+import { apiAuth } from "../../actions/auth.action"
+import { useUserContext } from "../../context/authcontext"
 
 
 const schemaValidate = Yup.object().shape({
     name: Yup.string().required('O nome é obrigatório').trim(),
     lastname: Yup.string().required('O sobrenome é obrigatório').trim(),
-    email:Yup.string().email().matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Email inválido').required('Email é obrigatório'),
-    password: Yup.string().trim().required('A senha é obrigatória'),
+    email:Yup.string().email('Email inválido').required('Email é obrigatório'),
+    password: Yup.string().trim().min(5,'Minino 5 caracteres').required('A senha é obrigatória'),
     tel: Yup.string().matches(/^(?:(?:\+|00)55|0?[1-9]{2})[0-9]{8,9}$/, 'Número de celular inválido').required('Número de celular é obrigatório'),
   
-  });
+  }).required()
 
 export const Cadastro=()=>{
     const params=useParams()
     const navigate=useNavigate()
-    const {registerAuth}=useUserContext()
     const {type}=params
     const [radioValue, setRadioValue] = useState<string>(type as string);
-   
+    const {RegisterAuth}=useUserContext()
+
+    useEffect(()=>{
+      document.title='MyJobs/Cadastro'
+    },[])
+
    //valores iniciais
   const initialValues={
     name:'',
@@ -46,18 +50,44 @@ export const Cadastro=()=>{
     tel:string,
     type:string
   }
-  //config de envio de formulario
+
+
+
+
 const Formik=useFormik({
   initialValues:initialValues,
   validationSchema:schemaValidate,
   onSubmit:async (values:FormValue,{resetForm}) =>{
- 
+    if(values.type !== ':type' ){
+      const response=await apiAuth.signUp(values)
+      const {user,token}=response.data
+         if(user && token ){
+            if(user.type ==='candidato'){
+              toast.success('Conta criada com sucesso')
+              console.log(response.data)
+              RegisterAuth(user,token)
+              navigate('/vagas')
+              
+            }else if(user.type === 'recrutador'){
+              toast.success('Conta criada com sucesso')
+              console.log(response.data)
+              RegisterAuth(user,token)
+              navigate('/painel/admin')
+              
+              
+            } 
+         }else{
+            toast.error('Usuário já tem uma conta')
+            console.log(response.data)
+         }
+     }else{
+      toast.error('Indique como deseja se candidatar : candidato ou recrutador?')
+     }
 
   }
 })
 
 
-//funcao para gerenciar inouts radio
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -70,7 +100,7 @@ const Formik=useFormik({
     <ContentPage >
       
       <Page>
-       <h3>Cadastro  {type ? <span>{`>> ${type}`}</span>  : null} </h3>
+       <h3>Cadastro  { type !== ':type' &&  <span>{`>> ${type}`}</span> } </h3>
        <p>Preencha os campos com suas informações para criar sua conta:</p>
        <form onSubmit={Formik.handleSubmit} >
         <div className="cx-inputs">
@@ -131,4 +161,8 @@ const Formik=useFormik({
       </Page>
   </ContentPage>
    </Layout>
+}
+
+function RegisterAuth(user: any, token: any) {
+  throw new Error("Function not implemented.")
 }

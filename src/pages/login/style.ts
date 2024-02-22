@@ -1,6 +1,6 @@
 import { GlobalStyle } from "../../globalStyle";
 import styled from "styled-components";
-import  ManDev from './../.././assets/imgs/devhomepage.png'
+import  HomePageImg from './../../../public/imgs/homepage.png'
 
 export const Page=styled.div`
     
@@ -11,8 +11,7 @@ export const Page=styled.div`
     background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        background-image: url('/assets/imgs/devhomepage.png');
-        background-image: url(${ManDev});
+        background-image: url(${HomePageImg});
         background-color:rgba(28, 26, 27, 0.89);
     
     form{
@@ -97,9 +96,10 @@ export const Page=styled.div`
                     border:none;
                     cursor: pointer;
                     color: #fff;
+                    transition: all ease .2s;
                     background-color:${GlobalStyle.bgThemeSecondary};
                     &:hover{
-                        background:linear-gradient(to bottom, ${GlobalStyle.bgThemeSecondary},#33BBC5);
+                        background:#33BBC5;
                     }
                 }
            

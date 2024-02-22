@@ -10,19 +10,50 @@ p{
     margin: 10px 0;
     font-size: 17px;
     font-family: 'Poppins';
-    font-weight: 600;
+    font-weight: 700;
+    color: gray;
+}
+.header-page{
+    h3{
+    font-size: 29px;
+    margin: 90px 0;
+    color: #222;
+    display: flex;
+    align-items: center;
+    span{
+        background-color: ${GlobalStyle.bgTheme};
+        font-size: 15px;
+        color:white;
+        padding: 12px;
+        border-radius: 35px;
+        margin-left: 20px;
+    }
+}
+
 }
 @media screen and (max-width:850px) {
-    margin: 50px 0;
+    margin: 10px 0;
+    margin-bottom: 100px;
+    .header-page{
+        h3{
+            flex-direction: column;
+        }
+    }
 }
 `
 export const SectionDetailsJobs=styled.div`
 .card-detail{
         .card-title{
             font-size: 24px;
-            color: ${GlobalStyle.bgThemeSecondary};
+            color: #fff;
             padding: 22px;
-            background:linear-gradient(to bottom,${GlobalStyle.bgTheme},${GlobalStyle.colorTitles});
+            display: flex;
+            align-items: center;
+            background:linear-gradient(to bottom,${GlobalStyle.bgTheme},${GlobalStyle.bgThemeSecondary});
+            .svg{
+                height: 45px;
+                width: 45px;
+            }
         }
         .card-body{
             padding:22px;
@@ -46,7 +77,6 @@ export const SectionDetailsJobs=styled.div`
                 justify-content:center;
                 width:20%;
                 img{
-                    box-shadow: 0 0 12px #000;
                     height:160px;
                     width:160px;
                     border-radius: 100%;
@@ -56,12 +86,13 @@ export const SectionDetailsJobs=styled.div`
             flex:1;
                 p{
                     padding: 12px;
-                    font-weight: 600;
+                    font-weight: 500;
+                    color: #aaa;
                     font-family: 'Poppins';
                 }
               
                 h3{
-                    font-family: 'Roboto';
+                    font-family: 'Montserrat';
                     font-size:26px;
                     font-weight: bold;
                 }

@@ -1,17 +1,26 @@
 
 import axios from "axios";
 import { baseURL } from "../services/axios.config";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { IUser } from "../interfaces/user";
 
+
+
+type PromiseAuth={
+    user:IUser,
+    token:string,
+    status:boolean
+}
 
 export const apiAuth={
    
-        signIn:async(email:string,password:string,type:string)=>{
-         if(email && password && type){
+        signIn:async(data:{email:string,password:string,type:'candidato' | 'recrutador' | string})=>{
+         if(data){
             try{
-            let response=await axios.post(`${baseURL}auth/sigin`,{email,password,type})
+            let response=await axios.post(`${baseURL}auth/sigin`,data)
             if(response.data){
-                 localStorage.setItem('token',response.data.token)
-                 localStorage.set('user',response.data.user)
+                useLocalStorage.setValue('token',response.data.token)
+                useLocalStorage.setValue('user',response.data.user)
                 return response.data
             }
               response.data
@@ -20,14 +29,13 @@ export const apiAuth={
             }
         }
  
- 
      },
-     signUp:async(name:string,lastname:string,password:string,tel:string,email:string,type:string)=>{
-         if(email && password && type && lastname && tel && name){
+     signUp:async(data:{name:string,lastname:string,password:string,tel:string,email:string,type:string})=>{
+         if(data){
              try{
-                const response=await axios.post(`${baseURL}auth/register`,{name,email,type,password,tel,lastname})
-                localStorage.setItem('token',response.data.token)
-                localStorage.set('user',response.data.user)
+                const response=await axios.post(`${baseURL}auth/register`,data)
+                useLocalStorage.setValue('token',response.data.token)
+                useLocalStorage.setValue('user',response.data.user)
                 return response.data
              }catch(e){
               return e

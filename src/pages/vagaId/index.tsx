@@ -7,7 +7,9 @@ import { toast } from "react-toastify"
 import { useUserContext } from "../../context/authcontext"
 import { Page, SectionDetailsJobs } from "./style"
 import { Layout } from "../../componentes/Layout"
-
+import './../../../public/assets/company-logo.png'
+import Arrowright from "../../assets/svgs/arrowright"
+import { baseURL } from "../../services/axios.config"
 
 
 
@@ -24,11 +26,15 @@ export const VagaId=()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
                 setJobId(job)
-             console.log(job)
-              
+                   
         }
         getJobById()
     },[])
+
+
+    useEffect(()=>{
+        document.title='MyJobs/Vaga'
+      },[])
     
     const ClickCandidateToJob=()=>{
         if(user){
@@ -40,55 +46,62 @@ export const VagaId=()=>{
     }
 
     return <Layout>
-        <ContentPage titlePage={`${jobId?.title}/ ${jobId?.category?.name}`}>
+        <ContentPage titlePage={``}>
         <Page>
                 {/*userApplicationJob && <p>
                      Você se candidatou em {userApplicationJob.dateapplied} ✅
                      </p>
         */}
+
+        <div className="header-page">
+          <h3>{jobId?.title} <span>{jobId?.category?.name}</span></h3>
+        </div>
+
            {<SectionDetailsJobs>
                     <div className="card-detail">
-                        <div className="card-title">Descrição</div>
+                        <div className="card-title"><Arrowright />Descrição</div>
                         <div className="card-body">
                             <p>{jobId?.description?.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
                         </div>
                     </div>
                     <div className="card-detail">
-                        <div className="card-title">Requisitos</div>
+                        <div className="card-title"><Arrowright />Requisitos</div>
                         <div className="card-body">
                             <p>{jobId?.requirements?.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
                         </div>
                     </div>
                     <div className="card-detail">
-                        <div className="card-title">Salário</div>
+                        <div className="card-title"><Arrowright />Salário</div>
                         <div className="card-body">
                             <p>{jobId?.salary  ? `R$ ${jobId.salary.toString().replace('.',',')}` : 'Salário não especificado'}</p>
                         </div>
                     </div>
                     <div className="card-detail">
-                        <div className="card-title">Beneficios:</div>
+                        <div className="card-title"><Arrowright />Beneficios</div>
                         <div className="card-body">
                             <p>{jobId?.benefits.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
                         </div>
                     </div>
                     <div className="card-detail">
-                        <div className="card-title">Localização/Atuação</div>
+                        <div className="card-title"><Arrowright />Localização/Atuação</div>
                         <div className="card-body">
                             <p >{jobId?.location}</p>
                         </div>
                     </div>
                     <div className="card-detail">
-                        <div className="card-title">Tipo de contrato</div>
+                        <div className="card-title"><Arrowright />Tipo de contrato</div>
                         <div className="card-body">
                             <p className="card-contrato">{jobId?.contractType}</p>
                         </div>
                     </div>
 
                     <div className="card-detail">
-                        <div className="card-title">Sobre a Empresa</div>
+                        <div className="card-title"><Arrowright />Sobre a Empresa</div>
                         <div className="card-body-company">
                             <div className="cx-img">
-                               <img src={jobId?.company?.logo || ''} alt="" />
+                            {jobId?.company && 
+                              <img src={`${baseURL}public/images/${jobId.company.logo}`} alt="Logo da Empresa" />
+                             }
                             </div>
                             <div className="data">
                            {

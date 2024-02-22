@@ -1,17 +1,12 @@
 
-import { Link, useNavigate } from "react-router-dom"
+import {useNavigate } from "react-router-dom"
 import { Button } from "../Button"
 import { Container } from "./style"
+import { CursoType } from "../../types/data"
 
 
 type Props={
-    course:{
-        id:number,
-        img:string,
-        name:string,
-        price:string | number,
-        category:string
-    }
+    course:CursoType
 }
 
 export default ({course}:Props)=>{
@@ -27,13 +22,16 @@ export default ({course}:Props)=>{
                 <h3>{course.name}</h3>
                 <div className="data">
                     <div>{course.category}</div> 
-                    <div>{typeof course.price ==='number' && 'R$'} 
-                       {typeof course.price ==='number' ?  course.price.toFixed(2).replace('.',',') : course.price}
+                    <div>{course.free ? 'Gratuito' : `R$ ${course.price.toFixed(2).replace('.',',') }`}
                     </div>
                 </div>
                 <div className="divider"></div>
                <div className="cx-btn">
-                 <Button onClick={()=>navigate(`/cursos/${course.id}`)} bgH="#0766AD" p="22px 0" color="white" colorH="white" bgColor="#525CEB" text="ver curso" w="80%" m="50px 0"/>
+                 <Button onClick={()=>navigate(`/cursos/${course.id}`)} bgH="#0766AD" 
+                    p="22px 0" color="white" 
+                    colorH="white" bgColor="#525CEB" text="ver curso" 
+                     w="80%" m="50px 0"
+                  />
                 
                </div>
             </div>

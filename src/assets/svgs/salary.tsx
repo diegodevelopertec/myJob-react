@@ -1,4 +1,4 @@
-import { GlobalStyle } from "@/styles/GlobalStyle"
+import { GlobalStyle } from "../../globalStyle"
 
 export default ()=>{
     return <svg className="svg" fill={GlobalStyle.bgThemeSecondary} version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" 

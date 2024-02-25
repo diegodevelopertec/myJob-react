@@ -6,7 +6,6 @@ import { Login } from "../pages/login"
 import { Cadastro } from "../pages/cadastro"
 import { Home } from "../pages/home"
 import { VagaId } from "../pages/vagaId"
-import { useUserContext } from "../context/authcontext"
 import { HomePainel } from "../pages/painel/home"
 import { CandidatosPainel } from "../pages/painel/candidatos"
 import { VagasPostadasPainel } from "../pages/painel/vagasPostadas"
@@ -15,24 +14,26 @@ import { ContaPainel } from "../pages/painel/conta"
 import { EmpresaPainel } from "../pages/painel/empresa"
 import { Cursos } from "../pages/cursos"
 import { CursoId } from "../pages/cursoId"
-import Platform from "../pages/platform"
+import {Plataforma}  from "../pages/plataforma"
 import { MeusCursos } from "../pages/meuscursos"
 import { CandidaturaId } from "../pages/candidaturaId"
+import { CreateCurriculum } from "../pages/createCurriculum"
 
 
 
 
 export const Routes=()=>{
-    const {user}=useUserContext()
+
     return <Router>
-        {!user && <>
+       <>
             <Route path="/" element={<Home/>}/>
             <Route path="/vagas" element={<Vagas/>}/>
             <Route path="/vagas/:id" element={<VagaId />}/>
             <Route path="/login/:type?" element={<Login />}/>
             <Route path="/cadastro/:type?" element={<Cadastro />}/>
             <Route path="/cursos" element={<Cursos />}/>
-           
+            <Route path="/cursos/:id" element={<CursoId />}/>
+          
             //recurtador
             <Route path="/painel/recrutador" element={<HomePainel />}/>
             <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>
@@ -41,19 +42,20 @@ export const Routes=()=>{
             <Route path="/painel/recrutador/minha-conta" element={<ContaPainel />}/>
             <Route path="/painel/recrutador/sobre-empresa" element={<EmpresaPainel />}/>
         </>
-       }
-        {
-         user && <>
+       
+        
+         <>
              <Route path="/vagas" element={<Vagas/>}/>
               <Route path="/vagas/:id" element={<VagaId />}/>
              <Route path="/candidaturas" element={<Candidaturas />}/>
-             {<Route path="/candidaturas/:id" element={<CandidaturaId />}/>}
+             <Route path="/candidaturas/:id" element={<CandidaturaId />}/>
              <Route path="/conta" element={<Conta />}/>
              <Route path="/cursos" element={<Cursos />}/>
+             <Route path="/criar_curriculo" element={<CreateCurriculum />}/>
             <Route path="/cursos/:id" element={<CursoId />}/>
             <Route path="/meus_cursos" element={<MeusCursos />}/>
-            <Route path="/plataforma_ead/curso/:cursoid" element={<Platform />}/>
+            <Route path="/plataforma_ead/curso/:cursoid" element={<Plataforma />}/>
             </>
-        }
+        
     </Router>
 }

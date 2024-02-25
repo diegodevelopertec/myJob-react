@@ -1,7 +1,7 @@
 import { GlobalStyle } from "../../globalStyle"
 
 export default ()=>{
-    return <svg fill={GlobalStyle.bgTheme} className="svg" version="1.1" id="Capa_1"  
+    return <svg fill='auto' className="svg fill" version="1.1" id="Capa_1"  
     viewBox="0 0 367.004 367.004">
 <g>
    <path d="M160.937,197.203c24.125,0,80.846-29.033,80.846-98.603c0-9.705-0.236-19.081-1.037-27.94

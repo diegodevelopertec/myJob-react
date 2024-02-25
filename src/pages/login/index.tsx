@@ -2,65 +2,78 @@
 import { useFormik} from "formik"
 import { Input } from "../../componentes/Input"
 import { GlobalStyle } from "../../globalStyle"
-import { Page } from "./style"
+import { Form, Page } from "./style"
 import { toast } from "react-toastify"
-import * as Yup from 'yup'
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { apiAuth } from "../../actions/auth.action"
 import { Link } from "react-router-dom"
+ import { useAuthContext } from "../../context/authContext"
 import { Layout } from "../../componentes/Layout"
-import { useUserContext } from "../../context/authcontext"
+import { apiAuth } from "../../actions/auth.action"
+import * as y from 'yup'
 
 
+type User={
+    id:number,
+    name:string,
+    lastname:string,
+    email:string,
+    password:string,
+    type:string,
+    tel:string,
+    photo:string
 
-const schemaValidate = Yup.object().shape({
-    email: Yup.string().email('Email inválido').required('O email é obrigatório').trim(),
-    password: Yup.string().max(8,'A senha deve ter no máximo 8 caracteres').trim().required('A senha é obrigatória'),
-    type:Yup.string().trim().required('selecione seu tipo de usuário'),
-}).required()
+}
+interface PromiseAuth{
+user:User,
+status:boolean,
+token:string,
 
+}
+
+
+const schemaValidate = y.object().shape({
+    email:y.string().email('Email inválido').trim(),
+    password: y.string().max(14,'A senha deve ter no máximo 14 caracteres').trim(),
+    type:y.string().trim(),
+});
 
 
 export const Login=()=>{
-    const {LoginAuth}=useUserContext()
+
+    const {SigIn}=useAuthContext()
+    const {type}=useParams()
+    const navigate=useNavigate()
+    const [radioValue, setRadioValue] = useState<string>(!type ? '' : type);
 
     useEffect(()=>{
         document.title='MyJobs/Login'
       },[])
 
-    const {type}=useParams()
-    const navigate=useNavigate()
-    const [radioValue, setRadioValue] = useState<string>(!type ? '' : type);
     const Formik=useFormik(
        { initialValues:{
             email:'',
             password:'',
-            type:radioValue
+            type:''
         },
         validationSchema:schemaValidate,
         onSubmit:async (values,{resetForm})=>{
-              const response=await apiAuth.signIn({...values})
-              const {user,token}=response.data
-           if(user && token ){
-                if(user.type ==='candidato'){
-                    LoginAuth(user,token)
-                    setTimeout(()=>{     
-                    },2000)
-                   
+           const response=await apiAuth.signIn(values)
+            if(response.data.status === true){
+                const {user,token}=response.data
+                if(user.type === 'candidato'){
                     navigate('/vagas')
-                    toast.success('Logado com sucesso')
-                  
+                    SigIn(user,token)
+                    toast.success('login feito com sucesso')
                 }else if(user.type === 'recrutador'){
-                    LoginAuth(user,token)
-                     navigate('/painel/admin/')
-                    toast.success('Logado com sucesso')
-   
+                    navigate('/painel/vagas')
+                    SigIn(user,token)
                 }
-
-           }else{
-             toast.error('Usuário não possui uma conta')
-           }  
+            
+            }else{
+                toast.error('email e/ou senha incorretos')
+            }
+           
         }
     }
     )
@@ -74,62 +87,45 @@ export const Login=()=>{
       
     return <Layout>
         <Page>
-            <form action="" method="POST" onSubmit={Formik.handleSubmit} >
+            <Form action="" method="POST" onSubmit={Formik.handleSubmit}  >
                 <h2>Entrar</h2>
                 <p>Preencha os campos para entrar na sua conta:</p>
-                <div className="inputs">
-                   <div className="cx-input">
-                      <Input bx={`0 0 3px ${GlobalStyle.bgThemeSecondary}`}  
-                        value={Formik.values.email} 
-                        onChange={Formik.handleChange}
-                       type="email"  name="email" placeholder="Digite seu email" p={'16px 22px'} 
-                      />
-                      {Formik.errors.email && <p>{Formik.errors.email}</p>}
-                   </div>
-                    <div className="cx-input">
-                        <Input bx={`0 0 3px ${GlobalStyle.bgThemeSecondary}`} 
-                         name="password" value={Formik.values.password} onChange={Formik.handleChange}
-                            type="password" p={'16px 22px'} placeholder="Digite sua senha"  
-                        />
-                        {Formik.errors.password && <p>{Formik.errors.password}</p>}
-                    </div>
-                    <div className="cx-radio">
+                    <div className="inputs">
+                        <div className="cx-input">
+                            <Input bx={`0 0 3px ${GlobalStyle.bgThemeSecondary}`}  
+                            value={Formik.values.email}  name={'email'}
+                            onChange={Formik.handleChange}
+                            type={'email'}  placeholder={'digite seu email'} p={'16px 22px'} 
+                            />
+                            {Formik.errors.email && <p>{Formik.errors.email }</p>}
+                        </div>
+                        <div className="cx-input">
+                            <Input bx={`0 0 3px ${GlobalStyle.bgThemeSecondary}`}  
+                            value={Formik.values.password}  name={'password'}
+                            onChange={Formik.handleChange}
+                            type={'password'}  placeholder={'digite sua senha'} p={'16px 22px'} 
+                            />
+                            {Formik.errors.password && <p>{Formik.errors.password }</p>}
+                        </div>
+                        <div className="cx-radio">
                         <p>Entrar como: </p>
                         <span>
                         <div className="input-radio">
-                         <input type="radio" name="type"  checked={radioValue === 'candidato'} value={'candidato'} onChange={handleRadioChange} />
-                            <span>sou candidato</span>
-                        </div>
-                        <div className="input-radio">
-                         <input type="radio" name='type' checked={radioValue === 'recrutador'} value={'recrutador'} onChange={handleRadioChange} />
-                        <span> recrutador</span>
-                        </div>
-                        <p className="error">{Formik.errors.type}</p>
-
-                        
+                            <input type="radio" name="type"  checked={radioValue === 'candidato'} value={'candidato'} onChange={handleRadioChange} />
+                                <span>candidato</span>
+                            </div>
+                            <div className="input-radio">
+                            <input type="radio" name='type' checked={radioValue === 'recrutador'} value={'recrutador'} onChange={handleRadioChange} />
+                            <span>recrutador</span>
+                            </div>
+                            <p className="error">{Formik.errors.type}</p>
                         </span>
                     </div>
-                </div>
-                <div className="actions">
-                    <div className="cx-btn">
+                    </div>
+                    <div className="actions">
                         <input type="submit" value={'Entrar'} />
-                        <div className="about">
-                          <Link to=''>Esqueci minha senha</Link>
-                          <Link to={`/cadastro/${type}?`}>Não tem uma conta ainda ? Clique aqui</Link>
-                        </div>
                     </div>
-                    <hr />
-                    <div className="cx-media-links">
-                        <div className="media-link">
-                            {/*<MediaLinkRadius  href="gitmedialink.png" image='assets/gitmedialink.png' />
-                            <MediaLinkRadius  href="" image='assets/googlemedia.png' />
-<MediaLinkRadius  href="" image='assets/linkedinmedia.png' /> */}
-                        </div>
-                    </div>
-                   
-
-                </div>
-            </form>
+            </Form>
         </Page>
     </Layout>
     

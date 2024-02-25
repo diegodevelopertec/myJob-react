@@ -90,7 +90,7 @@ nav{
 
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 868px) {
     padding: 12px 8px;
     position: fixed;
     top: 0;
@@ -100,15 +100,14 @@ nav{
     z-index: 1;
     .right {
         .cx-btn{
-            display:${props=>props.activeMobile === false ? 'flex' : ' none'};
+            display:${props=>props.activeMobile === false ? 'flex' : 'none'};
         }
         nav{
             .close-menu{
-                display:flex;
-               
+                display:flex;  
             }
             z-index: 1;
-            display:${props=>props.activeMobile ? 'auto' : 'hidden'};
+            display:${props=>props.activeMobile === true ? 'auto' : 'hidden'};
             transition: all ease .3s;
             padding: 190px 0;
             position: fixed;

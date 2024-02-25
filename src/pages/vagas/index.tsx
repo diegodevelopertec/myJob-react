@@ -6,8 +6,6 @@ import { IJob } from "../../interfaces/job"
 import { apiJobs } from "../../actions/jobs.action"
 import { CardJob } from "../../componentes/CardJob"
 import Skeleton from "../../componentes/Skeleton"
-import { useUserContext } from "../../context/authcontext"
-import SkeletonItem from "react-loading-skeleton"
 import { Layout } from "../../componentes/Layout"
 import { BannerSlide } from "../../componentes/BannerSlide"
 import { bannersJobs } from "../../data/banner"
@@ -15,13 +13,19 @@ import SearchInput from "../../componentes/SearchInput"
 import Filter from "../../componentes/Filter"
 import Select from "../../componentes/Select"
 import { Button } from "../../componentes/Button"
+import { useAuthContext } from "../../context/authContext"
+import { IApplication } from "../../interfaces/application"
+
 
 
 
 export const Vagas=()=>{
-   const [jobs,setJobs]=useState<IJob[] | []>([])
-   const {user}=useUserContext()
+    const [jobs,setJobs]=useState<IJob[] | []>([])
+    const {user}=useAuthContext()
     const [loading,setLoading]=useState(true)
+
+
+
 
    useEffect(()=>{
     const getJobs=async()=>{
@@ -29,11 +33,11 @@ export const Vagas=()=>{
         setLoading(false)
         setJobs(jobsList as IJob[])
         console.log(jobsList);
-        
     }
-     setTimeout(()=>{
-        getJobs()
-     },200)
+   
+     getJobs()
+
+
    },[])
 
     return <Layout>

@@ -3,8 +3,7 @@ import styled from "styled-components";
 import  HomePageImg from './../../../public/imgs/homepage.png'
 
 export const Page=styled.div`
-    
-    padding: 150px 0;
+    height: 959px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +13,14 @@ export const Page=styled.div`
         background-image: url(${HomePageImg});
         background-color:rgba(28, 26, 27, 0.89);
     
-    form{
+    
+
+@media screen and (max-width: 768px) {
+    padding: 150px 12px;
+}
+`
+
+export const Form=styled.form`
        min-height: 500px;
         padding: 22px;
         width: 600px;
@@ -89,7 +95,7 @@ export const Page=styled.div`
             display:flex;
             flex-direction: column;
             align-items: center;
-             input{
+            input{
                     width: 100%;
                     padding:12px 132px;
                     font-size: 19px;
@@ -143,9 +149,8 @@ export const Page=styled.div`
             }
         }
      
-    }
+    
 
-@media screen and (max-width: 768px) {
-    padding: 150px 12px;
-}
+
+
 `

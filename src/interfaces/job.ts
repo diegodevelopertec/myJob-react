@@ -1,3 +1,4 @@
+import { IApplication } from "./application";
 import { CategoryInterface } from "./category";
 import { CompanyInterface } from "./company";
 
@@ -14,6 +15,7 @@ export  interface IJob{
     expireDate: string;
     companyId: number | string,
     contractType:string,
-    company?:CompanyInterface,
-    category?:CategoryInterface
+    company:CompanyInterface,
+    applications:IApplication,
+    category:CategoryInterface
 }

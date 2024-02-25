@@ -1,32 +1,28 @@
-
 import { useEffect, useState } from "react"
 import { ContentPage } from "../../componentes/ContentPage"
 import { Input } from "../../componentes/Input"
 import { Page } from "./style"
 import { Link,useNavigate, useParams } from "react-router-dom"
-import * as Yup from 'yup';
 import { useFormik } from "formik"
 import { toast } from "react-toastify"
 import { Layout } from "../../componentes/Layout"
-import { apiAuth } from "../../actions/auth.action"
-import { useUserContext } from "../../context/authcontext"
+import { schemaValidateUser } from "../../validations/user"
 
-
-const schemaValidate = Yup.object().shape({
-    name: Yup.string().required('O nome é obrigatório').trim(),
-    lastname: Yup.string().required('O sobrenome é obrigatório').trim(),
-    email:Yup.string().email('Email inválido').required('Email é obrigatório'),
-    password: Yup.string().trim().min(5,'Minino 5 caracteres').required('A senha é obrigatória'),
-    tel: Yup.string().matches(/^(?:(?:\+|00)55|0?[1-9]{2})[0-9]{8,9}$/, 'Número de celular inválido').required('Número de celular é obrigatório'),
-  
-  }).required()
 
 export const Cadastro=()=>{
     const params=useParams()
     const navigate=useNavigate()
     const {type}=params
     const [radioValue, setRadioValue] = useState<string>(type as string);
-    const {RegisterAuth}=useUserContext()
+    const [image,setImage]=useState<string | null>(null)
+
+
+
+
+
+
+
+
 
     useEffect(()=>{
       document.title='MyJobs/Cadastro'
@@ -35,6 +31,7 @@ export const Cadastro=()=>{
    //valores iniciais
   const initialValues={
     name:'',
+    photo:'',
     lastname:'',
     email:'',
     password:'',
@@ -43,8 +40,10 @@ export const Cadastro=()=>{
   }
 
   type FormValue={
-    name:string,
-    lastname:string,
+    id?:number,
+    name: string,
+    photo?:string,
+    lastname: string,
     email:string,
     password:string,
     tel:string,
@@ -56,36 +55,16 @@ export const Cadastro=()=>{
 
 const Formik=useFormik({
   initialValues:initialValues,
-  validationSchema:schemaValidate,
+  validationSchema:schemaValidateUser,
   onSubmit:async (values:FormValue,{resetForm}) =>{
     if(values.type !== ':type' ){
-      const response=await apiAuth.signUp(values)
-      const {user,token}=response.data
-         if(user && token ){
-            if(user.type ==='candidato'){
-              toast.success('Conta criada com sucesso')
-              console.log(response.data)
-              RegisterAuth(user,token)
-              navigate('/vagas')
-              
-            }else if(user.type === 'recrutador'){
-              toast.success('Conta criada com sucesso')
-              console.log(response.data)
-              RegisterAuth(user,token)
-              navigate('/painel/admin')
-              
-              
-            } 
-         }else{
-            toast.error('Usuário já tem uma conta')
-            console.log(response.data)
-         }
+      console.log(values)
      }else{
       toast.error('Indique como deseja se candidatar : candidato ou recrutador?')
      }
+    }
 
-  }
-})
+  })
 
 
 

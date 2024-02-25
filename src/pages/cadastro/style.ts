@@ -125,3 +125,12 @@ form{
     }
 }
 `
+
+export const FileInputRender=styled.div`
+
+.input{
+  
+}
+
+
+`

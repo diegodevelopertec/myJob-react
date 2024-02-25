@@ -4,29 +4,35 @@ import { IJob } from "../../interfaces/job"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { apiJobs } from "../../actions/jobs.action"
 import { toast } from "react-toastify"
-import { useUserContext } from "../../context/authcontext"
 import { Page, SectionDetailsJobs } from "./style"
 import { Layout } from "../../componentes/Layout"
 import './../../../public/assets/company-logo.png'
 import Arrowright from "../../assets/svgs/arrowright"
 import { baseURL } from "../../services/axios.config"
+import { useAuthContext } from "../../context/authContext"
+import { apiApplication } from "../../actions/applications.action"
+import currentDate from "../../hooks/currentDate"
+import { IApplication } from "../../interfaces/application"
 
 
 
 export const VagaId=()=>{
+    const {user}=useAuthContext()
+    const [hasApplication,setHasApplication]=useState<true | false>(false)
     const [jobId,setJobId]=useState<IJob | null>(null)
     const params=useParams()
-    const {user}=useUserContext()
     const location=useLocation()
     const navigate=useNavigate()
     const articleUrl = `https://${location.pathname}`;
     const {id}=params
 
+
+
+
     useEffect(()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
-                setJobId(job)
-                   
+                setJobId(job)      
         }
         getJobById()
     },[])
@@ -36,10 +42,12 @@ export const VagaId=()=>{
         document.title='MyJobs/Vaga'
       },[])
     
-    const ClickCandidateToJob=()=>{
-        if(user){
+    const ClickCandidateToJob=async()=>{
+        const d=new Date()
+        if(user && jobId !== null){
+            await apiApplication.addApplication(user?.id as number ,jobId.id,d.toLocaleDateString())
             toast.success('candidatura feita!')
-            navigate(`/candidato/candidaturas`)
+            navigate(`/candidaturas`)
         }else{
             toast.error('Ops!você não tem uma conta 😢 ')
         }
@@ -48,32 +56,32 @@ export const VagaId=()=>{
     return <Layout>
         <ContentPage titlePage={``}>
         <Page>
-                {/*userApplicationJob && <p>
+            {/*userApplicationJob && <p>
                      Você se candidatou em {userApplicationJob.dateapplied} ✅
                      </p>
-        */}
+          */}
 
         <div className="header-page">
-          <h3>{jobId?.title} <span>{jobId?.category?.name}</span></h3>
+          <h3>{jobId?.title} <span>{jobId?.category.name}</span></h3>
         </div>
 
            {<SectionDetailsJobs>
                     <div className="card-detail">
                         <div className="card-title"><Arrowright />Descrição</div>
                         <div className="card-body">
-                            <p>{jobId?.description?.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
+                            <p>{jobId?.description.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
                         </div>
                     </div>
                     <div className="card-detail">
                         <div className="card-title"><Arrowright />Requisitos</div>
                         <div className="card-body">
-                            <p>{jobId?.requirements?.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
+                            <p>{jobId?.requirements.split(',').map((i,k)=><li key={k}>{i}</li>)}</p>
                         </div>
                     </div>
                     <div className="card-detail">
                         <div className="card-title"><Arrowright />Salário</div>
                         <div className="card-body">
-                            <p>{jobId?.salary  ? `R$ ${jobId.salary.toString().replace('.',',')}` : 'Salário não especificado'}</p>
+                            <p>{jobId?.salary  ? `R$ ${jobId?.salary.toString().replace('.',',')}` : 'Salário não especificado'}</p>
                         </div>
                     </div>
                     <div className="card-detail">
@@ -106,8 +114,8 @@ export const VagaId=()=>{
                             <div className="data">
                            {
                             jobId?.company !== undefined && <>
-                               <h3>{jobId?.company &&  jobId?.company.name}</h3>
-                               <p>{jobId?.company.about}</p>
+                               <h3>{jobId.company &&  jobId?.company.name}</h3>
+                               <p>{jobId.company.about}</p>
                             </>
                            }
 
@@ -115,7 +123,8 @@ export const VagaId=()=>{
                         </div>
                     </div>
                     <div className="actions">
-                        <button onClick={ClickCandidateToJob}>candidatar</button> 
+                       <button onClick={ClickCandidateToJob}>candidatar</button> 
+                  
                         {/* userApplicationJob &&  <button >desistir</button> */}
                     </div>
                 </SectionDetailsJobs>

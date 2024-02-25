@@ -1,81 +1,63 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 
-interface User {
-  name:string,
-  email:string,
-  password:string,
-  type:string,
-  tel?:string,
-  lastname?:string
 
+
+type props={
+    children:ReactNode
 }
 
-interface Token{
-  token:string
+type User={
+    id?:number,
+    photo?:string,
+    name:string,
+    lastname:string,
+    email:string,
+    password:string,
+    type:string,
+    tel:string
+}
+type SigInType={
+    user:User,
+    token:string,
+    status:boolean
+}
+type ContextType={
+    user:User | null,
+    SigIn:(user:User,token:string)=>void,
+    SigOut:()=>void
 }
 
 
+const contextAuth=createContext<ContextType>({} as ContextType)
 
-interface UserContextProps {
-  user: User | null;
-  token: Token| null;
-  loginAuth: (user:User,token:Token) => void;
-  registerAuth: (user: User,token:Token) => void;
-  logoutAuth: () => void;
-}
+export const AuthProvider=({children}:props)=>{
+    const [user,setUser]=useState<User | null>(null)
+    
 
-const UserContext = createContext<UserContextProps | undefined>(undefined);
-
-export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<Token | null>(null);
- 
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    const savedToken = localStorage.getItem('token');
-    if (savedUser !== null && savedToken !== null) {
-      try {
-        const parsedUser = JSON.parse(savedUser);
-        const parsedToken = JSON.parse(savedToken);
-        setUser(parsedUser);
-        setToken(parsedToken);
-      } catch (error) {
-        // Handle the error, e.g., log it or provide a default user
-        console.error('Error parsing user data from localStorage:', error);
-      }
+useEffect(()=>{
+    const storageUser=localStorage.getItem('@u')
+    if(storageUser){
+        const storageUserParsed=JSON.parse(storageUser as string)
+        setUser(storageUserParsed)
     }
-  }, []);
+},[])
 
-  const registerAuth = (userData: User,token:Token) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', JSON.stringify(token));
-  };
+const SigIn=async(user:User,token:string)=>{
+    localStorage.setItem('@u',JSON.stringify(user))
+    localStorage.setItem('@token',JSON.stringify(token))
+    setUser(user)
+}
 
-  const loginAuth = (userData: User,token:Token) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', JSON.stringify(token));
-  };
+const SigOut=()=>{
+     setUser(null)
+     localStorage.clear()
+}
+const values={
+    user,SigIn,SigOut
+}
+    return <contextAuth.Provider value={values}>
+        {children}
+    </contextAuth.Provider>
+}
 
-
-  const logoutAuth = () => {
-    setUser(null);
-    setToken(null)
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-  }
-
-  return <UserContext.Provider value={{token, user, loginAuth, logoutAuth,registerAuth }}>
-      {children}
-    </UserContext.Provider>
-  
-};
-
-export const useUserContext = () => {
-  const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
-  return context;
-};
+export const useAuthContext=()=>useContext(contextAuth)

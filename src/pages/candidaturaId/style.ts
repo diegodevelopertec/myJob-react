@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 
 export const Page=styled.div`
-padding: 0 12px;
+margin: 50px 0;
+padding: 12px;
 
 p{
     margin: 10px 0;
@@ -41,6 +42,9 @@ p{
 }
 `
 export const SectionDetailsJobs=styled.div`
+.data-application{
+    margin: 22px 0;
+}
 .card-detail{
         .card-title{
             font-size: 24px;

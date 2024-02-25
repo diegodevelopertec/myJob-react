@@ -14,5 +14,5 @@ export interface CompanyInterface{
     tel:string,
     city:string,
     state:string,
-    user?:IUser
+    user:IUser
 }

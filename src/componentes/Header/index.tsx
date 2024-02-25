@@ -3,12 +3,12 @@ import { Container } from "./style"
 import { useGlobalContext } from "../../context/globalContext"
 import MenuBurguerIcon from './../../assets/icons/menuburguer.png'
 import MenuCloseIcon from './../../assets/icons/close.png'
-import { useUserContext } from "../../context/authcontext"
+import { useAuthContext } from "../../context/authContext"
 import Lupa from "../../assets/svgs/lupa"
 
 
 export const Header=()=>{
-  const {user}=useUserContext()
+  const {user}=useAuthContext()
   const {stateMobile,handleStateMobile}=useGlobalContext()
   const conditionLinkClick=()=>stateMobile ? handleStateMobile(false) : handleStateMobile(true)
 
@@ -33,24 +33,24 @@ export const Header=()=>{
                 </button>
               </div>
               <div className="links">
-                {!user && <>
+                {user === null &&  <>
                   <Link to={'/'} onClick={conditionLinkClick}>inicio</Link>
                   <Link to={'/vagas'} onClick={conditionLinkClick}>vagas</Link>
                   <Link to={'/cursos'} onClick={conditionLinkClick}>cursos</Link>
                   <Link to={'/login'} onClick={conditionLinkClick}>entrar</Link>
                   <Link to={'/cadastro'} onClick={conditionLinkClick} >cadastrar</Link>
-</>}
-
-                 {
-                  user && <>
+                </> }
+                {user && 
+                    <>
                     <Link to={'/vagas'} onClick={conditionLinkClick}>vagas</Link>
                     <Link to={'/candidaturas'} onClick={conditionLinkClick}>candidaturas</Link>
                     <Link to={'/cursos'} onClick={conditionLinkClick}>cursos</Link>
                     <Link to={'/meus_cursos'} onClick={conditionLinkClick}>meus cursos</Link>
                     <Link to={'/conta'} onClick={conditionLinkClick} >minha conta</Link>
+                    </>
+                    
+                }
 
-                  </>
-                 }
               </div>
             </nav>
         </div>

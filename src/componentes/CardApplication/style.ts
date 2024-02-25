@@ -1,32 +1,25 @@
-import { GlobalStyle } from "../../globalStyle";
+import { GlobalStyle } from './../../globalStyle';
 import styled from "styled-components";
 
 export const Container=styled.div`
 display: flex;
 flex-direction: column;
-background-color:${GlobalStyle.bgTheme};
-padding:22px;
-border-radius: 5px;
-margin: 23px 0;
-box-shadow: 0 0 8px #aaa;
-transition:all ease .3s;
+border-radius: 4px;
+background-color: ${GlobalStyle.bgTheme};
+padding: 8px 22px;
+margin:12px 0;
 
-
-&:hover{
-    box-shadow:  0 0 22px #222;
-    outline: 2px solid ${GlobalStyle.bgThemeSecondary};
-}
 .top{
     .header{
         display: flex;
-     
-            h2{
-                font-size: 25px;
-                text-transform: capitalize;
+        align-items: center;
+         h2{
+                font-size: 20px;
+                text-shadow:0 0 5px #000;
                 color:${GlobalStyle.bgThemeSecondary};
             }
             span{
-                font-size: 12px;
+                font-size: 14px;
                 margin: 5px;
                 padding: 7px;
                 border-radius: 3px;
@@ -36,49 +29,42 @@ transition:all ease .3s;
                 justify-content: center;
                 align-items: center;
             }
-            
      
     }
 }
-.data-job{
-    display: flex;
-    p{
-        margin:0 12px;
-        font-weight: 800;
-      font-size:14px;
-      font-family: 'Poppins';
-      color: #FFF;
-    }
-}
-
 
 .divider{
- margin: 22px;
+ margin: 14px;
  height: 1.5px;
  background-color:${GlobalStyle.bgThemeSecondary};
 }
 
 .info{
     display: flex;
+  
     .left{
         display: flex;
         justify-content:space-between;
         width: 70%;
         span{
-            .svg{
-                height:29px;
-                margin-right: 5px;
-               fill: ${GlobalStyle.bgThemeSecondary};
-            }
-           font-family: 'Poppins';
+            font-family: 'Poppins';
             color: #FFF;
-            font-size: 13px;
             font-weight: 800;
+            font-size: 12px;
+            .svg{
+                height:22px;
+                margin-right: 5px;
+                
+            }
+            .fill{
+                fill: ${GlobalStyle.bgThemeSecondary};
+            }
+           
         }
-     }
+    }
     
     .right{
-      padding:0 12px ;
+       padding:0 12px ;
        flex: 1;
        display: flex;
        justify-content:center;
@@ -88,57 +74,68 @@ transition:all ease .3s;
             justify-content: center;
             align-items: center;
             color: #FFF;
-            padding:12px 22px;
+            padding:8px 22px;
             background-color: ${GlobalStyle.bgThemeSecondary};
             width: 30%;
-            transition: all ease .3s;
+            transition: all ease 0.3s;
             cursor: pointer;
             border-radius: 3px;
             &:hover{
-                box-shadow:0 0 9px #181D31;
-                background: #0E8388;
-                
+                background-color:#00DFA2;
+
             }
+        }
+    }
+    .state{
+        p{
+            font-size: 13px;
         }
     }
 }
 
-@media screen and (max-width: 698px) {
-
+@media screen and (max-width: 768px) {
+padding: 15px 8px;
     .top{
         .header{
             align-items: center;
             h2{
-                font-size: 19px;
+                font-size: 15px;
                 justify-content: center;
             }
             span{
-                font-size: 8px;
-                text-align: center;
+                font-size: 11px;
             }
         }
     }
     .info{
      flex-direction: column;
         .left{
-           flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            width:auto;
+            margin:10px 0;
             span{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 8px;
                 font-size: 11px;
-                text-align: justify;
-              
             }
             img{
-                height: 20px;
-                width: 25px;
+                height: 26px;
+                width: 26px;
             }
         }
         .right{
             margin:12px 0;
         }
     }
+    
 }
+.state{
+    margin: 18px 0;
+        p{
+            color: #279EFF;
+            font-weight: 900;
+            font-size: 13px;
+            text-decoration: underline;
+            color: ${GlobalStyle.bgThemeSecondary};
+        }
+    }
 `

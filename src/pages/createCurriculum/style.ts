@@ -27,6 +27,18 @@ form{
                     }
                 }
             }
+            .cx-radio{
+                    display: flex;
+                    margin: 12px 0;
+                    align-items: center;
+                    label{
+                      font-size: 13px;
+                    }
+                    input{
+                        margin: 12px;
+                        font-size: 13px;
+                    }
+           }
     .cx-input{
         display: flex;
         flex-direction: column;
@@ -48,6 +60,7 @@ form{
          font-weight: 33px;
          font-weight: 700;
          font-family: 'Arial';
+         
          span{
             font-size: 14px;
             margin: 0 12px;
@@ -129,7 +142,8 @@ export const BoxNewExperienceAndTrainning=styled.div<props>`
                 label{
                     font-size: 13px;
                 }
-                div{
+               
+                .cx-date{
                     margin:0 22px;
                     display: flex;
                     align-items: center;
@@ -137,6 +151,16 @@ export const BoxNewExperienceAndTrainning=styled.div<props>`
                     input{
                         width: auto;
                         background-color: #DEDEDE;
+                    }
+                }
+                .radio{
+                    display: flex;
+                    align-items: center;
+                    label{
+                        margin: 0 22px;
+                    }
+                    input{
+                        margin: 12px;
                     }
                 }
             }

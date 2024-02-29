@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { ContentPage } from "../../componentes/ContentPage"
 import { Input } from "../../componentes/Input"
 import { Page } from "./style"
@@ -7,31 +7,29 @@ import { useFormik } from "formik"
 import { toast } from "react-toastify"
 import { Layout } from "../../componentes/Layout"
 import { schemaValidateUser } from "../../validations/user"
+import { apiAuth } from "../../actions/auth.action"
+import { useAuthContext } from "../../context/authContext"
+
+
 
 
 export const Cadastro=()=>{
     const params=useParams()
     const navigate=useNavigate()
     const {type}=params
-    const [radioValue, setRadioValue] = useState<string>(type as string);
-    const [image,setImage]=useState<string | null>(null)
+    const [radioValue, setRadioValue] = useState<string>(type as string)
+    const {SigUp}=useAuthContext()
 
 
-
-
-
-
-
-
-
+  
+    
     useEffect(()=>{
-      document.title='MyJobs/Cadastro'
-    },[])
+      document.title=`MyJobs/Cadastro/${type}`
+    },[type])
 
-   //valores iniciais
+
   const initialValues={
     name:'',
-    photo:'',
     lastname:'',
     email:'',
     password:'',
@@ -39,49 +37,52 @@ export const Cadastro=()=>{
     type:radioValue
   }
 
-  type FormValue={
-    id?:number,
-    name: string,
-    photo?:string,
-    lastname: string,
-    email:string,
-    password:string,
-    tel:string,
-    type:string
+  
+const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setRadioValue(newValue);
+    Formik.setFieldValue('type', newValue);
   }
-
-
-
 
 const Formik=useFormik({
   initialValues:initialValues,
   validationSchema:schemaValidateUser,
-  onSubmit:async (values:FormValue,{resetForm}) =>{
-    if(values.type !== ':type' ){
-      console.log(values)
-     }else{
-      toast.error('Indique como deseja se candidatar : candidato ou recrutador?')
-     }
-    }
+  onSubmit:async (values,{resetForm}) =>{
 
-  })
+if(values.type !== ':type' ){
+      const response=await apiAuth.sigUp(values)
+      resetForm()
+      if(response.data.status === true){
+          const {user,token}=response.data
+          if(user.type === 'candidato'){
+              navigate('/vagas')
+              SigUp(user,token)
+              toast.success('login feito com sucesso')
+          }else if(user.type === 'recrutador'){
+              navigate('/painel/recrutador/candidatos')
+              SigUp(user,token)
+              toast.success('login feito com sucesso')
+          }
+      
+      }else{
+          toast.error('email e/ou senha incorretos')
+      }}
+    
+}})
 
 
 
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    setRadioValue(newValue);
-    Formik.setFieldValue('type', newValue);
-  };
+
    
    
    return <Layout>
     <ContentPage >
       
       <Page>
-       <h3>Cadastro  { type !== ':type' &&  <span>{`>> ${type}`}</span> } </h3>
+       <h3>Cadastro  { type !== undefined &&  <span>{`>> ${type}`}</span> } </h3>
        <p>Preencha os campos com suas informações para criar sua conta:</p>
        <form onSubmit={Formik.handleSubmit} >
+  
         <div className="cx-inputs">
           <div className="cx-input">
             <Input type="text" placeholder="Digite seu nome" name="name" value={Formik.values.name} 
@@ -114,23 +115,16 @@ const Formik=useFormik({
                {Formik.errors.password && <p>{Formik.errors.password}</p>}
           </div>
           <div className="cx-radios">
-          <div className="radio-item">
-            <input type="radio"  
-              checked={radioValue === 'candidato'}
-              value='candidato'
-              onChange={handleRadioChange}
-
-            />sou candidato
-          </div>
-          <div className="radio-item">
-            <input type="radio" 
-              checked={radioValue === 'recrutador'}
-               value={'recrutador'}
-               onChange={handleRadioChange} 
-            />sou recrutador
-          </div>
-          </div>
-          <button type='submit'>criar conta</button>
+                <div className="radio-item">
+                 <input type="radio" name="type"  checked={radioValue === 'candidato'} value={'candidato'} onChange={handleRadioChange} />
+                  <span>sou candidato</span>
+                </div>
+                <div className="radio-item">
+                 <input type="radio" name='type' checked={radioValue === 'recrutador'} value={'recrutador'} onChange={handleRadioChange} />
+                  <span>sou recrutador</span>
+                </div>
+           </div>
+          <button type='submit' >criar conta</button>
           <div className="divider"></div>
           <div className="actions">
             <p>Já tem uma conta ?<Link to='/login'>Clique aqui</Link></p>
@@ -142,6 +136,3 @@ const Formik=useFormik({
    </Layout>
 }
 
-function RegisterAuth(user: any, token: any) {
-  throw new Error("Function not implemented.")
-}

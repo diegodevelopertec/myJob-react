@@ -12,10 +12,11 @@ export  interface IJob{
     level: string;
     benefits: string;
     createDate: string;
+    exclusivepcd:boolean;
     expireDate: string;
     companyId: number | string,
     contractType:string,
     company:CompanyInterface,
-    applications:IApplication,
+    applications:IApplication[],
     category:CategoryInterface
 }

@@ -24,6 +24,54 @@ form{
     display: flex;
     margin: 30px 0;
     justify-content:center;
+    .cx-img{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      
+        img{
+          height: 255px;
+          height:100%;
+          box-shadow: 0 0 12px #000;
+          border: 1px solid grey;
+          width: 255px;
+          border-radius: 100%;
+        }
+        button{
+          font-size: 12px;
+          background-color: #DEDEDE;
+          width: 100px;
+          padding: 12px 43px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+        input{
+          margin: 50px 0;
+        }
+    }
+
+    button{
+      color: white;
+      width: 170px;
+      padding: 12px;
+      margin:24px 0;
+      align-self:center;
+      border-radius: 3px;
+      border:none;
+      background-color:${GlobalStyle.bgTheme};
+      transition: all ease 0.3s;
+      cursor:pointer;
+      font-family: 'Poppins';
+      font-weight: 900;
+      font-size: 19px;
+      color: white;
+      &:hover{
+          background: ${GlobalStyle.bgTheme};
+      }
+   
+    }
   .cx-inputs{
     display: flex;
     width:70%;
@@ -62,25 +110,6 @@ form{
     }
   }
 
-  button{
-    padding: 32px 22px;
-    width: 50%;
-    margin:24px 0;
-    align-self:center;
-    border-radius: 3px;
-    border:none;
-    background-color:${GlobalStyle.bgTheme};
-    transition: all ease 0.3s;
-    cursor:pointer;
-    font-family: 'Poppins';
-    font-weight: 900;
-    font-size: 19px;
-    color: white;
-    &:hover{
-        color: ${GlobalStyle.bgThemeSecondary};
-        background: ${GlobalStyle.bgTheme};
-    }
-  }
   .divider{
     height:1.25px;
     margin:20px 30px;
@@ -92,6 +121,7 @@ form{
    a,p{
     font-family: 'Poppins';
    }
+   
     a{
         margin: 0 5px;
         color: ${GlobalStyle.bgTheme};

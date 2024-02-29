@@ -8,7 +8,6 @@ export const RoutesPainel=()=>{
     
     return <Router> 
             <Route path="/painel/" element={<HomePainel />}/>
-            <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>
             <Route path="/painel/recrutador/vagaspostadas" element={<VagasPostadasPainel />}/>
        
     

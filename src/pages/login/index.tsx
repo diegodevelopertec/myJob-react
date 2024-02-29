@@ -58,7 +58,7 @@ export const Login=()=>{
         },
         validationSchema:schemaValidate,
         onSubmit:async (values,{resetForm})=>{
-           const response=await apiAuth.signIn(values)
+           const response=await apiAuth.sigIn(values)
             if(response.data.status === true){
                 const {user,token}=response.data
                 if(user.type === 'candidato'){
@@ -66,7 +66,7 @@ export const Login=()=>{
                     SigIn(user,token)
                     toast.success('login feito com sucesso')
                 }else if(user.type === 'recrutador'){
-                    navigate('/painel/vagas')
+                    navigate('/painel/recrutador')
                     SigIn(user,token)
                 }
             

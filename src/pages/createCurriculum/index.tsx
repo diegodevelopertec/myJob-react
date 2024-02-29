@@ -11,6 +11,8 @@ export const CreateCurriculum=()=>{
     const [newTrainning,setNewTrainning]=useState<boolean>(false)
     const [newExperience,setNewExperience]=useState<boolean>(false)
     const [newSkill,setNewSkill]=useState<boolean>(false)
+    const [curriculum,setCurriculum]=useState(false)
+
 
     return <Layout>
         <ContentPage titlePage="Criar Curriculo">
@@ -24,12 +26,25 @@ export const CreateCurriculum=()=>{
                             <Input type="text" />
                         </div>
                         <div className="cx-input">
+                            <label htmlFor="">Sobrenome</label>
+                            <Input type="text" />
+                        </div>
+
+                        <div className="cx-input">
                             <label htmlFor="">Email</label>
                             <Input type="text" />
                         </div>
                         <div className="cx-input">
-                        <label htmlFor="">Telefone</label>
+                           <label htmlFor="">Telefone</label>
                           <Input type="text" />
+                        </div>
+                        <div className="cx-input">
+                            <label htmlFor="">Linkedin</label>
+                          <Input type="url" />
+                        </div>
+                        <div className="cx-input">
+                            <label htmlFor="">É da area de TI? Github</label>
+                          <Input type="url" />
                         </div>
                         <div className="cx-input">
                             <label htmlFor="">Cidade</label>
@@ -39,8 +54,33 @@ export const CreateCurriculum=()=>{
                            <label htmlFor="">Estado</label>
                            <Input type="text" />
                         </div>
-                  
+                        <div className="cx-input">
+                           <label htmlFor="">Profissão/Cargo</label>
+                           <Input type="text" />
+                        </div>
+                        <div className="cx-radio">
+                           <label htmlFor="">você é uma pessoa PCD?</label>
+                          <input type="radio" name="pcd" />Sim
+                          <input type="radio" name="pcd" />Não
+                        </div>
+                        <div className="cx-input">
+                           <label htmlFor="">Se respondeu sim a pergunta anterior,qual a sua deficiência?</label>
+                           <Input type="text" />
+                        </div>
+                        <div className="cx-input">
+                           <label htmlFor="">Sobre</label>
+                          <TextArea h="250px" placeholder="Fale um pouco sobre você,destaque suas habilidades"></TextArea>
+                        </div>
+                        <div className="cx-input">
+                           <label htmlFor="">Data de nascimento</label>
+                           <Input type="date" />
+                        </div>
+                        <div className="cx-btn">
+                            <button>continuar a preencher</button>
+                        </div>
                     </fieldset>
+                  
+                   {curriculum && <>
                     <fieldset>
                         <legend>Habilidades 
                             {!newSkill &&  <span onClick={()=>setNewSkill(true)}>adicionar nova</span>}
@@ -58,8 +98,7 @@ export const CreateCurriculum=()=>{
                                 <button>Adicionar</button>
                             </div>
                             </BoxNewExperienceAndTrainning >
-                    </fieldset>
-
+                   </fieldset>
                     <fieldset>
                         <legend>Formação 
                             {!newTrainning &&  <span onClick={()=>setNewTrainning(true)}>adicionar nova</span>}
@@ -78,13 +117,18 @@ export const CreateCurriculum=()=>{
                                <Input type="text" placeholder="digite o nome da instituição" />
                             </div>
                             <div className="cx-dates">
-                                <div>
+                                <div className="cx-date">
                                     <label htmlFor="">Inicio</label>
                                     <Input type="date" />
                                 </div>
-                                <div>
+                                <div  className="cx-date">
                                     <label htmlFor="">Conclusão:</label>
                                     <Input type="date" />
+                                </div>
+                                <div className="radio">
+                                    <label htmlFor="">Cursando?</label>
+                                    <input type="radio" name="cursando" id="" />Sim
+                                    <input type="radio" name="cursando" id="" />Não
                                 </div>
                             </div>
                             <div className=" cx-radio">
@@ -117,13 +161,18 @@ export const CreateCurriculum=()=>{
                                <Input type="text" placeholder="digite o nome da empresa"  />
                             </div>
                             <div className="cx-dates">
-                                <div>
+                                <div className="cx-date">
                                     <label htmlFor="">Inicio</label>
                                     <Input type="date" />
                                 </div>
-                                <div>
+                                <div className="cx-date">
                                     <label htmlFor="">Conclusão:</label>
                                     <Input type="date" />
+                                </div>
+                                <div className="radio">
+                                    <label htmlFor="">Trabalha aqui?</label>
+                                    <input type="radio" name="" id="" />Sim
+                                    <input type="radio" name="" id="" />Não
                                 </div>
                             </div>
                             <div className="cx-input">
@@ -134,10 +183,17 @@ export const CreateCurriculum=()=>{
                                 <button>Adicionar</button>
                             </div>
                         </BoxNewExperienceAndTrainning>
-                    </fieldset>
+                        </fieldset>
+                        
+                      
+                   
                      <div className="cx-btn">
                         <input type="submit" value={'Salvar informações'}/>
                     </div>
+                   
+                   
+                   
+                   </>}
                 </form>
             </Page>
         </ContentPage>

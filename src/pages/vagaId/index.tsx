@@ -13,7 +13,7 @@ import { useAuthContext } from "../../context/authContext"
 import { apiApplication } from "../../actions/applications.action"
 import currentDate from "../../hooks/currentDate"
 import { IApplication } from "../../interfaces/application"
-
+import Deficiency from "../../assets/svgs/deficiency"
 
 
 export const VagaId=()=>{
@@ -60,9 +60,14 @@ export const VagaId=()=>{
                      Você se candidatou em {userApplicationJob.dateapplied} ✅
                      </p>
           */}
-
         <div className="header-page">
           <h3>{jobId?.title} <span>{jobId?.category.name}</span></h3>
+          {jobId?.exclusivepcd  && <div className="pcd-line">
+           <div className="cx">
+             <Deficiency />
+             {jobId?.exclusivepcd ? 'Vaga exclusiva para PCD' : null}
+           </div>
+          </div>}
         </div>
 
            {<SectionDetailsJobs>

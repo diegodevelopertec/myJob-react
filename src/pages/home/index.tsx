@@ -1,17 +1,23 @@
-import { Link } from "react-router-dom"
+import { Link, redirect, useNavigate } from "react-router-dom"
 import { ContentPage } from "../../componentes/ContentPage"
 import { Layout } from "../../componentes/Layout"
 import { ContainerOne, ContainerTrue, ContainerTwo } from "./style"
 import {gsap} from "gsap"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useAuthContext } from "../../context/authContext"
+
 
 
 
 export const Home=()=>{
- 
- 
-   
+  const {user}=useAuthContext()
+  const navigate=useNavigate()
 
+  useEffect(()=>{
+    if(user){
+     navigate('/vagas')
+    }
+  },[])
  useEffect(()=>{
   gsap.fromTo(".box", 
    {y:0, opacity: 0 }, // propriedades iniciais
@@ -47,9 +53,10 @@ export const Home=()=>{
     return <Layout>
         <ContentPage titlePage="">
         <div className="content">
-  <div className="banner">
-    
-  </div>
+          <div className="banner">
+            
+
+          </div>
   <ContainerOne   >
     <div className="left box" id="candidato" >
         <h2>Em Busca de novas Oportunidades?</h2>

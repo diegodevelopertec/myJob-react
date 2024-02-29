@@ -14,6 +14,7 @@ export const HeaderPainel=styled.header`
     flex-direction: column;
     align-items: center;
     left:0;
+    box-shadow: 0 0 12px #000;
     height: 100vh;
     width: 16vw;
     background:linear-gradient(to bottom,${GlobalStyle.bgTheme},#000);
@@ -92,6 +93,7 @@ export const HeaderPainel=styled.header`
 export const Main=styled.main`
 display: flex;
 margin-left: 219px;
+padding: 22px;
 flex: 1;
 background-color:#F9F9F9;
 flex-direction: column;

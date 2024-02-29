@@ -1,16 +1,17 @@
-import { Children } from "react"
-import { useNavigate } from "react-router-dom"
-import { useAuthContext } from "../../context/authcontext"
 
+import React, { ReactNode } from 'react';
+import { Route, useNavigate} from 'react-router-dom';
+import { useAuthContext } from '../../context/authContext';
 
-
-export default ()=>{
+type props={
+    children:ReactNode
+}
+export default ({children}:props)=>{
     const {user}=useAuthContext()
     const navigate=useNavigate()
-
     if(!user){
-        navigate('/')
+        navigate("/")
     }else{
-        return Children
+        return children
     }
 }

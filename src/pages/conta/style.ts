@@ -208,6 +208,7 @@ section{
         border: 1px solid #DEDEDE;
         border-radius: 9px;
         padding: 12px;
+        margin: 12px 0;
         .title{
             font-weight: bold;
             margin: 9px 0;
@@ -217,4 +218,65 @@ section{
 @media screen and (max-width:950px){
     margin: 50px 0;
 }
+`
+
+export const PDFPage=styled.div`
+width: 100%;
+flex-direction: column;
+display:none;
+font-family: 'Poppins';
+.data-profile{
+    display: flex;
+    flex-direction: column;
+}
+.top{
+
+
+    h2{
+    font-size:45px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction:column;
+    .office{
+        font-size: 18px;
+        margin: 6px 0;
+    }
+}
+
+.ctts{
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    span{
+        font-size: 15px;
+    }
+}
+
+
+}
+.section{
+    ul{
+        display: block;
+        margin: 8px;
+       li{
+        list-style-position: inside;
+        background-color: transparent;
+        color:#000;
+        padding: 0;
+        margin: 2px 0;
+       }
+
+    }
+
+    .curso,.experiencia{
+        margin: 12px 0;
+        .title{
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+    }
+}
+
 `

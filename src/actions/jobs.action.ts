@@ -1,10 +1,11 @@
 import axios  from "axios"
 import { baseURL } from "../services/axios.config"
+import { IJob } from "../interfaces/job"
 
 
 
 export const apiJobs={
-    getAllJobs:async()=>{
+    getAllJobs:async():Promise<IJob[] | any>=>{
         try{
             let response=await  axios.get(`${baseURL}jobs`)
             let jobs=response.data
@@ -13,7 +14,7 @@ export const apiJobs={
             console.log(e)
         }
     },
-    getJobId:async(id:number)=>{
+    getJobId:async(id:number):Promise<IJob | any>=>{
         try{
             const response=await axios.get(`${baseURL}jobs/${id}`)
             return response.data

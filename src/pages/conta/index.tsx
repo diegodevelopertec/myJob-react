@@ -1,17 +1,65 @@
 import { ContentPage } from "../../componentes/ContentPage"
 import { Layout } from "../../componentes/Layout"
-import { BoxCurriculum, NotCurriculum, Page } from "./style"
+import { BoxCurriculum, NotCurriculum, PDFPage, Page } from "./style"
 import { useAuthContext } from "../../context/authContext"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import  Swal from 'sweetalert'
 import { toast } from "react-toastify"
-
+import { apiCurriculum } from "../../actions/apiCurriculum"
+import { ICurriculum } from "../../interfaces/curriculum"
+import generatePDF, {  Margin,Options } from 'react-to-pdf'
+import { string } from "yup"
 
 export const Conta=()=>{
+    const [targetRef,setTargetRef]=useState(null)
+    const getTargetElement =()=>document.getElementById('content-id') 
     const {user,SigOut}=useAuthContext()
+    const [curriculum,setCurriculum]=useState<ICurriculum | null>(null)
     const [hasCurriculum,setHasCurriculum]=useState(false)
     const navigate=useNavigate()
+
+    const stylePDF:Options = {
+        method:'save',
+        filename:`${curriculum !== null ? `${curriculum.user?.name}${curriculum.user?.lastname}-curriculo.pdf`: 'curriculo.pdf'}`,
+        page: {
+          
+           margin: Margin.MEDIUM,
+           format: 'A4',
+           orientation: 'portrait',
+        }
+    
+    }
+    const GeneratePDF=()=>{ 
+        const box=document.getElementById('content-id')  as HTMLDivElement
+        box.style.display='flex'
+        generatePDF(getTargetElement,stylePDF)
+        box.style.display='none'
+      }
+      
+
+    useEffect(()=>{
+        const getCurriculumUser=async()=>{
+          const curriculumStorage=localStorage.getItem('@curri')
+          const curriculumParsed=JSON.parse(curriculumStorage as string)
+
+          if(user !== null){
+            if(curriculumParsed){
+                setCurriculum(curriculumParsed)
+                const curriculumId=await apiCurriculum.getCurriculumFromUser(user.id as number)
+                localStorage.setItem('@curri',JSON.stringify(curriculumId))
+                  setCurriculum(curriculumId)
+                  setHasCurriculum(true)
+            }
+           
+          }
+        }
+    
+      setInterval(
+        getCurriculumUser,1000
+      )
+    },[])
+
 
 const SigOutUser=()=>{
     Swal({
@@ -46,9 +94,6 @@ const SigOutUser=()=>{
             console.log(result)
         }
       })
-
-
-
 
 
 }
@@ -88,58 +133,118 @@ const SigOutUser=()=>{
             {
                 hasCurriculum && <BoxCurriculum>
                     <div className="top">
-                        <span>Baixar PDF</span>
+                        <span onClick={()=>GeneratePDF()}>Baixar PDF</span>
                         <span>Editar</span>
                     </div>
+                    {curriculum !== null ? <PDFPage ref={targetRef} id="content-id">
+                               <div className="dataprofile">
+                                <div className="top">
+                                    <h2>
+                                      <div className="name">{curriculum.user?.name} {curriculum.user?.lastname}</div>
+                                      <div className="office">{curriculum.tel}</div>
+                                    </h2>  
+                                    <div className="ctts">
+                                      <span><strong>Email</strong>:{curriculum.user?.email}</span>
+                                      <span><strong>Telefone </strong>:{curriculum.user?.tel}</span>
+                                      <span><strong>Linkedin</strong>:{curriculum?.linkedin}</span>
+                                      <span><strong>Github</strong>:{curriculum?.github}</span>
+                                    </div>
+                                  </div>
+                               </div>
+                                <section>
+                                  <div className= "section about">
+                                    <h3>Sobre Mim</h3>
+                                    {curriculum?.about}
+                                  </div>
+                                  <div className= "section skills">
+                                    <h3>Habilidades</h3>
+                                    <ul>
+                                      {/*curriculum?.skills?.split(',').map((skill,k)=><li>-{skill}</li>)*/}
+                                    </ul>
+                                  </div>
+                                  <div className= "section cursos">
+                                    <h3>Cursos</h3>
+                                    <ul>
+                                      {curriculum.trainnings.map((t,k)=>(
+                                         <div className="curso">
+                                          <div className="title">{t?.name}-{t?.school}</div>
+                                          <span>{t.start?.split('/').reverse().join('/')} - {t.end?.split('/').reverse().join('/')}</span>
+                                         </div>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                  <div className= "section experiencia">
+                                    <h3>Experiência Profissional</h3>
+                                    <ul>
+                                      {curriculum.experiences.map((xp,k)=>(
+                                         <div className="curso">
+                                          <div className="title">{xp?.office}-{xp?.companyname}</div>
+                                          <p>{xp.about}</p>
+                                          <span>{xp.start?.split('/').reverse().join('/')} - {xp.end?.split('/').reverse().join('/')}</span>
+                                         </div>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </section>
+                           </PDFPage> : null
+                        }
                     <div className="header">
-                        <h2>{user?.name} {user?.lastname}</h2>
+                        <h2>{curriculum?.name} {curriculum?.lastname}</h2>
                         <div className="info">
-                            <span>Email:{user?.email}</span>
-                            <span>Telefone(celular):{user?.tel}</span>
-                            <span>São Paulo - SP</span>
+                            <span>Email:{curriculum?.email}</span>
+                            <span>Telefone(celular):{curriculum?.tel}</span>
+                            <span>{curriculum?.city} - {curriculum?.state}</span>
                             
                         </div>
                     </div>
                     <section>
                         <h4>Sobre Mim</h4>
-                        <p>
-                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin 
-                        literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney Colle
-                        ge in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through t
-                        he cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.3
-                        3 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theo
-                        ry of ethics, very popular during the Renaissance
-                        . The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  Lorem Ipsum used since the 1500s is
-                        </p>
+                        <p>{curriculum?.about}</p>
                     </section>
                     <section>
                         <h4>Habilidades</h4>
                         <ul className="data">
-                            <li>Pacote Office</li>
-                            <li>Pacote Office</li>
-                            <li>Pacote Office</li>
-                            <li>Pacote Office</li>
+                          <li>Pacote Office</li>
                         </ul>
                     </section>
                     <section>
                         <h4>Formação</h4>
+                       {
+                        curriculum !== null && curriculum.trainnings ?
                         <div className="data">
-                            <div className="card">
-                               <p className="title">Curso de Amalise de Sistemas</p>
-                                <p>Escola Estadual Walmir Almeida Costa</p>
-                                <p>inicio: 02/02/2022  conclusão :45/12/2024</p>
-                            </div>
+                            {
+                                curriculum.trainnings.map((t,k)=>(
+                                    <div className="card" key={k}>
+                                    <p className="title">{t.name}</p>
+                                    <p>{t.school}</p>
+                                    <p>{t.start} - {t.end !== null && t.end}</p>
+                                </div>
+                                ))
+                            }
                         </div>
+
+                        : <div>Nenhuma formação</div>
+                       }
+                        
                     </section>
                     <section>
                         <h4>Experiência Profissional</h4>
+                        {
+                        curriculum !== null && curriculum.experiences ?
                         <div className="data">
-                            <div className="card">
-                               <p className="title">Polidor</p>
-                                <p>Marmoraria Pedramar</p>
-                                <p>inicio: 02/02/2022  conclusão :45/12/2024</p>
-                            </div>
+                            {
+                                curriculum.experiences.map((e,k)=>(
+                                    <div className="card" key={k}>
+                                    <p className="title">{e.office}</p>
+                                    <p>{e.companyname}</p>
+                                    <p>{e.start}  -  {e.end !== null && e.end}</p>
+                                </div>
+                                ))
+                            }
                         </div>
+
+                        : <div>Nenhuma formação</div>
+                       }
                     </section>
                 </BoxCurriculum>
             }

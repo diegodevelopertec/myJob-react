@@ -100,6 +100,7 @@ export const Form=styled.form`
                     padding:12px 132px;
                     font-size: 19px;
                     border:none;
+                    border-radius: 9px;
                     cursor: pointer;
                     color: #fff;
                     transition: all ease .2s;

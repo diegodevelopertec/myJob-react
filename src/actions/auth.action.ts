@@ -2,8 +2,9 @@ import { baseURL } from "../services/axios.config";
 import axios from "axios";
 
 
-type UserType={
+export interface UserType{
     name: string,
+    photo?:File | null,
     lastname: string,
     email:string,
     password:string,
@@ -19,7 +20,7 @@ type dataSignIn={
 
 export const apiAuth={
    
-        signIn:async(data:dataSignIn):Promise<any>=>{
+        sigIn:async(data:dataSignIn):Promise<any>=>{
          if(data){
             try{
               let response=await axios.post(`${baseURL}auth/sigin`,data)
@@ -31,15 +32,15 @@ export const apiAuth={
  
  
      },
-     signUp:async(user:UserType):Promise<any>=>{
-         if(user){
-             try{
-                const response=await axios.post(`${baseURL}auth/register`,user)
-                return response
-             }catch(e){
-              return e
-             }
-         }
+     sigUp:async(user:UserType):Promise<any>=>{
+        if(user){
+            try{
+              let response=await axios.post(`${baseURL}auth/sigup`,user)
+              return response
+            }catch(e){
+             return e
+            }
+        }
         }
 
 }

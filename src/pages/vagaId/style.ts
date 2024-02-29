@@ -5,6 +5,29 @@ import styled from "styled-components";
 export const Page=styled.div`
 padding: 0 12px;
 
+.pcd-line{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 12px 0;
+    padding: 12px;
+    
+    .cx{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin: 12px 0;
+        padding: 12px;
+        font-weight: bold;
+        .svg{
+            height: 55px;
+            fill:${GlobalStyle.bgTheme};
+            width: 55px;
+            margin-right: 12px;
+        }
+    }
+    
+}
 p{
     margin: 10px 0;
     font-size: 17px;

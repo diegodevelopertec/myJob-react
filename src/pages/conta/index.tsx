@@ -9,15 +9,18 @@ import { toast } from "react-toastify"
 import { apiCurriculum } from "../../actions/apiCurriculum"
 import { ICurriculum } from "../../interfaces/curriculum"
 import generatePDF, {  Margin,Options } from 'react-to-pdf'
-import { string } from "yup"
+import { useGlobalContext } from "../../context/globalContext"
+import { Modal } from "../../componentes/Modal"
+import { baseURL } from "../../services/axios.config"
 
 export const Conta=()=>{
     const [targetRef,setTargetRef]=useState(null)
     const getTargetElement =()=>document.getElementById('content-id') 
-    const {user,SigOut}=useAuthContext()
+    const {user,SigOut,setCurriculumContext}=useAuthContext()
     const [curriculum,setCurriculum]=useState<ICurriculum | null>(null)
     const [hasCurriculum,setHasCurriculum]=useState(false)
     const navigate=useNavigate()
+    const {handleStateModal}=useGlobalContext()
 
     const stylePDF:Options = {
         method:'save',
@@ -40,24 +43,23 @@ export const Conta=()=>{
 
     useEffect(()=>{
         const getCurriculumUser=async()=>{
-          const curriculumStorage=localStorage.getItem('@curri')
-          const curriculumParsed=JSON.parse(curriculumStorage as string)
-
           if(user !== null){
-            if(curriculumParsed){
-                setCurriculum(curriculumParsed)
                 const curriculumId=await apiCurriculum.getCurriculumFromUser(user.id as number)
-                localStorage.setItem('@curri',JSON.stringify(curriculumId))
-                  setCurriculum(curriculumId)
-                  setHasCurriculum(true)
+               if(typeof curriculumId !== 'string'){
+                setCurriculum(curriculumId)
+                setHasCurriculum(true)
+               setCurriculumContext(curriculumId)
+               
+               }else{
+                setHasCurriculum(false)
+                setCurriculumContext(null)
+          
+               }
             }
            
           }
-        }
-    
-      setInterval(
-        getCurriculumUser,1000
-      )
+        
+    setInterval(getCurriculumUser,1000)
     },[])
 
 
@@ -104,7 +106,7 @@ const SigOutUser=()=>{
              <div className="profile">
                <div className="content">
                        <div className="cx-img">
-                        <img src="" alt="" />
+                        <img src={`${baseURL}public/images/${user?.photo}`}  alt="" />
                        </div>
                        <h3>{user?.name} {user?.lastname}</h3>
                         <div className="data">
@@ -113,14 +115,14 @@ const SigOutUser=()=>{
                             <p>{user?.password}</p>
                         </div>
                         <div className="cx-btn">
-                            <button>Editar</button>
+                            <button onClick={()=>handleStateModal(true)}>Editar</button>
                         </div>
                 </div>
             </div>
             <button onClick={SigOutUser}>Sair da  conta</button>
          </div>
          <div className="right">
-            {!hasCurriculum && <NotCurriculum>
+            {(!hasCurriculum && !curriculum ) && <NotCurriculum>
                <div className="box">
                    <div className="text">
                         <h3>Olá {user?.name}</h3>
@@ -131,7 +133,7 @@ const SigOutUser=()=>{
             </NotCurriculum>
             }
             {
-                hasCurriculum && <BoxCurriculum>
+                (hasCurriculum && curriculum ) && <BoxCurriculum>
                     <div className="top">
                         <span onClick={()=>GeneratePDF()}>Baixar PDF</span>
                         <span>Editar</span>
@@ -159,14 +161,14 @@ const SigOutUser=()=>{
                                   <div className= "section skills">
                                     <h3>Habilidades</h3>
                                     <ul>
-                                      {/*curriculum?.skills?.split(',').map((skill,k)=><li>-{skill}</li>)*/}
+                                   {curriculum.skills?.map((s,k)=><li key={k}>{s.name}</li>)}
                                     </ul>
                                   </div>
                                   <div className= "section cursos">
                                     <h3>Cursos</h3>
                                     <ul>
-                                      {curriculum.trainnings.map((t,k)=>(
-                                         <div className="curso">
+                                      {curriculum?.trainnings?.map((t,k)=>(
+                                         <div className="curso" key={k}>
                                           <div className="title">{t?.name}-{t?.school}</div>
                                           <span>{t.start?.split('/').reverse().join('/')} - {t.end?.split('/').reverse().join('/')}</span>
                                          </div>
@@ -176,7 +178,7 @@ const SigOutUser=()=>{
                                   <div className= "section experiencia">
                                     <h3>Experiência Profissional</h3>
                                     <ul>
-                                      {curriculum.experiences.map((xp,k)=>(
+                                      {curriculum.experiences?.map((xp,k)=>(
                                          <div className="curso">
                                           <div className="title">{xp?.office}-{xp?.companyname}</div>
                                           <p>{xp.about}</p>
@@ -204,7 +206,7 @@ const SigOutUser=()=>{
                     <section>
                         <h4>Habilidades</h4>
                         <ul className="data">
-                          <li>Pacote Office</li>
+                          {curriculum?.skills && curriculum?.skills?.map((s,k)=> <li key={k}>- {s.name}</li>)}
                         </ul>
                     </section>
                     <section>
@@ -249,6 +251,7 @@ const SigOutUser=()=>{
                 </BoxCurriculum>
             }
          </div>
+         
         </Page>
      </ContentPage>
     </Layout>

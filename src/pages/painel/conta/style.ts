@@ -18,12 +18,20 @@ export const Page=styled.div`
         padding: 12px;
         strong{ margin-right: 9px;}
        }
-       .bx-btn{
+       .cx-btn,.cx-btn-close{
             display: flex;
             justify-content:center;
             align-items: center;
             width: 100%;
             margin: 50px 0;
+            span{
+                transition: all ease .3s;
+                cursor: pointer;
+                &:hover{
+                    color: #1D24CA;
+                    text-decoration: underline;
+                }
+            }
             button{
                 cursor: pointer;
                 width: 150px;

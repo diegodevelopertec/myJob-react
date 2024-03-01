@@ -1,17 +1,55 @@
-import { useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { ContentPage } from "../../componentes/ContentPage"
 import { Input } from "../../componentes/Input"
 import { Layout } from "../../componentes/Layout"
 import { TextArea } from "../../componentes/TextArea"
 import { BoxNewExperienceAndTrainning, Page } from "./style"
 import Close from "../../assets/svgs/close"
+import { apiStatesCity } from "../../actions/stateCity"
 
+interface State {
+    id: number;
+    nome: string;
+    sigla: string;
+}
+  
 
 export const CreateCurriculum=()=>{
     const [newTrainning,setNewTrainning]=useState<boolean>(false)
     const [newExperience,setNewExperience]=useState<boolean>(false)
     const [newSkill,setNewSkill]=useState<boolean>(false)
     const [curriculum,setCurriculum]=useState(false)
+    const [stateSelected,setStateSelected]=useState<string | null>(null) //estado string
+    const [citySelected,setCitySelected]=useState<string | null>(null)         //estado object
+    const [statesList,setStatesList]=useState<State[] | []>([])   //lista de estados
+    const [cityList,setCityList]=useState<{id:number,nome:string}[] | []>([])    //lista de cidades do estado
+
+
+
+useEffect(()=>{
+    const getStates=async()=>{
+        const listStates=await apiStatesCity.getStates() as State[]
+        setStatesList(listStates)
+    }
+    getStates()
+},[])
+
+
+
+useEffect(()=>{
+    const getCitys=async()=>{
+        const citys=await apiStatesCity.getCitys() as {id:number,nome:string}[]
+        setCityList(citys)
+      }
+    
+   
+    getCitys()
+},[])
+
+
+useEffect(()=>{
+    console.log(stateSelected,citySelected)
+},[stateSelected,citySelected])
 
 
     return <Layout>
@@ -46,13 +84,26 @@ export const CreateCurriculum=()=>{
                             <label htmlFor="">É da area de TI? Github</label>
                           <Input type="url" />
                         </div>
-                        <div className="cx-input">
-                            <label htmlFor="">Cidade</label>
-                            <Input type="text" />
-                        </div>
-                        <div className="cx-input">
-                           <label htmlFor="">Estado</label>
-                           <Input type="text" />
+                        <div className="cx-state-city">
+                            <div className="cx-input">
+                                <label htmlFor="">Estado</label>
+                                <select onChange={(e: React.ChangeEvent<HTMLSelectElement>)=>setStateSelected(e.target.value)}>
+                                    {statesList?.map((s,k)=>(
+                                        <option value={s.sigla}>{s.sigla}-{s.nome}</option>
+                                    ))}
+                                </select>
+                               
+                             </div>
+                             <div className="cx-input">
+                                <label htmlFor="">Cidade</label>
+                                <select onChange={(e: React.ChangeEvent<HTMLSelectElement>)=>setCitySelected(e.target.value)}>
+                                    {cityList?.map((c,k)=>(
+                                       <option value={c.nome}>{c.nome}</option>
+                                    ))}
+                                </select>
+                               
+                             </div>
+                              
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Profissão/Cargo</label>

@@ -15,6 +15,7 @@ import Select from "../../componentes/Select"
 import { Button } from "../../componentes/Button"
 import { useAuthContext } from "../../context/authContext"
 import { IApplication } from "../../interfaces/application"
+import { useQuery } from "@tanstack/react-query"
 
 
 
@@ -25,20 +26,29 @@ export const Vagas=()=>{
     const [loading,setLoading]=useState(true)
 
 
+   /*
+ const query=useQuery(
+        {
+            queryKey:['jobs'],
+            queryFn:apiJobs.getAllJobs
+            
+        }
+    )
+
+   */
 
 
-   useEffect(()=>{
-    const getJobs=async()=>{
-        const jobsList=await apiJobs.getAllJobs()
-        setLoading(false)
-        setJobs(jobsList as IJob[])
-        console.log(jobsList);
+useEffect(()=>{
+    const getAllJobs=async()=>{
+        const list=await apiJobs.getAllJobs()
+        setJobs(list)
     }
-   
-     getJobs()
+   getAllJobs()
 
+    const intervalo = setInterval(getAllJobs, 5000)
+    return () => clearInterval(intervalo)
+},[])
 
-   },[])
 
     return <Layout>
         <ContentPage titlePage="">
@@ -58,10 +68,8 @@ export const Vagas=()=>{
         </div>
            <p>{user?.name} Acompanhe as vagas abertas</p>
            <div className="cx-jobs">
-               {!loading  ? jobs?.map((i,k)=><CardJob key={k} job={i} />) 
-                        : 
-                <Skeleton />
-               }
+            {/*query.isLoading &&   <Skeleton />*/}
+            {jobs !== null && jobs?.map((i,k)=><CardJob key={k} job={i} />) }
              
            </div>
        </ContainerJobs>

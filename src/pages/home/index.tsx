@@ -14,10 +14,14 @@ export const Home=()=>{
   const navigate=useNavigate()
 
   useEffect(()=>{
-    if(user){
-     navigate('/vagas')
+    if(user?.type === 'candidato'){
+      navigate('/vagas')
+    }else if(user?.type === 'recrutador'){
+      navigate('/painel/recrutador/candidatos')
     }
   },[])
+
+
  useEffect(()=>{
   gsap.fromTo(".box", 
    {y:0, opacity: 0 }, // propriedades iniciais
@@ -36,18 +40,6 @@ export const Home=()=>{
 
   
 },[])
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     return <Layout>

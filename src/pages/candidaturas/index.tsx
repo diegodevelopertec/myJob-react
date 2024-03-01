@@ -20,14 +20,12 @@ export const Candidaturas=()=>{
       const getApplications=async()=>{
         if(user !== null){
           const dataList:IApplication[] | []=await apiApplication.getApplications(user.id as number)
-          console.log(dataList)
           setApplications(dataList)
         }
       }
   
-    getApplications()
-   
-})
+  setTimeout(getApplications,1000)
+},[])
       
     return <Layout>
       <ContentPage titlePage="Minhas Candidaturas">

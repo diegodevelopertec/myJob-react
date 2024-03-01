@@ -28,7 +28,7 @@ export const VagaPainelId=()=>{
     useEffect(()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
-                setJobId(job)      
+            setJobId(job)      
         }
         getJobById()
     },[])
@@ -165,7 +165,7 @@ useEffect(()=>{
                                
                             </div>
                             <div className="right">
-                                <Link to={`/painel/recrutador/candidatos/${id}`}>ver curriculo</Link>
+                                <Link to={`/painel/recrutador/candidatos/${i.user.id}`}>ver curriculo</Link>
                             </div>
                         </li>
                         <div className="divider"></div>

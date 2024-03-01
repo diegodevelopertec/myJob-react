@@ -6,13 +6,15 @@ import { IJob } from "../interfaces/job"
 
 export const apiJobs={
     getAllJobs:async():Promise<IJob[] | any>=>{
-        try{
-            let response=await  axios.get(`${baseURL}jobs`)
-            let jobs=response.data
-            return jobs
-        }catch(e){
-            console.log(e)
-        }
+       
+            try{
+                let response=await  axios.get(`${baseURL}jobs`)
+                let jobs=response.data
+                return jobs
+            }catch(e){
+                console.log(e)
+            }
+        
     },
     getJobId:async(id:number):Promise<IJob | any>=>{
         try{

@@ -12,14 +12,12 @@ export interface ModalInterface extends HTMLAttributes<HTMLDivElement> {
 
 }
 export const Modal=({children}:Props)=>{
-    const {stateModal}=useGlobalContext()
+    const {stateModal,handleStateModal}=useGlobalContext()
 
     return <Container stateModal={stateModal}>
         <div className="modal-content">
-            <div className="remove-modal">
-                <Button text="x" w="max-content"  bgColor="#EDEDE"/>
-            </div>
-          {children}
-        </div>
+           {children}
+         </div>
+        
     </Container>
 }

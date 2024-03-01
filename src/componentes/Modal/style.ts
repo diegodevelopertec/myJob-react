@@ -29,6 +29,11 @@ transition: opacity 0.3s ease-in-out;
     background-color: #fff; /* Cor de fundo do modal */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 0 22px ;
-   
+
+    .remove-modal{
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
 }
 `

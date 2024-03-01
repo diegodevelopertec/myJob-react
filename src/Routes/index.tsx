@@ -23,6 +23,8 @@ import Private from "../componentes/Private"
 import AddEmpresa from "../pages/painel/addEmpresa"
 import { VagaPainelId } from "../pages/painel/vagaPainelId"
 import { CandidatoId } from "../pages/painel/candidatoId"
+import {PrivateRecruiter} from "../componentes/Private/privateTypeRecruiter"
+import { PrivateCandidate } from "../componentes/Private/PrivateTypeCandidates"
 
 
 
@@ -41,16 +43,15 @@ export const Routes=()=>{
             <Route path="*" element={<PaginaNaoEncontrada />}/>
           
             //recurtador
-            <Route path="/painel/recrutador" element={<HomePainel />}/>
-            <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>
-            <Route path="/painel/recrutador/vagaspostadas" element={<VagasPostadasPainel />}/>
-            <Route path={`/painel/recrutador/vagaspostadas/:id`} element={<VagaPainelId />}/>
-            <Route path="/painel/recrutador/candidatos" element={<CandidatosPainel />}/>
-            <Route path="/painel/recrutador/candidatos/:id" element={<CandidatoId />}/>
-            <Route path="/painel/recrutador/novavaga" element={<NovaVagaPainel />}/>
-            <Route path="/painel/recrutador/minha-conta" element={<ContaPainel />}/>
-            <Route path="/painel/recrutador/sobre-empresa" element={<EmpresaPainel />}/>
-            <Route path="/painel/recrutador/configure_empresa" element={<AddEmpresa />}/>
+            <Route path="/painel/recrutador" element={<Private><PrivateRecruiter><HomePainel /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/vagaspostadas" element={<Private><PrivateRecruiter><VagasPostadasPainel /></PrivateRecruiter></Private>}/>
+            <Route path={`/painel/recrutador/vagaspostadas/:id`} element={<Private><PrivateRecruiter><VagaPainelId /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/candidatos" element={<Private><PrivateRecruiter><CandidatosPainel /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/candidatos/:id" element={<Private><PrivateRecruiter><CandidatoId /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/novavaga" element={<Private><PrivateRecruiter><NovaVagaPainel /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/minha-conta" element={<Private><PrivateRecruiter><ContaPainel /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/sobre-empresa" element={<Private><PrivateRecruiter><EmpresaPainel /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/configure_empresa" element={<Private><PrivateRecruiter><AddEmpresa /></PrivateRecruiter></Private>}/>
            
             <Route path="*" element={<PaginaNaoEncontrada />}/>
         </>
@@ -59,14 +60,14 @@ export const Routes=()=>{
          <>
              <Route path="/vagas" element={<Vagas/>}/>
               <Route path="/vagas/:id" element={<VagaId />}/>
-             <Route path="/candidaturas" element={<Private><Candidaturas /></Private>}/>
-             <Route path="/candidaturas/:id" element={<Private><CandidaturaId /></Private>}/>
-             <Route path="/conta" element={<Private><Conta /></Private>}/>
+             <Route path="/candidaturas" element={<Private><PrivateCandidate><Candidaturas /></PrivateCandidate></Private>}/>
+             <Route path="/candidaturas/:id" element={<Private><PrivateCandidate><CandidaturaId /></PrivateCandidate></Private>}/>
+             <Route path="/conta" element={<Private><PrivateCandidate><Conta /></PrivateCandidate></Private>}/>
              <Route path="/cursos" element={<Cursos />}/>
-             <Route path="/criar_curriculo" element={<Private><CreateCurriculum /></Private>}/>
+             <Route path="/criar_curriculo" element={<Private><PrivateCandidate><CreateCurriculum /></PrivateCandidate></Private>}/>
             <Route path="/cursos/:id" element={<CursoId />}/>
             <Route path="/meus_cursos" element={<MeusCursos />}/>
-            <Route path="/plataforma_ead/curso/:cursoid" element={<Private><Plataforma /></Private>}/>
+            <Route path="/plataforma_ead/curso/:cursoid" element={<Private><PrivateCandidate><Plataforma /></PrivateCandidate></Private>}/>
             <Route path="*" element={<PaginaNaoEncontrada />}/>
             </>
         

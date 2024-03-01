@@ -34,6 +34,8 @@ type SigInType={
 }
 type ContextType={
     user:User | null,
+    curriculumContext:ICurriculum | null,
+    setCurriculumContext:(curriculum:ICurriculum | null)=>void,
     SigIn:(user:User,token:string)=>void,
     SigUp:(user:TUser,token:string)=>void,
     SigOut:()=>void
@@ -44,29 +46,45 @@ const contextAuth=createContext<ContextType>({} as ContextType)
 
 export const AuthProvider=({children}:props)=>{
     const [user,setUser]=useState<User | null>(null)
-    const [curriculum,setCurriculum]=useState<ICurriculum | null>(null)
+    const [curriculumContext,setCurriculumContext]=useState<ICurriculum | null>(null)
 
+    
 useEffect(()=>{
     const storageUser=localStorage.getItem('@u')
-    if(storageUser){
+    const storageCurriculum=localStorage.getItem('@curri')
+    if(storageUser || storageCurriculum){
         const storageUserParsed=JSON.parse(storageUser as string)
         setUser(storageUserParsed)
+
+        const storageCurriculumParsed=JSON.parse(storageCurriculum as string)
+        setCurriculumContext(storageCurriculumParsed)
     }
+
+ 
 },[])
 
 useEffect(()=>{
     const getCurriculumUser=async()=>{
       if(user !== null){
-        const curriculumId=await apiCurriculum.getCurriculumFromUser(user.id as number)
-        setCurriculum(curriculumId)
-        console.log(curriculumId)
+            const curriculumId=await apiCurriculum.getCurriculumFromUser(user.id as number)
+           if(typeof curriculumId !== 'string'){
+            setCurriculumContext(curriculumId)
+            console.log(curriculumId)
+           }else{
+           
+            setCurriculumContext(null)
+            console.log(curriculumId)
+           }
+        }
+       
       }
-    }
+    
 
   setInterval(
-    getCurriculumUser,1000
+    getCurriculumUser,5000
   )
 },[])
+
 
 
 const SigIn=async(user:User,token:string)=>{
@@ -82,10 +100,13 @@ const SigUp=async(user:TUser,token:string)=>{
 }
 const SigOut=()=>{
      setUser(null)
-     localStorage.clear()
+     setCurriculumContext(null)
+     localStorage.removeItem('@u')
+     localStorage.removeItem('token')
+     localStorage.removeItem('@curri')
 }
 const values={
-    user,SigIn,SigOut,SigUp
+    user,SigIn,SigOut,SigUp,curriculumContext,setCurriculumContext
 }
     return <contextAuth.Provider value={values}>
         {children}

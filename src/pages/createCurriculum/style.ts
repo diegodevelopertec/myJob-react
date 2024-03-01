@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GlobalStyle } from "../../globalStyle";
 
 export const Page=styled.div`
 margin: 50px 20px;
@@ -51,6 +52,7 @@ form{
           background-color: #DEDEDE;
         }
     }
+    
     fieldset{
         border: 1px solid grey;
         padding: 12px;
@@ -72,7 +74,23 @@ form{
            }
          }
         }
-       
+        .cx-state-city{
+            display: flex;
+            align-items: center;
+            div{
+                flex: 1;
+                select{
+                    width: 350px;
+                    padding: 12px;
+                    border-radius: 2px;
+                    transition: all ease 0.3s;
+                    &:focus{
+                        outline: 1px solid ${GlobalStyle.bgTheme};
+                    }
+                }
+            }
+        }
+        
            
     }
 }

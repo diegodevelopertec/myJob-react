@@ -6,7 +6,7 @@ import { Link,useNavigate, useParams } from "react-router-dom"
 import { useFormik } from "formik"
 import { toast } from "react-toastify"
 import { Layout } from "../../componentes/Layout"
-import { schemaValidateUser } from "../../validations/user"
+import { schemaValidateUser } from "../../validations/user.validation"
 import { apiAuth } from "../../actions/auth.action"
 import { useAuthContext } from "../../context/authContext"
 

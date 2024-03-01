@@ -56,6 +56,7 @@ transition:all ease .3s;
             height: 25px;
         }
         &:hover{
+            outline: 1px solid #525CEB;
             background-color: #0D1282;
         }
     }

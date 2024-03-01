@@ -31,7 +31,7 @@ export const CandidaturaId=()=>{
             }  
               console.log(application)     
         }
-        getJobById()
+       setTimeout( getJobById,1000)
     },[])
 
 

@@ -7,15 +7,18 @@ padding: 0 12px;
 
 .pcd-line{
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: end;
-    margin: 12px 0;
     padding: 12px;
-    
+    p{
+        font-family: 'Montserrat';
+        color: gray;
+        font-weight:300;
+    }
     .cx{
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content:space-between;
         margin: 12px 0;
         padding: 12px;
         font-weight: bold;

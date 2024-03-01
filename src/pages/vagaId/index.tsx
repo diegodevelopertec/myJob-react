@@ -11,14 +11,16 @@ import Arrowright from "../../assets/svgs/arrowright"
 import { baseURL } from "../../services/axios.config"
 import { useAuthContext } from "../../context/authContext"
 import { apiApplication } from "../../actions/applications.action"
-import currentDate from "../../hooks/currentDate"
 import { IApplication } from "../../interfaces/application"
 import Deficiency from "../../assets/svgs/deficiency"
+import Skeleton from "react-loading-skeleton"
 
 
 export const VagaId=()=>{
-    const {user}=useAuthContext()
+    const {user,curriculumContext}=useAuthContext()
+    const [loading,setLoading]=useState(true)
     const [hasApplication,setHasApplication]=useState<true | false>(false)
+    const [application,setApplication]=useState<IApplication | null>(null)
     const [jobId,setJobId]=useState<IJob | null>(null)
     const params=useParams()
     const location=useLocation()
@@ -26,47 +28,57 @@ export const VagaId=()=>{
     const articleUrl = `https://${location.pathname}`;
     const {id}=params
 
-
-
-
     useEffect(()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
-                setJobId(job)      
+            setJobId(job)      
         }
-        getJobById()
+       setTimeout( getJobById,1000)
     },[])
 
+useEffect(()=>{
+    const verifyApplicationByIdJob=async()=>{
+        if(user !== null && jobId){
+          const list=await apiApplication.getApplications(user.id as number) as IApplication[]
+          const verify=list.some(i=>i.idjob === jobId.id && i.iduser === (user.id as number))
+          const applicationUser=list.find(i=>i.idjob === jobId.id && i.iduser === (user.id as number))
+         setHasApplication(verify)
+         setApplication(applicationUser as IApplication)
+         console.log(verify)
+        }
+        
+  }
+   setTimeout(verifyApplicationByIdJob,956)
+})
 
     useEffect(()=>{
         document.title='MyJobs/Vaga'
       },[])
-    
+
+   
+
+
     const ClickCandidateToJob=async()=>{
         const d=new Date()
-        if(user && jobId !== null){
+        if(user !== null && curriculumContext !== null && jobId !== null){
             await apiApplication.addApplication(user?.id as number ,jobId.id,d.toLocaleDateString())
             toast.success('candidatura feita!')
             navigate(`/candidaturas`)
-        }else{
+        }else if(!user){
             toast.error('Ops!você não tem uma conta 😢 ')
+        }else if(!curriculumContext){
+            toast.error('Ops!você ainda não criou o seu curriculo 😢 ')
         }
     }
 
     return <Layout>
         <ContentPage titlePage={``}>
-        <Page>
-            {/*userApplicationJob && <p>
-                     Você se candidatou em {userApplicationJob.dateapplied} ✅
-                     </p>
-          */}
+      <Page>
         <div className="header-page">
           <h3>{jobId?.title} <span>{jobId?.category.name}</span></h3>
-          {jobId?.exclusivepcd  && <div className="pcd-line">
-           <div className="cx">
-             <Deficiency />
-             {jobId?.exclusivepcd ? 'Vaga exclusiva para PCD' : null}
-           </div>
+          { <div className="pcd-line">
+           {jobId?.exclusivepcd  && <div className="cx"><Deficiency />{jobId?.exclusivepcd ? 'Vaga exclusiva para PCD' : null}</div>}
+           <div>{hasApplication && <p>✅ Você  já se candidatou á essa vaga em {application?.date} </p> }</div>
           </div>}
         </div>
 
@@ -128,9 +140,7 @@ export const VagaId=()=>{
                         </div>
                     </div>
                     <div className="actions">
-                       <button onClick={ClickCandidateToJob}>candidatar</button> 
-                  
-                        {/* userApplicationJob &&  <button >desistir</button> */}
+                       {!hasApplication && <button onClick={ClickCandidateToJob}>candidatar</button>} 
                     </div>
                 </SectionDetailsJobs>
             }
@@ -183,7 +193,7 @@ export const VagaId=()=>{
                  */} 
              
             </Page>
-    
+        
     </ContentPage>
     </Layout>
 }

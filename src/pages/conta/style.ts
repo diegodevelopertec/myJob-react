@@ -27,7 +27,8 @@ align-items: center;
                 img{
                     height: 150px;
                     width: 150px;
-                    background-color: #DEDEDE;
+                    border:1px solid  #DEDEDE;
+                    box-shadow: 0 0 5px #000;
                     border-radius: 100%;
                 }
            }

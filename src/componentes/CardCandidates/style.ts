@@ -5,10 +5,10 @@ import styled from "styled-components";
 export const Container=styled.div`
 background:linear-gradient( to bottom , ${GlobalStyle.bgTheme},#000);
 border-radius: 6px;
-box-shadow:0 0 6px #aaa;
-
+transition:all ease .3s;
 &:hover{
     background:linear-gradient( to bottom , #5E227F,#000);
+    box-shadow:0 0 12px #000;
 }
 .divider{
     height: 1.25px;

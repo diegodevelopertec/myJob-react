@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.24.1",
+    "@tanstack/react-query-devtools": "^5.24.1",
     "@types/gsap": "^3.0.0",
     "axios": "^1.5.1",
     "formik": "^2.4.5",

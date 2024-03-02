@@ -27,8 +27,8 @@ useEffect(()=>{
         setCurriculumUser(data)
         console.log(data)
     }
-    getCurriculumId()
-})
+   getCurriculumId()
+},[])
 
 
 return <Painel>
@@ -36,7 +36,8 @@ return <Painel>
          <Page>
            <HeaderPage>
              <div className="top">
-               <img src={`${baseURL}public/images/${curriculumUser?.user.photo}`}  alt="foto do candidato"/>
+               {curriculumUser?.user.photo !== null && <img src={`${baseURL}public/images/${curriculumUser?.user.photo}`}  alt="foto do candidato"/>}
+               {curriculumUser?.user.photo === null && <img src={`/assets/user.png`}  alt="foto do candidato" />}
                <h3>{curriculumUser?.user?.name} {curriculumUser?.user?.lastname} </h3>
                <span>{curriculumUser?.office} </span>
                 {curriculumUser?.pcd  ? <Deficiency /> : null}

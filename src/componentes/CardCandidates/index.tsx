@@ -14,7 +14,8 @@ export const CardCandidates = ({curriculum}:props)=>{
     return <Container>
         <div className="top">
             <div className="cx-img">
-                <img src={`${baseURL}public/images/${curriculum.user.photo}`}  />
+                {curriculum.user.photo !== null && <img src={`${baseURL}public/images/${curriculum.user.photo}`}  />}
+                {curriculum.user.photo === null && <img src={`/assets/user.png`}  alt="" />}
             </div>
             <div className="cx-info">
                 <h2 className="name"> {curriculum.user?.name}</h2>

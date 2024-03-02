@@ -13,9 +13,6 @@ import { toast } from "react-toastify"
 
 export const VagasPostadasPainel=()=>{
     const [jobsFromCompany,setJobsFromCompany]=useState<IJob[] | null>(null)
-
-
-
     useEffect(()=>{
         const getJobs=async()=>{
             const jobsList=await apiJobs.getAllJobs()

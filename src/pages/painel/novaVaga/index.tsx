@@ -1,12 +1,28 @@
-import Arrowright from "../../../assets/svgs/arrowright"
+import { useEffect, useState } from "react"
 import { ContentPage } from "../../../componentes/ContentPage"
 import { Input } from "../../../componentes/Input"
 import { Painel } from "../../../componentes/Painel"
 import { TextArea } from "../../../componentes/TextArea"
 import { Form, Page } from "./style"
+import apiCategory from "../../../actions/apiCategory"
+import { CategoryInterface } from "../../../interfaces/category"
 
 
 export const NovaVagaPainel=()=>{
+  const [categorys,setCategorys]=useState<CategoryInterface[] | []>([])
+
+
+  useEffect(()=>{
+    const getListCategorys=async()=>{
+      const list=await apiCategory.getCategorys()
+      setCategorys(list)
+    }
+
+    getListCategorys()
+
+    },[])
+
+
     return <Painel >
         <ContentPage titlePage="Nova Vaga">
         <Page>
@@ -38,12 +54,19 @@ export const NovaVagaPainel=()=>{
                     <TextArea h="130px"></TextArea>
                     <p className="error"></p>
                   </div>
+                  <div className="cx-input category-cx">
+                    <label htmlFor="">➡️ Categoria</label>
+                    <select name="" id="">
+                      {categorys?.map((c,k)=><option value={c.name}>{c.name}</option>)}
+                   </select>
+                    <p className="error"></p>
+                  </div>
                   <div className="cx-input">
                     <label htmlFor="">➡️ Data de Expiração(opcional)</label>
                     <Input type="date" placeholder="" name="" value={''} onChange={()=>{}} />
                     <p className="error"></p>
                   </div>
-
+                
               
                       <div className="cx-input">
                           <label htmlFor="">➡️ Tipo de contrato</label>

@@ -34,6 +34,7 @@ export const VagaPainelId=()=>{
     },[])
 
 
+
 useEffect(()=>{
      document.title='Painel|Recurtador'
 },[])
@@ -157,15 +158,19 @@ useEffect(()=>{
             <section className="content">
                  <div className="list-candidates">
                     {
-                        jobId?.applications.map((i,k)=>(
+                      jobId !== null &&   jobId?.applications.map((i,k)=>(
                             <div key={k}>
                          <li className="profile">
                             <div className="left">
-                                <span className="data"><img src={`${baseURL}public/images/${i.user.photo}`} alt="" />{i?.user?.name}</span>
+                                <span className="data">
+                                    {i.user.photo !== null && <img src={`${baseURL}public/images/${i.user.photo}`} alt="" />} 
+                                    {i.user.photo === null && <img src={`/assets/user.png`}  alt="" />}
+                                    {i?.user?.name}
+                                </span>
                                
                             </div>
                             <div className="right">
-                                <Link to={`/painel/recrutador/candidatos/${i.user.id}`}>ver curriculo</Link>
+                                <Link to={`/painel/recrutador/candidatos/${i.user.curriculum.id}`}>ver curriculo</Link>
                             </div>
                         </li>
                         <div className="divider"></div>

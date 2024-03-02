@@ -16,9 +16,9 @@ useEffect(()=>{
        setListCandidates(data)
     }
   
- setInterval(() => {
-    getCurriculunsAll
-   },1000)
+ 
+    setInterval(getCurriculunsAll,2000)
+   
 },[])
 
 

@@ -4,7 +4,8 @@ import { ButtonInterface } from ".";
 
 export const Component=styled.button<ButtonInterface>`
 background-color: ${props=>props.bgColor ? props.bgColor :'#EDED'};
-color: ${props=>props.color ? props.color :'#000'};
+color: ${props=>props.color ? props.color :'white'};
+font-size: ${props=>props.fs ? props.fs :'15px'};
 border: ${props=>props.bd ? props.bd :'none'};
 border-radius: ${props=>props.radius ? props.radius :'3px'};
 padding:${props=>props.p ? props.p :'12px 23px'};
@@ -17,8 +18,9 @@ display: flex;
 justify-content: center;
 align-items: center;
 cursor: pointer;
+transition: all ease .3s;
  &:hover{
     background-color: ${props=>props.bgH ? props.bgH : 'auto'};
-    color: ${props=>props.colorH ? props.colorH :'#000'};
+    color: ${props=>props.colorH ? props.colorH :'auto'};
  }
 `

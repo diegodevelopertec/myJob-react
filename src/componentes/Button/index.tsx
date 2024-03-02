@@ -10,6 +10,8 @@ export interface ButtonInterface extends ButtonHTMLAttributes<HTMLButtonElement>
     m?:string,
     w?:string,
     h?:string,
+    fs?:string,
+    color?:string
     bgH?:string,
     colorH?:string,
     bd?:string,

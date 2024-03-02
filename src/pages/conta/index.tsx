@@ -106,7 +106,8 @@ const SigOutUser=()=>{
              <div className="profile">
                <div className="content">
                        <div className="cx-img">
-                        <img src={`${baseURL}public/images/${user?.photo}`}  alt="" />
+                         {user?.photo !== null && <img src={`${baseURL}public/images/${user?.photo}`}  alt="" />}
+                         {user?.photo === null && <img src={`/assets/user.png`}  alt="" />}
                        </div>
                        <h3>{user?.name} {user?.lastname}</h3>
                         <div className="data">

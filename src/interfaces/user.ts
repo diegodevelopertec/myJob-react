@@ -1,4 +1,7 @@
 
+import { CompanyInterface } from "./company";
+import { ICurriculum } from "./curriculum";
+
 
 export interface IUser{
     id:number,
@@ -8,5 +11,7 @@ export interface IUser{
     password:string,
     type:string,
     tel:string,
-    photo:string
+    photo:string,
+    company:CompanyInterface,
+    curriculum:ICurriculum
 }

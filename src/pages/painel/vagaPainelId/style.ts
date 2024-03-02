@@ -349,6 +349,7 @@ transition: all ease-in-out 0.3s;
                     width: 34px;
                     border-radius: 100%;
                     margin: 0 12px;
+                    box-shadow:  0 0 5px #000;
                 };
               }
             }

@@ -1,4 +1,6 @@
+import { Options } from 'react-to-pdf';
 import styled from "styled-components";
+import { GlobalStyle } from "../../../globalStyle";
 
 
 export const Page=styled.div`
@@ -26,6 +28,24 @@ input,textarea{
 .city-state{
     display: flex;
 
+}
+.category-cx{
+    margin: 22px 0;
+    select{
+        margin: 0 12px;
+        transition: all ease-in .2s;
+        padding: 12px;
+        outline:none;
+        border: none;
+        border-radius: 3px;
+        box-shadow:  0 0 2px gray;
+        &:focus{
+          outline:2px solid ${GlobalStyle.bgTheme};
+        }
+        option{
+            font-size: 17px;
+        }
+    }
 }
 
 .city-state{

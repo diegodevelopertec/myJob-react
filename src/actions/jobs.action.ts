@@ -16,6 +16,17 @@ export const apiJobs={
             }
         
     },
+    getAllJobsFromCompany:async(companyid:number):Promise<IJob[] | any>=>{
+       
+        try{
+            let response=await  axios.get(`${baseURL}companys/${companyid}/jobs`)
+            let jobs=response.data
+            return jobs
+        }catch(e){
+            console.log(e)
+        }
+    
+    },
     getJobId:async(id:number):Promise<IJob | any>=>{
         try{
             const response=await axios.get(`${baseURL}jobs/${id}`)
@@ -31,9 +42,12 @@ export const apiJobs={
             return e
         }
     },
-    deleteJobId:async()=>{
+    deleteJobId:async(id:number)=>{
         try{
-          
+          const response=await axios.delete(`${baseURL}jobs/${id}`)
+          if(response.status == 200){
+            console.log(response.data)
+          }
         }catch(e){
             return e
         }

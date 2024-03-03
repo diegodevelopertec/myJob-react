@@ -134,7 +134,7 @@ form{
 }
 
 @media screen and (max-width: 768px){
-   padding: 50px 9px;
+   padding: 0px 9px;
    height: auto;
    margin-top: 20px;
     form{

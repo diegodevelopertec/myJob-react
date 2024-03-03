@@ -1,6 +1,11 @@
 []upload/put de dados de usuario
 []criar curriculo
-[]ver se ja candidatou e bloquer acao
+[]paginacao em vagas e cursos
 
-[]criar empresa e pagina da empresa
-[]criar filtragens e palavras chaves
+
+()Painel
+
+[]criar empresa
+[]atualizar empresa
+[]painel de candidaturas
+[]paginacao em vagas e candidatos

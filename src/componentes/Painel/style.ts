@@ -44,8 +44,7 @@ export const HeaderPainel=styled.header`
         display: flex;
         flex-direction: column;
         font-size: 15px;
-    
-
+        margin: 50px 0;
         a{
             display: flex;
             align-items: center;

@@ -14,6 +14,6 @@ padding:50px;
     h2{
         margin:auto 22px;
     }
-    padding: 10px 7px;
+    padding: 100px 7px;
 }
 `

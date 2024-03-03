@@ -14,11 +14,13 @@ import { apiApplication } from "../../actions/applications.action"
 import { IApplication } from "../../interfaces/application"
 import Deficiency from "../../assets/svgs/deficiency"
 import Skeleton from "react-loading-skeleton"
+import Loading from "../../componentes/Loading"
+import { GlobalStyle } from "../../globalStyle"
 
 
 export const VagaId=()=>{
     const {user,curriculumContext}=useAuthContext()
-    const [loading,setLoading]=useState(true)
+    const [loadingJob,setLoadingJob]=useState(true)
     const [hasApplication,setHasApplication]=useState<true | false>(false)
     const [application,setApplication]=useState<IApplication | null>(null)
     const [jobId,setJobId]=useState<IJob | null>(null)
@@ -31,7 +33,8 @@ export const VagaId=()=>{
     useEffect(()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
-            setJobId(job)      
+            setJobId(job)
+            setLoadingJob(false)      
         }
        setTimeout( getJobById,1000)
     },[])
@@ -73,14 +76,15 @@ useEffect(()=>{
 
     return <Layout>
         <ContentPage titlePage={``}>
-      <Page>
+        {loadingJob && <Loading text="Aguarde,carregando detalhes da vaga.." type="bubbles" color={`${GlobalStyle.bgTheme}`} />}
+        {!loadingJob &&  <Page>
         <div className="header-page">
           <h3>{jobId?.title} <span>{jobId?.category.name}</span></h3>
           { <div className="pcd-line">
            {jobId?.exclusivepcd  && <div className="cx"><Deficiency />{jobId?.exclusivepcd ? 'Vaga exclusiva para PCD' : null}</div>}
            <div>{hasApplication && <p>✅ Você  já se candidatou á essa vaga em {application?.date} </p> }</div>
           </div>}
-        </div>
+         </div>
 
            {<SectionDetailsJobs>
                     <div className="card-detail">
@@ -193,6 +197,7 @@ useEffect(()=>{
                  */} 
              
             </Page>
+        }
         
     </ContentPage>
     </Layout>

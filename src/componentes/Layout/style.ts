@@ -12,6 +12,5 @@ main{
 
 
 @media screen and (max-width:950px){
-    padding:150px 12px;
 }
 `

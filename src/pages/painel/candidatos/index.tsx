@@ -5,15 +5,19 @@ import { ICurriculum } from "../../../interfaces/curriculum"
 import { apiCurriculum } from "../../../actions/apiCurriculum"
 import { CardCandidates } from "../../../componentes/CardCandidates"
 import { ContainerProfessional } from "./style"
+import Loading from "../../../componentes/Loading"
+import { GlobalStyle } from "../../../globalStyle"
 
 
 export const CandidatosPainel=()=>{
     const [listCandidates,setListCandidates]=useState<ICurriculum[] | null>(null)
+    const [loadingProfessionals,setLodingProfessionals]=useState<boolean>(true)
 
 useEffect(()=>{
     const getCurriculunsAll=async()=>{
         const data=await apiCurriculum.getCurriculumAll()
-       setListCandidates(data)
+        setListCandidates(data)
+        setLodingProfessionals(false)
     }
   
  
@@ -23,15 +27,17 @@ useEffect(()=>{
 
 
     return <Painel >
-        <ContentPage titlePage="Candidatos">
-            <ContainerProfessional>
-              {
-                listCandidates !== null && listCandidates?.map((c,k)=>(
-                    <CardCandidates curriculum={c} key={k} />
-                ))
-              }
-                
-            </ContainerProfessional>
+        <ContentPage titlePage="Profissionais">
+         {loadingProfessionals && <Loading text="Aguarde,carregando suas profissionais..." type="bubbles" color={`${GlobalStyle.bgTheme}`}/>}
+        {
+            !loadingProfessionals && <ContainerProfessional>
+            {
+              listCandidates !== null && listCandidates?.map((c,k)=>(
+                  <CardCandidates curriculum={c} key={k} />
+              ))
+            } 
+          </ContainerProfessional>
+        }
         </ContentPage>
     </Painel>
   

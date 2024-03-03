@@ -10,17 +10,24 @@ import { Link } from "react-router-dom"
 import { Tooltip } from "react-tooltip"
 import Swal from "sweetalert"
 import { toast } from "react-toastify"
+import Loading from "../../../componentes/Loading"
+import { GlobalStyle } from "../../../globalStyle"
 
 export const VagasPostadasPainel=()=>{
     const [jobsFromCompany,setJobsFromCompany]=useState<IJob[] | null>(null)
+    const [loadingJobs,setLodingJobs]=useState<boolean>(true)
+
+
     useEffect(()=>{
+        const companyStorage=localStorage.getItem('@companyid')
+        const parsedCompanyStorage=JSON.parse(companyStorage as string) 
         const getJobs=async()=>{
-            const jobsList=await apiJobs.getAllJobs()
+            const jobsList=await apiJobs.getAllJobsFromCompany(parsedCompanyStorage)
             setJobsFromCompany(jobsList as IJob[])
-            console.log(jobsList);
+            setLodingJobs(false)
         }
        
-         getJobs()
+         setInterval(getJobs,5600)
        },[])
        
 
@@ -50,7 +57,11 @@ const deleteJob=(id:number)=>{
         ,
       }).then((result) => {
         if (result) {
-         toast.success('Vaga deletada')
+           const deleteJobId=async()=>{
+               await apiJobs.deleteJobId(id)
+           }
+           deleteJobId()
+          toast.success('Vaga deletada')
         } else {
             console.log(result)
         }
@@ -62,9 +73,10 @@ const deleteJob=(id:number)=>{
     return <Painel >
         <ContentPage titlePage="Vagas Postadas">
             <Page>
-               <p>Acomapnhe aqui todas as vags que postou</p> 
+               <p>Acompanhe aqui todas as vagas da sua Empresa </p> 
+                {loadingJobs && <Loading text="Aguarde,carregando suas vagas..." type="bubbles" color={`${GlobalStyle.bgTheme}`}/>}
                 {
-                    jobsFromCompany !== null && <Table>
+                   (!loadingJobs && jobsFromCompany !== null) && <Table>
                         <thead>
                             <tr>
                             <td>Titulo</td>
@@ -80,7 +92,7 @@ const deleteJob=(id:number)=>{
                            <tr>
                              <td>{j.title}</td>
                             <td>{j.createDate}</td>
-                            <td>{j.expireDate}</td>
+                            <td>{j.expireDate == null ? j.expireDate : 'não expecificado'}</td>
                             <td>{j.applications.length}</td>
                             <td>{j.category.name}</td>
                             <td className="actions">
@@ -96,7 +108,9 @@ const deleteJob=(id:number)=>{
 
 
                     </Table>
+                   
                 }
+                
             </Page>
         </ContentPage>
         <Tooltip id="my-tooltip"  />

@@ -31,6 +31,10 @@ import { PrivateCandidate } from "../componentes/Private/PrivateTypeCandidates"
 
 export const Routes=()=>{
 
+
+
+
+    
     return <Router>
        <>
             <Route path="/" element={<Home/>}/>

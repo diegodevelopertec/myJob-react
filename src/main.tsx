@@ -8,14 +8,14 @@ import { BrowserRouter } from 'react-router-dom'
 import { ContextProvider } from './context/globalContext.tsx'
 import { ToastContainer } from 'react-toastify'
 import { AuthProvider } from './context/authContext.tsx'
-import { QueryProvider } from './utils/queryprovider.tsx'
+
 
 
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 
-  <QueryProvider>
+  
      <AuthProvider>
      <ContextProvider>
       <BrowserRouter>
@@ -26,6 +26,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ToastContainer />
   </ContextProvider>
    </AuthProvider>
-  </QueryProvider>
+
  
 )

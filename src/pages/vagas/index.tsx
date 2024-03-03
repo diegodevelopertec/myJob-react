@@ -5,7 +5,6 @@ import { ContainerJobs } from "./style"
 import { IJob } from "../../interfaces/job"
 import { apiJobs } from "../../actions/jobs.action"
 import { CardJob } from "../../componentes/CardJob"
-import Skeleton from "../../componentes/Skeleton"
 import { Layout } from "../../componentes/Layout"
 import { BannerSlide } from "../../componentes/BannerSlide"
 import { bannersJobs } from "../../data/banner"
@@ -14,8 +13,7 @@ import Filter from "../../componentes/Filter"
 import Select from "../../componentes/Select"
 import { Button } from "../../componentes/Button"
 import { useAuthContext } from "../../context/authContext"
-import { IApplication } from "../../interfaces/application"
-import { useQuery } from "@tanstack/react-query"
+
 
 
 
@@ -23,19 +21,6 @@ import { useQuery } from "@tanstack/react-query"
 export const Vagas=()=>{
     const [jobs,setJobs]=useState<IJob[] | []>([])
     const {user}=useAuthContext()
-    const [loading,setLoading]=useState(true)
-
-
-   /*
- const query=useQuery(
-        {
-            queryKey:['jobs'],
-            queryFn:apiJobs.getAllJobs
-            
-        }
-    )
-
-   */
 
 
 useEffect(()=>{
@@ -45,8 +30,8 @@ useEffect(()=>{
     }
    getAllJobs()
 
-    const intervalo = setInterval(getAllJobs, 5000)
-    return () => clearInterval(intervalo)
+    setInterval(getAllJobs, 2000)
+    
 },[])
 
 

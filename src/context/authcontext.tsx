@@ -1,6 +1,8 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import { ICurriculum } from "../interfaces/curriculum"
 import { apiCurriculum } from "../actions/apiCurriculum"
+import { CompanyInterface } from "../interfaces/company"
+import apiCompany from "../actions/apiCompany"
 
 
 type props={
@@ -25,13 +27,15 @@ type User={
     email:string,
     password:string,
     type:string,
-    tel:string
+    tel:string,
+    company?:CompanyInterface
 }
 type SigInType={
     user:User,
     token:string,
     status:boolean
 }
+
 type ContextType={
     user:User | null,
     curriculumContext:ICurriculum | null,
@@ -47,7 +51,7 @@ const contextAuth=createContext<ContextType>({} as ContextType)
 export const AuthProvider=({children}:props)=>{
     const [user,setUser]=useState<User | null>(null)
     const [curriculumContext,setCurriculumContext]=useState<ICurriculum | null>(null)
-
+    const [company,setCompany]=useState<CompanyInterface | null>(null)
     
 useEffect(()=>{
     const storageUser=localStorage.getItem('@u')
@@ -105,8 +109,11 @@ const SigOut=()=>{
      localStorage.removeItem('token')
      localStorage.removeItem('@curri')
 }
+
+
+
 const values={
-    user,SigIn,SigOut,SigUp,curriculumContext,setCurriculumContext
+    user,SigIn,SigOut,SigUp,curriculumContext,setCurriculumContext,company
 }
     return <contextAuth.Provider value={values}>
         {children}

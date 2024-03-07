@@ -2,6 +2,7 @@
 import styled from "styled-components";
 
 
+
 export const Page=styled.div`
 padding:50px;
 display: flex;
@@ -99,6 +100,7 @@ padding: 100px 12px;
 
 export const NotCurriculum=styled.div`
 width: 100%;
+display: none;
 .box{
     width: 100%;
     height: 500px;

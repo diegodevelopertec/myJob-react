@@ -25,6 +25,8 @@ import { VagaPainelId } from "../pages/painel/vagaPainelId"
 import { CandidatoId } from "../pages/painel/candidatoId"
 import {PrivateRecruiter} from "../componentes/Private/privateTypeRecruiter"
 import { PrivateCandidate } from "../componentes/Private/PrivateTypeCandidates"
+import { UpdateCurriculum } from "../pages/atualizar_curriculo"
+import { VagasEmpresaId } from "../pages/vagasEmpresaId"
 
 
 
@@ -64,11 +66,13 @@ export const Routes=()=>{
          <>
              <Route path="/vagas" element={<Vagas/>}/>
               <Route path="/vagas/:id" element={<VagaId />}/>
+              <Route path="/:empresa/:id/vagas" element={<Private><PrivateCandidate><VagasEmpresaId /></PrivateCandidate></Private>}/>
              <Route path="/candidaturas" element={<Private><PrivateCandidate><Candidaturas /></PrivateCandidate></Private>}/>
              <Route path="/candidaturas/:id" element={<Private><PrivateCandidate><CandidaturaId /></PrivateCandidate></Private>}/>
              <Route path="/conta" element={<Private><PrivateCandidate><Conta /></PrivateCandidate></Private>}/>
              <Route path="/cursos" element={<Cursos />}/>
              <Route path="/criar_curriculo" element={<Private><PrivateCandidate><CreateCurriculum /></PrivateCandidate></Private>}/>
+             <Route path="/atualizar_curriculo/:id" element={<Private><PrivateCandidate><UpdateCurriculum /></PrivateCandidate></Private>}/>
             <Route path="/cursos/:id" element={<CursoId />}/>
             <Route path="/meus_cursos" element={<MeusCursos />}/>
             <Route path="/plataforma_ead/curso/:cursoid" element={<Private><PrivateCandidate><Plataforma /></PrivateCandidate></Private>}/>

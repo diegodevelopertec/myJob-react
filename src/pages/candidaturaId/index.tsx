@@ -10,11 +10,14 @@ import { baseURL } from "../../services/axios.config"
 import { IApplication } from "../../interfaces/application"
 import { apiApplication } from "../../actions/applications.action"
 import { useAuthContext } from "../../context/authContext"
+import Loading from "../../componentes/Loading"
+import { GlobalStyle } from "../../globalStyle"
 
 
 
 export const CandidaturaId=()=>{
     const [applicationId,setApplicationId]=useState<IApplication | null>(null)
+    const [loadingApplicationId,setLoadingApplicationId]=useState(true)
     const params=useParams()
     const {user}=useAuthContext()
     const location=useLocation()
@@ -28,6 +31,7 @@ export const CandidaturaId=()=>{
             const application=await apiApplication.getApplicationId(parseInt(id as string))
               if(application !== null){
                 setApplicationId(application)
+                setLoadingApplicationId(false)
             }  
               console.log(application)     
         }
@@ -52,8 +56,8 @@ export const CandidaturaId=()=>{
 
     return <Layout>
         <ContentPage titlePage={``}>
-
-     {applicationId !== null && <Page>
+     {loadingApplicationId  && <Loading text="Carregando detalhes da candidatura..." type="bubbles" color={`${GlobalStyle.bgTheme}`} />}
+     {!loadingApplicationId && applicationId !== null && <Page>
         <div className="header-page">
         <h3>{applicationId?.job.title} <span>{applicationId?.job.category.name}</span></h3>
         </div>

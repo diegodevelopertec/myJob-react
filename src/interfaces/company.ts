@@ -1,3 +1,4 @@
+import { IJob } from "./job";
 import { IUser } from "./user";
 
 export interface CompanyInterface{
@@ -14,5 +15,6 @@ export interface CompanyInterface{
     tel:string,
     city:string,
     state:string,
-    user:IUser
+    user:IUser,
+    jobs:IJob[]
 }

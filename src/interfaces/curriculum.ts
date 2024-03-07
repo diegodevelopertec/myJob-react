@@ -15,7 +15,7 @@ export interface  ICurriculum {
     state:string,
     dateNasc:string,
     pcd:number,
-    deficiency: string | null,
+    deficiency: string,
     about:string,
     linkedin:string,
     github:string,

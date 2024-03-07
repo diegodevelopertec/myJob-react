@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 
 export const Page=styled.div`
-margin: 50px 0;
 padding: 12px;
+margin-bottom: 100px;
 
 p{
     margin: 10px 0;

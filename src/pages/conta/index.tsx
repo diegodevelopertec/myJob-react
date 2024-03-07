@@ -3,7 +3,7 @@ import { Layout } from "../../componentes/Layout"
 import { BoxCurriculum, NotCurriculum, PDFPage, Page } from "./style"
 import { useAuthContext } from "../../context/authContext"
 import { Link, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import  Swal from 'sweetalert'
 import { toast } from "react-toastify"
 import { apiCurriculum } from "../../actions/apiCurriculum"
@@ -12,6 +12,8 @@ import generatePDF, {  Margin,Options } from 'react-to-pdf'
 import { useGlobalContext } from "../../context/globalContext"
 import { Modal } from "../../componentes/Modal"
 import { baseURL } from "../../services/axios.config"
+import Loading from "../../componentes/Loading"
+import { GlobalStyle } from "../../globalStyle"
 
 export const Conta=()=>{
     const [targetRef,setTargetRef]=useState(null)
@@ -21,6 +23,8 @@ export const Conta=()=>{
     const [hasCurriculum,setHasCurriculum]=useState(false)
     const navigate=useNavigate()
     const {handleStateModal}=useGlobalContext()
+   const [loadingCurriculum,setLoadingCurriculum]=useState(true)
+    const boxNotRef=useRef<HTMLDivElement | null>(null)
 
     const stylePDF:Options = {
         method:'save',
@@ -49,19 +53,24 @@ export const Conta=()=>{
                 setCurriculum(curriculumId)
                 setHasCurriculum(true)
                setCurriculumContext(curriculumId)
-               
+                setLoadingCurriculum(false)
                }else{
-                setHasCurriculum(false)
-                setCurriculumContext(null)
-          
+                  setHasCurriculum(false)
+                  setCurriculumContext(null)
+                  setLoadingCurriculum(false)
                }
             }
            
           }
         
-    setInterval(getCurriculumUser,1000)
+    setInterval(getCurriculumUser,2400)
     },[])
 
+    useEffect(()=>{
+      if(!hasCurriculum && boxNotRef.current){
+        boxNotRef.current.style.display='flex' 
+      }
+    },[hasCurriculum])
 
 const SigOutUser=()=>{
     Swal({
@@ -99,6 +108,42 @@ const SigOutUser=()=>{
 
 
 }
+const deleteCurriculumUser=(id:number)=>{
+  Swal({
+      title:'Tem certeza?',
+      text: `Se deletar seu curriculo,todas as suas formações e experiencias,bem como também suas candidaturas serão deletadas.Ainda quer continuar?`,
+      icon: 'info',
+
+      buttons:
+          {
+              cancel: {
+                text: "Cancel",
+                value:false,
+                visible: true,
+                className: "",
+                closeModal: true,
+              },
+              confirm: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+              }
+            }
+      ,
+    }).then((result) => {
+      if (result) {
+        
+        toast.success('curriculo deletado')
+      } else {
+          console.log(result)
+      }
+    })
+
+
+}
+
     return <Layout>
      <ContentPage titlePage="Meus Dados">
         <Page>
@@ -123,21 +168,13 @@ const SigOutUser=()=>{
             <button onClick={SigOutUser}>Sair da  conta</button>
          </div>
          <div className="right">
-            {(!hasCurriculum && !curriculum ) && <NotCurriculum>
-               <div className="box">
-                   <div className="text">
-                        <h3>Olá {user?.name}</h3>
-                        <p>Para se candidatar á vagas crie o seu curriculo</p>
-                        <Link to={'/criar_curriculo'}>clique Aqui</Link>
-                    </div>
-               </div>
-            </NotCurriculum>
-            }
-            {
-                (hasCurriculum && curriculum ) && <BoxCurriculum>
+            {loadingCurriculum && <Loading text="Carregando seu curriculo.." type="bubbles" color={`${GlobalStyle.bgTheme}`} />}
+            {!loadingCurriculum &&
+                (hasCurriculum && curriculum ) && <BoxCurriculum ref={boxNotRef}>
                     <div className="top">
                         <span onClick={()=>GeneratePDF()}>Baixar PDF</span>
-                        <span>Editar</span>
+                        <span onClick={()=>navigate(`/atualizar_curriculo/${curriculum.id}`)}>Editar</span>
+                        <span onClick={()=>deleteCurriculumUser(curriculum.id)}>Excluir</span>
                     </div>
                     {curriculum !== null ? <PDFPage ref={targetRef} id="content-id">
                                <div className="dataprofile">
@@ -249,7 +286,17 @@ const SigOutUser=()=>{
                         : <div>Nenhuma formação</div>
                        }
                     </section>
-                </BoxCurriculum>
+                </BoxCurriculum> 
+            }
+             {!hasCurriculum && <NotCurriculum>
+               <div className="box">
+                   <div className="text">
+                        <h3>Olá {user?.name}</h3>
+                        <p>Para se candidatar á vagas crie o seu curriculo</p>
+                        <Link to={'/criar_curriculo'}>clique Aqui</Link>
+                    </div>
+               </div>
+            </NotCurriculum>
             }
          </div>
          

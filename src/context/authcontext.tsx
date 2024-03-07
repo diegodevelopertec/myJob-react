@@ -85,7 +85,7 @@ useEffect(()=>{
     
 
   setInterval(
-    getCurriculumUser,5000
+    getCurriculumUser,1200
   )
 },[])
 
@@ -105,9 +105,7 @@ const SigUp=async(user:TUser,token:string)=>{
 const SigOut=()=>{
      setUser(null)
      setCurriculumContext(null)
-     localStorage.removeItem('@u')
-     localStorage.removeItem('token')
-     localStorage.removeItem('@curri')
+    localStorage.clear()
 }
 
 

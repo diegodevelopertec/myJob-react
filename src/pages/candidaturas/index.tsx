@@ -6,10 +6,13 @@ import {apiApplication } from "../../actions/applications.action"
 import { CardApplication } from "../../componentes/CardApplication"
 import { Page } from "./style"
 import { useAuthContext } from "../../context/authContext"
+import Loading from "../../componentes/Loading"
+import { GlobalStyle } from "../../globalStyle"
 
 
 export const Candidaturas=()=>{
   const [application,setApplications]=useState<IApplication[] | []>([])
+  const [loadingApplications,setLoadingApplications]=useState(true)
   const {user}=useAuthContext()
 
     useEffect(()=>{
@@ -21,6 +24,7 @@ export const Candidaturas=()=>{
         if(user !== null){
           const dataList:IApplication[] | []=await apiApplication.getApplications(user.id as number)
           setApplications(dataList)
+          setLoadingApplications(false)
         }
       }
   
@@ -30,11 +34,13 @@ export const Candidaturas=()=>{
     return <Layout>
       <ContentPage titlePage="Minhas Candidaturas">
       <Page>
-        {application.length > 0  ? application.map((a,k)=>(
+      {loadingApplications  && <Loading text="Carregando suas candidaturas..." type="bubbles" color={`${GlobalStyle.bgTheme}`} />}
+       {!loadingApplications && application.length > 0  ? application.map((a,k)=>(
           <CardApplication application={a} key={k} />
         )) : <div>
              <p>🫤 Você ainda não se candidatou á nenhuma vaga</p>
-          </div>} 
+          </div>
+         } 
       </Page>
     </ContentPage>
     </Layout> 

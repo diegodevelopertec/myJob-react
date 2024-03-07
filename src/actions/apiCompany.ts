@@ -14,5 +14,17 @@ export default {
         }catch(e){
 
         }
+    },
+    getCompanyId:async(id:number)=>{
+        try{
+            const response=await axios.get<CompanyInterface>(`${baseURL}companys/${id}`)
+            if(response.status === 200){
+                return response.data
+            }else{
+                return 'algo deu errado'
+            }
+        }catch(e){
+
+        }
     }
 }

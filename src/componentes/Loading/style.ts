@@ -1,3 +1,4 @@
+import { TextArea } from './../TextArea/index';
 import { styled } from "styled-components";
 import { GlobalStyle } from "../../globalStyle";
 
@@ -8,7 +9,7 @@ height: 100vh;
 display: flex;
 justify-content: center;
 .card{
-    width: 60%;
+    width: 70%;
     margin: 100px 0;
     height: 140px;
     flex-direction: column;
@@ -16,7 +17,10 @@ justify-content: center;
     justify-content: center;
     align-items: center;
     color: ${GlobalStyle.bgTheme};
-   
+  p{
+    text-align: center;
+    
+  }
     
 }
 

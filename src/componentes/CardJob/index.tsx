@@ -19,7 +19,7 @@ export const CardJob=({job}:Props)=>{
         <div className="top">
            <div className="header">
                 <h2>{job.title}</h2>
-                <span>{job.category.name}</span>
+                <span>{job.category?.name}</span>
             
            </div>
            <div className="data-job">

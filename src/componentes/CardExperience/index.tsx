@@ -5,8 +5,9 @@ import { IExperience } from "../../interfaces/experience"
 import { useLocation } from "react-router-dom"
 import { GlobalStyle } from "../../globalStyle"
 import { toast } from "react-toastify"
-import LixeiraIcon from "../../assets/svgs/lixeira"
 import { Tooltip } from "react-tooltip"
+import Lixeira from "../../assets/svgs/lixeira"
+import apiExperiences from "../../actions/apiExperiences"
 
 type Props={
     experience:IExperience
@@ -15,16 +16,8 @@ export default ({experience}:Props)=>{
     const location=useLocation()
     
     const deleteExperience=async()=>{
-       /*
- const response=await apiExperiences.deleteExperiences(experience.id)
-        if(response){
+       await apiExperiences.deleteExperienceId(experience.id)
             toast.success('Experiencia excluida')
-        }else{
-            console.log(response.data)
-        }
-
-       */
-
     }
     
     return  <Container>
@@ -36,13 +29,14 @@ export default ({experience}:Props)=>{
         </div>
         {!location.pathname.includes('painel') && <div className="right">
             <Button  radius="5px" h="45px" w="45px" p="5px"
-                bgH={GlobalStyle.bgThemeSecondary}   
+                bgH={GlobalStyle.bgThemeSecondary} 
+                bgColor={'white'}  
                 onClick={()=>deleteExperience()}
                 data-tooltip-id="my-tooltip"
-                  data-tooltip-content='deletar Experiência'
-                  data-tooltip-place="left"
+                data-tooltip-content='deletar Experiência'
+                data-tooltip-place="left"
             >
-             <LixeiraIcon />   
+             <Lixeira />   
             </ Button>
         </div>}
         <Tooltip id="my-tooltip" />

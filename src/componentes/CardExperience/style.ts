@@ -20,12 +20,16 @@ margin:12px 0;
         margin: 12px 0;
     }
     p{
-        color: #dede;
+        color: white;
         margin:12px 0;
         font-size: 12px;
         font-weight: 600;
     }
 
+    .svg{
+        stroke:white;
+        height: 45px;
+    }
     @media screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;

@@ -1,13 +1,13 @@
 import { ITrainnings } from "../../interfaces/trainnings"
-import { Box } from "../Box"
 import { Container } from "./style"
 import { Button } from "../Button"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation} from "react-router-dom"
 import EducationIcon from "../../assets/svgs/education"
 import { GlobalStyle } from "../../globalStyle"
 import { toast } from "react-toastify"
 import LixeiraIcon from "../../assets/svgs/lixeira"
 import { Tooltip } from "react-tooltip"
+import apiTrainning from "../../actions/apiTrainning"
 
 
 type Props={
@@ -17,18 +17,10 @@ export default ({trainning}:Props)=>{
     const location=useLocation()
 
     const deleteTrainning=async()=>{
-       /*
-       const response=await apiTrainnings.deleteTrainning(trainning.id)
-        if(response){
-            toast.success('Formação  excluida')
-        }else{
-            console.log(response.data)
-        }
-
-
-       */
-
-    }
+       await apiTrainning.deleteTrainningId(trainning.id)
+       toast.success('Formação  excluida')
+        
+}
 
     return  <Container>
         <div className="left">
@@ -38,7 +30,7 @@ export default ({trainning}:Props)=>{
         {!location.pathname.includes('painel') && <div className="right">
           <Button   radius="5px" h="45px" w="45px" p="5px"
                 bgH={GlobalStyle.bgThemeSecondary} 
-                onClick={()=>deleteTrainning()}
+                onClick={deleteTrainning}
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content={'deletar Formação'}
                 data-tooltip-place="left"

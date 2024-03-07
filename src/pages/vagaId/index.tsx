@@ -16,6 +16,7 @@ import Deficiency from "../../assets/svgs/deficiency"
 import Skeleton from "react-loading-skeleton"
 import Loading from "../../componentes/Loading"
 import { GlobalStyle } from "../../globalStyle"
+import { Link } from "react-router-dom"
 
 
 export const VagaId=()=>{
@@ -63,14 +64,16 @@ useEffect(()=>{
 
     const ClickCandidateToJob=async()=>{
         const d=new Date()
-        if(user !== null && curriculumContext !== null && jobId !== null){
+        if(curriculumContext === null){
+            toast.error('Ops!você ainda não criou o seu curriculo 😢 ')
+        }else if(user !== null && jobId !== null){
             await apiApplication.addApplication(user?.id as number ,jobId.id,d.toLocaleDateString())
             toast.success('candidatura feita!')
             navigate(`/candidaturas`)
         }else if(!user){
             toast.error('Ops!você não tem uma conta 😢 ')
         }else if(!curriculumContext){
-            toast.error('Ops!você ainda não criou o seu curriculo 😢 ')
+           
         }
     }
 
@@ -128,19 +131,23 @@ useEffect(()=>{
                         <div className="card-title"><Arrowright />Sobre a Empresa</div>
                         <div className="card-body-company">
                             <div className="cx-img">
-                            {jobId?.company && 
-                              <img src={`${baseURL}public/images/${jobId.company.logo}`} alt="Logo da Empresa" />
-                             }
+                             {jobId?.company &&  <img src={`${baseURL}public/images/${jobId.company.logo}`} alt="Logo da Empresa" />}
                             </div>
                             <div className="data">
                            {
                             jobId?.company !== undefined && <>
-                               <h3>{jobId.company &&  jobId?.company.name}</h3>
-                               <p>{jobId.company.about}</p>
+                                <div>
+                                <h3>{jobId.company &&  jobId?.company.name}</h3>
+                                <p>{jobId.company.about}</p>
+                                </div>
+                               
                             </>
                            }
 
                             </div>
+                        </div>
+                        <div className="cx-link">
+                                <Link to={`/${jobId?.company.name.toLowerCase()}/${jobId?.company.id}/vagas`}>ver mais vagas da empresa</Link>
                         </div>
                     </div>
                     <div className="actions">

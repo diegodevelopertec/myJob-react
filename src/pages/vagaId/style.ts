@@ -122,7 +122,24 @@ export const SectionDetailsJobs=styled.div`
                     font-weight: bold;
                 }
            }
+        
         }
+       .cx-link{
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        margin: 50px 0;
+        a{
+            color: gray;
+            font-size: 17px;
+           padding: 12px 23px;
+           transition: all ease .3s;
+            &:hover{
+                color: ${GlobalStyle.bgTheme};
+                text-decoration: underline;
+            }
+        }
+       }
     }
     .actions{
       padding:0 12px ;

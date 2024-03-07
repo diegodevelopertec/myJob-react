@@ -6,6 +6,14 @@ import { TextArea } from "../../componentes/TextArea"
 import { BoxNewExperienceAndTrainning, Page } from "./style"
 import Close from "../../assets/svgs/close"
 import { apiStatesCity } from "../../actions/stateCity"
+import { useAuthContext } from "../../context/authContext"
+import { useFormik } from "formik"
+import curriculumInitialvalues from "../../validations/initialValues/curriculumInitialvalues"
+import { schemaValidateCurriculum } from "../../validations/curriculum.validation"
+import CardTrainning from "../../componentes/CardTrainning"
+import CardExperience from "../../componentes/CardExperience"
+import Lixeira from "../../assets/svgs/lixeira"
+import apiSkill from "../../actions/apiSkill"
 
 interface State {
     id: number;
@@ -14,17 +22,41 @@ interface State {
 }
   
 
-export const CreateCurriculum=()=>{
+
+export const UpdateCurriculum=()=>{
     const [newTrainning,setNewTrainning]=useState<boolean>(false)
     const [newExperience,setNewExperience]=useState<boolean>(false)
     const [newSkill,setNewSkill]=useState<boolean>(false)
-    const [curriculum,setCurriculum]=useState(false)
+    const {curriculumContext}=useAuthContext()
     const [stateSelected,setStateSelected]=useState<string | null>(null) //estado string
     const [citySelected,setCitySelected]=useState<string | null>(null)         //estado object
     const [statesList,setStatesList]=useState<State[] | []>([])   //lista de estados
     const [cityList,setCityList]=useState<{id:number,nome:string}[] | []>([])    //lista de cidades do estado
+    
 
 
+
+    const Formik=useFormik({
+        initialValues:{
+            name:curriculumContext?.name ? curriculumContext.name : '' ,
+            lastname:curriculumContext?.lastname,
+            tel:curriculumContext?.tel,
+            office:curriculumContext?.office,
+            pcd:curriculumContext?.pcd,
+            deficiency:curriculumContext?.deficiency,
+            email:curriculumContext?.email,
+            github:curriculumContext?.github,
+            linkedin:curriculumContext?.linkedin,
+            about:curriculumContext?.about,
+            city:curriculumContext?.city,
+            state:curriculumContext?.state,
+            dateNasc:curriculumContext?.dateNasc,
+      },
+        validationSchema:schemaValidateCurriculum,
+        onSubmit:(values)=>{
+
+        }
+    })
 
 useEffect(()=>{
     const getStates=async()=>{
@@ -41,10 +73,9 @@ useEffect(()=>{
         const citys=await apiStatesCity.getCitys() as {id:number,nome:string}[]
         setCityList(citys)
       }
-    
-   
     getCitys()
 },[])
+
 
 
 useEffect(()=>{
@@ -52,42 +83,42 @@ useEffect(()=>{
 },[stateSelected,citySelected])
 
 
+
     return <Layout>
-        <ContentPage titlePage="Criar Curriculo">
+        <ContentPage titlePage="Atualizar Curriculo">
             <Page>
-                <p>Preencha os campos para criar seu curriculo</p>
-                <form action=''>
+                <form action='' onSubmit={Formik.handleSubmit}>
                     <fieldset>
                         <legend>Dados Pessoais</legend>
                         <div className="cx-input">
                             <label htmlFor="">Nome</label>
-                            <Input type="text" />
+                            <Input type="text" value={Formik.values.name} name="name" onChange={Formik.handleChange}  />
                         </div>
                         <div className="cx-input">
                             <label htmlFor="">Sobrenome</label>
-                            <Input type="text" />
+                            <Input type="text" value={Formik.values.lastname} name="lastname" onChange={Formik.handleChange} />
                         </div>
 
                         <div className="cx-input">
                             <label htmlFor="">Email</label>
-                            <Input type="text" />
+                            <Input type="email" value={Formik.values.email} name="email" onChange={Formik.handleChange}/>
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Telefone</label>
-                          <Input type="text" />
+                          <Input type="tel" value={Formik.values.tel} name="tel" onChange={Formik.handleChange}  />
                         </div>
                         <div className="cx-input">
                             <label htmlFor="">Linkedin</label>
-                          <Input type="url" />
+                          <Input type="url" value={Formik.values.linkedin} name="linkedin" onChange={Formik.handleChange} />
                         </div>
                         <div className="cx-input">
                             <label htmlFor="">É da area de TI? Github</label>
-                          <Input type="url" />
+                          <Input type="url" value={Formik.values.github} name="github" onChange={Formik.handleChange}/>
                         </div>
                         <div className="cx-state-city">
                             <div className="cx-input">
                                 <label htmlFor="">Estado</label>
-                                <select onChange={(e: React.ChangeEvent<HTMLSelectElement>)=>setStateSelected(e.target.value)}>
+                                <select value={Formik.values.state} name="state" onChange={(e: React.ChangeEvent<HTMLSelectElement>)=>setStateSelected(e.target.value)}>
                                     {statesList?.map((s,k)=>(
                                         <option value={s.sigla}>{s.sigla}-{s.nome}</option>
                                     ))}
@@ -96,7 +127,7 @@ useEffect(()=>{
                              </div>
                              <div className="cx-input">
                                 <label htmlFor="">Cidade</label>
-                                <select onChange={(e: React.ChangeEvent<HTMLSelectElement>)=>setCitySelected(e.target.value)}>
+                                <select value={Formik.values.city} onChange={(e: React.ChangeEvent<HTMLSelectElement>)=>setCitySelected(e.target.value)}>
                                     {cityList?.map((c,k)=>(
                                        <option value={c.nome}>{c.nome}</option>
                                     ))}
@@ -107,31 +138,31 @@ useEffect(()=>{
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Profissão/Cargo</label>
-                           <Input type="text" />
+                           <Input type="text" name="office" value={Formik.values.office}  onChange={Formik.handleChange} />
                         </div>
                         <div className="cx-radio">
                            <label htmlFor="">você é uma pessoa PCD?</label>
-                          <input type="radio" name="pcd" />Sim
-                          <input type="radio" name="pcd" />Não
+                          <input type="radio" value={Formik.values.pcd} checked={Formik.values.pcd === 1 ? true : false} onChange={Formik.handleChange} name="pcd" />Sim
+                          <input type="radio" checked={Formik.values.pcd === 1 ? true : false} onChange={Formik.handleChange} name="pcd"/>Não
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Se respondeu sim a pergunta anterior,qual a sua deficiência?</label>
-                           <Input type="text" />
+                           <Input type="text" value={Formik.values.deficiency} onChange={Formik.handleChange} name="deficiency"  />
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Sobre</label>
-                          <TextArea h="250px" placeholder="Fale um pouco sobre você,destaque suas habilidades"></TextArea>
+                          <TextArea h="250px" value={Formik.values.about} onChange={Formik.handleChange} placeholder="Fale um pouco sobre você,destaque suas habilidades">{Formik.values.about}</TextArea>
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Data de nascimento</label>
-                           <Input type="date" />
+                           <Input type="date" value={Formik.values.dateNasc} name="dateNasc" onChange={Formik.handleChange} />
                         </div>
                         <div className="cx-btn">
                             <button>continuar a preencher</button>
                         </div>
                     </fieldset>
                   
-                   {curriculum && <>
+                   {curriculumContext && <>
                     <fieldset>
                         <legend>Habilidades 
                             {!newSkill &&  <span onClick={()=>setNewSkill(true)}>adicionar nova</span>}
@@ -149,6 +180,13 @@ useEffect(()=>{
                                 <button>Adicionar</button>
                             </div>
                             </BoxNewExperienceAndTrainning >
+                            {
+                                <div className="box-skills">
+                                    {curriculumContext.skills.map((i,k)=>(
+                                        <li>{i.name} <span onClick={()=>apiSkill.deleteSkillId(i.id)}><Lixeira /></span></li>
+                                    ))}
+                                </div>
+                            }
                    </fieldset>
                     <fieldset>
                         <legend>Formação 
@@ -193,6 +231,11 @@ useEffect(()=>{
                                 <button>Adicionar</button>
                             </div>
                             </BoxNewExperienceAndTrainning >
+                            {
+                                <div className="box-trainnings">
+                                    {curriculumContext.trainnings.map((t,k)=><CardTrainning key={k} trainning={t}/>)}
+                                </div>
+                            }
                     </fieldset>
                     <fieldset>
                         <legend>Experiência Profissional 
@@ -234,6 +277,11 @@ useEffect(()=>{
                                 <button>Adicionar</button>
                             </div>
                         </BoxNewExperienceAndTrainning>
+                        {
+                                <div className="box-experiences">
+                                    {curriculumContext.experiences.map((xp,k)=><CardExperience key={k} experience={xp}/>)}
+                                </div>
+                            }
                         </fieldset>
                         
                       

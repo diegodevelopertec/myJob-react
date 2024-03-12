@@ -15,10 +15,9 @@ export const VagasEmpresaId=()=>{
 
     useEffect(()=>{
        const getCompany=async()=>{
-                const response=await apiCompany.getCompanyId(parseInt(id as string)) as CompanyInterface
-                setCompanyId(response)
-                console.log(companyId)
-                console.log(id)
+        const response=await apiCompany.getCompanyId(parseInt(id as string)) as CompanyInterface
+        setCompanyId(response)
+            
        }
 
 

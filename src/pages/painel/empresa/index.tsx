@@ -1,66 +1,66 @@
-import { Link } from "react-router-dom"
-import { ContentPage } from "../../../componentes/ContentPage"
-import { Painel } from "../../../componentes/Painel"
-import { useAuthContext } from "../../../context/authContext"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { CardJobCompany, Page } from "./style"
+import { Link } from "react-router-dom"
+import { Painel } from "../../../componentes/Painel"
 import { CompanyInterface } from "../../../interfaces/company"
 import apiCompany from "../../../actions/apiCompany"
 import { baseURL } from "../../../services/axios.config"
-import { PageCompany } from "./style"
-
-
+import { IJob } from "../../../interfaces/job"
+import { useAuthContext } from "../../../context/authContext"
 
 export const EmpresaPainel=()=>{
+    const [companyId,setCompanyId]=useState<CompanyInterface | null>(null)
     const {user}=useAuthContext()
-    const [company,setCompany]=useState<CompanyInterface | null>(null)
-
 
     useEffect(()=>{
-    
-           const getCompanyfromUser=async()=>{
-               if(user){
-                   const data=await apiCompany.getCompanyFromUser(user.id as number)
-                   setCompany(data as CompanyInterface)
-               }
-           }
-           getCompanyfromUser()
-      
-   },[])
-    
-
-
-
-    return <Painel >
-        <ContentPage titlePage="">
-          {!company &&   <div>
-              <p>Olá {user?.name}! Você ainda não configurou sua empresa.<Link to={'/painel/recrutador/configure_empresa'}>Clique aqui</Link></p>  
-            </div>
+       const getCompany=async()=>{
+        if(user){
+          const response=await apiCompany.getCompanyFromUser(user.id as number) as CompanyInterface
+          setCompanyId(response)
         }
-          {
-            company && <PageCompany>
-                  <div className="header-page">
-                        {company.logo !== null &&  <img src={`${baseURL}public/images/${company.logo}`} alt="" />}
-                        {company.logo === null &&   <img src="/assets/company-logo.png" />}
-                    <h3>{company.name}</h3>
-
-                   </div>
-                   <div className="data">
-                        <span>{company.instagram}</span>
-                        <span>{company.email}</span>
-                        <span>{company.linkedin}</span>
-                        <span>{company.tel}</span>
-                        <span>{company.city}-{company.state}</span>
-                   </div>
-                   <section>
-                     <h3>Sobre</h3>
-                     <p>{company.about}</p>
-                   </section>
-                   <section>
-                     <h3>Vagas da Empresa</h3>
-                   </section>
               
-            </PageCompany>
-          }
-        </ContentPage>
+       }
+
+
+       getCompany()
+    },[])
+
+
+    
+    return <Painel p="0">
+      <Page>
+        <div className="header-page">
+          <div className="logo-name">
+              <img src={`${baseURL}public/images/${companyId?.logo}`} alt="" />
+              <h2>{companyId?.name}</h2>
+          </div>
+          <Link to={``} >Editar</Link>
+        </div>
+        <main className="content">
+            <section>
+                <h3>Sobre Nós</h3>
+                <p>{companyId?.about}</p>
+            </section>
+            <section>
+                <section className="vagas">
+                   <h3>Vagas</h3>
+                    <p>Se candidate á nossas vagas e faça parte da nossa Equipe</p>
+                    <div className="cards-vagas">
+                    {companyId?.jobs && companyId?.jobs.map((j:IJob,k)=><CardJobCompany>
+                        <div className="job-details">
+                          <h4>{j.title}</h4>
+                          <p>publicada em {j.createDate}</p>
+                        </div>
+                         <Link to={`/painel/recrutador/vagaspostadas/${j.id}`} >ver detalhes</Link>
+                    
+                    </CardJobCompany>)}
+                    </div>
+                </section>
+            </section>
+          </main>
+        
+       </Page>
     </Painel>
+   
 }

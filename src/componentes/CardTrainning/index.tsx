@@ -8,6 +8,8 @@ import { toast } from "react-toastify"
 import LixeiraIcon from "../../assets/svgs/lixeira"
 import { Tooltip } from "react-tooltip"
 import apiTrainning from "../../actions/apiTrainning"
+import Lixeira from "../../assets/svgs/lixeira"
+import Trash from "../../assets/svgs/trash"
 
 
 type Props={
@@ -28,15 +30,14 @@ export default ({trainning}:Props)=>{
           <p>{trainning.school}</p>
         </div>
         {!location.pathname.includes('painel') && <div className="right">
-          <Button   radius="5px" h="45px" w="45px" p="5px"
-                bgH={GlobalStyle.bgThemeSecondary} 
+          <button  
                 onClick={deleteTrainning}
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content={'deletar Formação'}
                 data-tooltip-place="left"
-            >
-             <LixeiraIcon />   
-            </ Button>
+            > 
+            <Lixeira /> 
+            </button>
         </div>}
         <Tooltip id="my-tooltip" />
     </Container>

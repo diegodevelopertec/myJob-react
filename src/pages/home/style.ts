@@ -80,8 +80,9 @@ export const ContainerOne=styled.section`
                 padding: 32px 22px;
                 cursor: pointer;
                 &:hover{
-                    box-shadow:  0 0 22px #00DFA2;
-                  background-color: ${GlobalStyle.bgThemeSecondary};
+                    box-shadow:  0 0 22px ${GlobalStyle.bgTheme};
+                    background:linear-gradient( to bottom , ${GlobalStyle.bgTheme} ,#000);
+                   outline:2px solid  ${GlobalStyle.bgThemeSecondary};
                 }
               
             }
@@ -318,8 +319,9 @@ display: flex;
                 padding: 32px 22px;
                 cursor: pointer;
                 &:hover{
-                    box-shadow:  0 0 22px #00DFA2;
-                  background-color: ${GlobalStyle.bgThemeSecondary};
+                    box-shadow:  0 0 22px ${GlobalStyle.bgTheme};
+                    background:linear-gradient( to bottom , ${GlobalStyle.bgTheme} ,#000);
+                   outline:2px solid  ${GlobalStyle.bgThemeSecondary};
                 }
               
             }

@@ -81,8 +81,11 @@ margin:12px 0;
             cursor: pointer;
             border-radius: 3px;
             &:hover{
-                background-color:#00DFA2;
-
+                box-shadow:0 0 9px #181D31;
+               background-color: transparent;
+               color:${GlobalStyle.bgThemeSecondary};
+               outline: 1px solid  ${GlobalStyle.bgThemeSecondary};
+                
             }
         }
     }

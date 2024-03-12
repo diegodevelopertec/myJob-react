@@ -100,7 +100,7 @@ padding: 100px 12px;
 
 export const NotCurriculum=styled.div`
 width: 100%;
-display: none;
+display: flex;
 .box{
     width: 100%;
     height: 500px;
@@ -282,4 +282,32 @@ font-family: 'Poppins';
     }
 }
 
+`
+
+export const ContentModal=styled.div`
+width:880px;
+padding:12px 52px;
+.cx-input{
+    padding: 12px;
+    label{
+    max-width: 100px;
+    margin-right:9px;
+}
+input{
+    background-color: #DEDE;
+    flex:1;
+    padding: 9px;
+    margin: 3px 0;
+}
+
+    
+}
+
+
+.cx-btn{
+    display:flex;
+
+    margin:30px 0;
+    justify-content:center;
+}
 `

@@ -89,10 +89,13 @@ export const HeaderPainel=styled.header`
         }
     }
 `
-export const Main=styled.main`
+type Props={
+    p?:string
+}
+export const Main=styled.main<Props>`
 display: flex;
 margin-left: 219px;
-padding: 22px;
+padding:${props=>props.p ? props.p : ' 22px'};
 flex: 1;
 background-color:#F9F9F9;
 flex-direction: column;

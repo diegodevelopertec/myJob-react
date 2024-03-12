@@ -1,6 +1,6 @@
 import { ContentPage } from "../../componentes/ContentPage"
 import { Layout } from "../../componentes/Layout"
-import { BoxCurriculum, NotCurriculum, PDFPage, Page } from "./style"
+import { BoxCurriculum, ContentModal, NotCurriculum, PDFPage, Page } from "./style"
 import { useAuthContext } from "../../context/authContext"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
@@ -14,6 +14,8 @@ import { Modal } from "../../componentes/Modal"
 import { baseURL } from "../../services/axios.config"
 import Loading from "../../componentes/Loading"
 import { GlobalStyle } from "../../globalStyle"
+import { Input } from "../../componentes/Input"
+import { Button } from "../../componentes/Button"
 
 export const Conta=()=>{
     const [targetRef,setTargetRef]=useState(null)
@@ -288,7 +290,7 @@ const deleteCurriculumUser=(id:number)=>{
                     </section>
                 </BoxCurriculum> 
             }
-             {!hasCurriculum && <NotCurriculum>
+             {(!hasCurriculum && !loadingCurriculum) && <NotCurriculum>
                <div className="box">
                    <div className="text">
                         <h3>Olá {user?.name}</h3>
@@ -299,7 +301,33 @@ const deleteCurriculumUser=(id:number)=>{
             </NotCurriculum>
             }
          </div>
-         
+         <Modal>
+          <ContentModal>
+            <div className="cx-input">
+              <label htmlFor="">Nome</label>
+              <Input value={user?.name} />
+            </div>
+            <div className="cx-input">
+              <label htmlFor="">Sobrenome</label>
+              <Input value={user?.lastname} />
+            </div>
+            <div className="cx-input">
+              <label htmlFor="">Email</label>
+              <Input value={user?.email} />
+            </div>
+            <div className="cx-input">
+              <label htmlFor="">Telefone</label>
+              <Input value={user?.tel} />
+            </div>
+            <div className="cx-input">
+              <label htmlFor="">Senha</label>
+              <Input value={user?.password} />
+            </div>
+           <div className="cx-btn">
+              <Button w='60%'  bgColor="#0C359E" p='22px' bgH="#1D24CA" text="Atualizar" />
+           </div>
+          </ContentModal>
+         </Modal>
         </Page>
      </ContentPage>
     </Layout>

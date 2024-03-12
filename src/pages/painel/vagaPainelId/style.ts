@@ -41,7 +41,7 @@ p{
         border-bottom: 1px solid gray;
         justify-content: space-between;
         align-items: center;
-        button{
+        button,a{
             padding:12px 32px;
             margin:  0 8px;
             color: white;
@@ -285,7 +285,7 @@ flex-direction: column;
 background-color: #F3F3F3;
 box-shadow:0 0 12px #222;
 right: 0;
-width:${props=>props.onView ? '54vw' :'0'};
+width:${props=>props.onView ? '83vw' :'0'};
 height: 100vh;
 bottom: 0;
 transition: all ease-in-out 0.3s;

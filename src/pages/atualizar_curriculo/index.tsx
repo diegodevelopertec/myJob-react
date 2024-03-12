@@ -3,17 +3,16 @@ import { ContentPage } from "../../componentes/ContentPage"
 import { Input } from "../../componentes/Input"
 import { Layout } from "../../componentes/Layout"
 import { TextArea } from "../../componentes/TextArea"
-import { BoxNewExperienceAndTrainning, Page } from "./style"
-import Close from "../../assets/svgs/close"
 import { apiStatesCity } from "../../actions/stateCity"
 import { useAuthContext } from "../../context/authContext"
 import { useFormik } from "formik"
-import curriculumInitialvalues from "../../validations/initialValues/curriculumInitialvalues"
 import { schemaValidateCurriculum } from "../../validations/curriculum.validation"
-import CardTrainning from "../../componentes/CardTrainning"
-import CardExperience from "../../componentes/CardExperience"
-import Lixeira from "../../assets/svgs/lixeira"
-import apiSkill from "../../actions/apiSkill"
+import { toast } from "react-toastify"
+import FormTrainning from "../../componentes/FormTrainning"
+import FormExperience from "../../componentes/FormExperience"
+import FormSkill from "../../componentes/FormSkill"
+import User from "../../assets/svgs/user"
+import { Page } from "./style"
 
 interface State {
     id: number;
@@ -21,36 +20,34 @@ interface State {
     sigla: string;
 }
   
-
-
 export const UpdateCurriculum=()=>{
-    const [newTrainning,setNewTrainning]=useState<boolean>(false)
-    const [newExperience,setNewExperience]=useState<boolean>(false)
-    const [newSkill,setNewSkill]=useState<boolean>(false)
+
     const {curriculumContext}=useAuthContext()
     const [stateSelected,setStateSelected]=useState<string | null>(null) //estado string
     const [citySelected,setCitySelected]=useState<string | null>(null)         //estado object
     const [statesList,setStatesList]=useState<State[] | []>([])   //lista de estados
     const [cityList,setCityList]=useState<{id:number,nome:string}[] | []>([])    //lista de cidades do estado
-    
+   
 
 
 
-    const Formik=useFormik({
+
+
+ const Formik=useFormik({
         initialValues:{
             name:curriculumContext?.name ? curriculumContext.name : '' ,
             lastname:curriculumContext?.lastname,
             tel:curriculumContext?.tel,
             office:curriculumContext?.office,
             pcd:curriculumContext?.pcd,
-            deficiency:curriculumContext?.deficiency,
+            deficiency:curriculumContext?.pcd === 0 ? '' : curriculumContext?.deficiency,
             email:curriculumContext?.email,
             github:curriculumContext?.github,
             linkedin:curriculumContext?.linkedin,
             about:curriculumContext?.about,
             city:curriculumContext?.city,
             state:curriculumContext?.state,
-            dateNasc:curriculumContext?.dateNasc,
+            dateNasc:curriculumContext?.dateNasc as  string ,
       },
         validationSchema:schemaValidateCurriculum,
         onSubmit:(values)=>{
@@ -87,9 +84,9 @@ useEffect(()=>{
     return <Layout>
         <ContentPage titlePage="Atualizar Curriculo">
             <Page>
-                <form action='' onSubmit={Formik.handleSubmit}>
+                <form action='' className="form" onSubmit={Formik.handleSubmit}>
                     <fieldset>
-                        <legend>Dados Pessoais</legend>
+                        <legend><User /> Dados Pessoais</legend>
                         <div className="cx-input">
                             <label htmlFor="">Nome</label>
                             <Input type="text" value={Formik.values.name} name="name" onChange={Formik.handleChange}  />
@@ -142,8 +139,8 @@ useEffect(()=>{
                         </div>
                         <div className="cx-radio">
                            <label htmlFor="">você é uma pessoa PCD?</label>
-                          <input type="radio" value={Formik.values.pcd} checked={Formik.values.pcd === 1 ? true : false} onChange={Formik.handleChange} name="pcd" />Sim
-                          <input type="radio" checked={Formik.values.pcd === 1 ? true : false} onChange={Formik.handleChange} name="pcd"/>Não
+                          <input type="radio" value={'Sim'} checked={Formik.values.pcd === 1 ? true : false } onChange={Formik.handleChange} name="pcd" />Sim
+                          <input type="radio" value={'Nao'} checked={Formik.values.pcd === 0 ? true : false} onChange={Formik.handleChange} name="pcd"/>Não
                         </div>
                         <div className="cx-input">
                            <label htmlFor="">Se respondeu sim a pergunta anterior,qual a sua deficiência?</label>
@@ -158,142 +155,16 @@ useEffect(()=>{
                            <Input type="date" value={Formik.values.dateNasc} name="dateNasc" onChange={Formik.handleChange} />
                         </div>
                         <div className="cx-btn">
-                            <button>continuar a preencher</button>
+                            <input type="submit" value='atualizar' />
                         </div>
                     </fieldset>
-                  
-                   {curriculumContext && <>
-                    <fieldset>
-                        <legend>Habilidades 
-                            {!newSkill &&  <span onClick={()=>setNewSkill(true)}>adicionar nova</span>}
-                         </legend>
-                        <BoxNewExperienceAndTrainning newItem={newSkill}>
-                           <div className="header-box">
-                               <h2>Nova Habilidade</h2>
-                               <span onClick={()=>setNewSkill(false)}><Close /></span>
-                           </div>
-                            <div className="cx-input">
-                               <Input type="text" placeholder="digite uma habilidade ...Ex:Boa comunicação,pacote office,...." />
-                            </div>
-                        
-                            <div className="cx-btn">
-                                <button>Adicionar</button>
-                            </div>
-                            </BoxNewExperienceAndTrainning >
-                            {
-                                <div className="box-skills">
-                                    {curriculumContext.skills.map((i,k)=>(
-                                        <li>{i.name} <span onClick={()=>apiSkill.deleteSkillId(i.id)}><Lixeira /></span></li>
-                                    ))}
-                                </div>
-                            }
-                   </fieldset>
-                    <fieldset>
-                        <legend>Formação 
-                            {!newTrainning &&  <span onClick={()=>setNewTrainning(true)}>adicionar nova</span>}
-                         </legend>
-                        <BoxNewExperienceAndTrainning newItem={newTrainning}>
-                           <div className="header-box">
-                               <h2>Nova Formação</h2>
-                               <span onClick={()=>setNewTrainning(false)}><Close /></span>
-                           </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Nome</label>
-                               <Input type="text" placeholder="digite o nome do curso" />
-                            </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Instituição de Ensino</label>
-                               <Input type="text" placeholder="digite o nome da instituição" />
-                            </div>
-                            <div className="cx-dates">
-                                <div className="cx-date">
-                                    <label htmlFor="">Inicio</label>
-                                    <Input type="date" />
-                                </div>
-                                <div  className="cx-date">
-                                    <label htmlFor="">Conclusão:</label>
-                                    <Input type="date" />
-                                </div>
-                                <div className="radio">
-                                    <label htmlFor="">Cursando?</label>
-                                    <input type="radio" name="cursando" id="" />Sim
-                                    <input type="radio" name="cursando" id="" />Não
-                                </div>
-                            </div>
-                            <div className=" cx-radio">
-                               <label htmlFor="">Tipo</label>
-                                <span> <input type="radio" name="formacao" />Ensino Fundamental</span>
-                                <span> <input type="radio" name="formacao" />Ensino Fundamental</span>
-                                <span> <input type="radio" name="formacao"  />Ensino Superior</span>
-                                <span> <input type="radio" name="formacao"/>Curso Livre/Bootcamp</span>
-                            </div>
-                            <div className="cx-btn">
-                                <button>Adicionar</button>
-                            </div>
-                            </BoxNewExperienceAndTrainning >
-                            {
-                                <div className="box-trainnings">
-                                    {curriculumContext.trainnings.map((t,k)=><CardTrainning key={k} trainning={t}/>)}
-                                </div>
-                            }
-                    </fieldset>
-                    <fieldset>
-                        <legend>Experiência Profissional 
-                            {!newExperience &&  <span onClick={()=>setNewExperience(true)}>adicionar nova</span>}
-                        </legend>
-                        <BoxNewExperienceAndTrainning newItem={newExperience}>
-                           <div className="header-box">
-                               <h2>Nova Experiência</h2>
-                               <span onClick={()=>setNewExperience(false)}><Close /></span>
-                           </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Cargo</label>
-                               <Input type="text" placeholder="digite seu cargo"/>
-                            </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Empresa</label>
-                               <Input type="text" placeholder="digite o nome da empresa"  />
-                            </div>
-                            <div className="cx-dates">
-                                <div className="cx-date">
-                                    <label htmlFor="">Inicio</label>
-                                    <Input type="date" />
-                                </div>
-                                <div className="cx-date">
-                                    <label htmlFor="">Conclusão:</label>
-                                    <Input type="date" />
-                                </div>
-                                <div className="radio">
-                                    <label htmlFor="">Trabalha aqui?</label>
-                                    <input type="radio" name="" id="" />Sim
-                                    <input type="radio" name="" id="" />Não
-                                </div>
-                            </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Sobre</label>
-                                <TextArea w="auto" placeholder="digite algo sobre essa sua experiencia..." h="240px"></TextArea>
-                            </div>
-                            <div className="cx-btn">
-                                <button>Adicionar</button>
-                            </div>
-                        </BoxNewExperienceAndTrainning>
-                        {
-                                <div className="box-experiences">
-                                    {curriculumContext.experiences.map((xp,k)=><CardExperience key={k} experience={xp}/>)}
-                                </div>
-                            }
-                        </fieldset>
-                        
-                      
-                   
-                     <div className="cx-btn">
-                        <input type="submit" value={'Salvar informações'}/>
-                    </div>
-                   
-                   
-                   
-                   </>}
-                </form>
+                    </form>
+                   <>
+                        <FormSkill />
+                        <FormTrainning />
+                        <FormExperience />
+ </>
+                
             </Page>
         </ContentPage>
     </Layout>

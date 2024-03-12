@@ -77,12 +77,23 @@ nav{
             font-family: 'Poppins';
             margin:0 12px;
             color: #DEDEDE;
+            display: flex;
+            align-items: center;
             padding: 13px 24px;
             border-radius: 23px;
             transition:all ease 0.2s;
+            .svg{
+                height: 22px;
+                stroke:white;
+                margin-right: 7px;
+            }
             &:hover{
                 background-color:${GlobalStyle.bgThemeSecondary};
-              
+                color: ${GlobalStyle.bgTheme};
+                .svg{
+                  height: 22px;
+                  stroke: ${GlobalStyle.bgTheme};
+                }
             }
         }
     }

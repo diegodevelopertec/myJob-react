@@ -50,7 +50,7 @@ useEffect(()=>{
            <h3>{jobId?.title} <span>{jobId?.category.name}</span></h3>
             <div>
             <button onClick={()=>setOnListCandidates(true)} >ver candidaturas</button>
-            <button>Editar</button>
+            <Link to={`/painel/recrutador/atualizarvaga/${jobId?.id}`}>Editar</Link>
             </div>
           </div>
           {jobId?.exclusivepcd  && <div className="pcd-line">

@@ -109,6 +109,7 @@ export const SectionDetailsJobs=styled.div`
             }
            .data{
             flex:1;
+            padding:20px 0;
                 p{
                     padding: 12px;
                     font-weight: 500;
@@ -117,8 +118,9 @@ export const SectionDetailsJobs=styled.div`
                 }
               
                 h3{
-                    font-family: 'Montserrat';
-                    font-size:26px;
+                    font-family: 'Segoe UI';
+                    font-size:28px;
+                    color:grey;
                     font-weight: bold;
                 }
            }
@@ -132,7 +134,7 @@ export const SectionDetailsJobs=styled.div`
         a{
             color: gray;
             font-size: 17px;
-           padding: 12px 23px;
+            padding: 12px 23px;
            transition: all ease .3s;
             &:hover{
                 color: ${GlobalStyle.bgTheme};
@@ -152,26 +154,26 @@ export const SectionDetailsJobs=styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #FFF;
-            padding:32px 22px;
+            color: #fff;
+            padding:22px 22px;
             font-size: 17px;
-            background-color:#0EA293;
+            background-color:#3559E0;
             width: 30%;
-            transition: all ease .4s;
+            transition: all ease .3s;
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 13px;
             border: none;
             &:hover{
-                background:#14C38E;
-                box-shadow: 0 0 12px ${GlobalStyle.colorTitles};
-                color: ${GlobalStyle.colorTitles};
+                background-color:#0D1282;
+                box-shadow: 0 0 12px #aaa;
+                color:white;
 
             }
         }
     
     }
 
-@media screen and (max-width:950px) {
+@media screen and (max-width:780px) {
     .card-detail{
         .card-body-company{
             flex-direction: column;
@@ -183,19 +185,42 @@ export const SectionDetailsJobs=styled.div`
                     height: 255px;
                     border-radius: 100%;
                 }
+                
             }
             .data{
-                margin: 12px 0;
-                h3{
-                    text-align: center;
-                }
-                p{
-                    text-align:justify;
-                }
+                    margin: 12px 0;
+                
+                    h3{
+                        display:flex;
+                        justify-content:center;
+                    }
+                    p{
+                        text-align:justify;
+                    }
+                   
+                   
             }
+        
         }
+        .cx-link{
+               margin:22px 0;
+               padding:0;
+               display:flex;
+                padding:0;
+                text-align:center;
+                justify-content:center;
+               a{
+                display:flex;
+                padding:0;
+                text-decoration:underline;
+                margin-bottom:12px;
+                text-align:center;
+                justify-content:center;
+               }
+     }
     }
-
+    
+   
     .actions{
         margin:0;
         button{

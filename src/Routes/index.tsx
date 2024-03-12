@@ -27,6 +27,8 @@ import {PrivateRecruiter} from "../componentes/Private/privateTypeRecruiter"
 import { PrivateCandidate } from "../componentes/Private/PrivateTypeCandidates"
 import { UpdateCurriculum } from "../pages/atualizar_curriculo"
 import { VagasEmpresaId } from "../pages/vagasEmpresaId"
+import { AtualizarVagaPainel } from "../pages/painel/atualizarVaga"
+import { Mensagens } from "../pages/mensagens"
 
 
 
@@ -55,6 +57,7 @@ export const Routes=()=>{
             <Route path="/painel/recrutador/candidatos" element={<Private><PrivateRecruiter><CandidatosPainel /></PrivateRecruiter></Private>}/>
             <Route path="/painel/recrutador/candidatos/:id" element={<Private><PrivateRecruiter><CandidatoId /></PrivateRecruiter></Private>}/>
             <Route path="/painel/recrutador/novavaga" element={<Private><PrivateRecruiter><NovaVagaPainel /></PrivateRecruiter></Private>}/>
+            <Route path="/painel/recrutador/atualizarvaga/:id" element={<Private><PrivateRecruiter><AtualizarVagaPainel /></PrivateRecruiter></Private>}/>
             <Route path="/painel/recrutador/minha-conta" element={<Private><PrivateRecruiter><ContaPainel /></PrivateRecruiter></Private>}/>
             <Route path="/painel/recrutador/sobre-empresa" element={<Private><PrivateRecruiter><EmpresaPainel /></PrivateRecruiter></Private>}/>
             <Route path="/painel/recrutador/configure_empresa" element={<Private><PrivateRecruiter><AddEmpresa /></PrivateRecruiter></Private>}/>
@@ -66,6 +69,7 @@ export const Routes=()=>{
          <>
              <Route path="/vagas" element={<Vagas/>}/>
               <Route path="/vagas/:id" element={<VagaId />}/>
+              <Route path="/mensagens" element={<Mensagens />}/>
               <Route path="/:empresa/:id/vagas" element={<Private><PrivateCandidate><VagasEmpresaId /></PrivateCandidate></Private>}/>
              <Route path="/candidaturas" element={<Private><PrivateCandidate><Candidaturas /></PrivateCandidate></Private>}/>
              <Route path="/candidaturas/:id" element={<Private><PrivateCandidate><CandidaturaId /></PrivateCandidate></Private>}/>

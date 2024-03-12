@@ -27,9 +27,18 @@ transition: opacity 0.3s ease-in-out;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff; /* Cor de fundo do modal */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 0 22px ;
+    box-shadow: 0 0px 12x #aaa;
+    padding: auto;
 
+    .header-modal{
+        display: flex;
+        justify-content: end;
+        padding: 12px;
+        cursor: pointer;
+        .svg{
+            height:35px;
+        }
+    }
     .remove-modal{
         display: flex;
         width: 100%;

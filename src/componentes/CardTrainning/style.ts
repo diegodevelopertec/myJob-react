@@ -17,15 +17,49 @@ margin: 12px 0;
         font-weight: 900;
         color: ${GlobalStyle.bgTheme};
         text-transform: capitalize;
-      .svg{
-        height: 35px;
-        width: 35px;
-        margin-right: 6px;
-      }
+        .svg{
+          height: 35px;
+          width: 35px;
+          stroke: gray;
+          margin-right: 6px;
+       }
     }
     p{
         color: #dede;
-        font-weight: 800;
+        font-weight:500;
+        margin: 8px 0;
+        font-family:'Poppins';
+    }
+
+
+    button{
+      height: 55px;
+      width: 55px;
+      padding: 9px;
+      border-radius: 8px;
+      display: flex;
+      border: none;
+      justify-content: center;
+      align-items: center;
+      transition: all ease .3s;
+      cursor: pointer;
+      background-color: transparent;
+      .svg{
+        height: 35px;
+        width: 35px;
+        stroke: #DEDE;
+        margin-right: 6px;
+      }
+      &:hover{
+       border: 1px solid #DEDE;
+        background-color:${GlobalStyle.bgThemeSecondary};
+        .svg{
+          height: 35px;
+          width: 35px;
+          stroke:${GlobalStyle.bgTheme};
+          margin-right: 6px;
+        }
+      }
     }
 
     @media screen and (max-width: 768px) {

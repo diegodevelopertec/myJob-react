@@ -20,16 +20,42 @@ margin:12px 0;
         margin: 12px 0;
     }
     p{
-        color: white;
-        margin:12px 0;
-        font-size: 12px;
-        font-weight: 600;
+        color: #dede;
+        font-weight:500;
+        margin: 8px 0;
+        font-family:'Poppins';
     }
 
-    .svg{
-        stroke:white;
-        height: 45px;
+    button{
+      height: 55px;
+      width: 55px;
+      padding: 9px;
+      border-radius: 8px;
+      display: flex;
+      border: none;
+      justify-content: center;
+      align-items: center;
+      transition: all ease .3s;
+      cursor: pointer;
+      background-color: transparent;
+      .svg{
+        height: 35px;
+        width: 35px;
+        stroke: #DEDE;
+        margin-right: 6px;
+      }
+      &:hover{
+        outline: 1px solid #DEDE;
+        background-color:${GlobalStyle.bgThemeSecondary};
+        .svg{
+          height: 35px;
+          width: 35px;
+          stroke:${GlobalStyle.bgTheme};
+          margin-right: 6px;
+        }
+      }
     }
+
     @media screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;

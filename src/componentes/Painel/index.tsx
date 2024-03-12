@@ -13,9 +13,10 @@ import apiCompany from '../../actions/apiCompany'
 import { CompanyInterface } from '../../interfaces/company'
 
 type Props={
-    children:ReactNode
+    children:ReactNode,
+    p?:string
 }
-export const Painel=({children}:Props)=>{
+export const Painel=({children,p}:Props)=>{
     const {user}=useAuthContext()
     const [companyName,setCompanyName]=useState<string>('')
     useEffect(()=>{
@@ -52,7 +53,7 @@ export const Painel=({children}:Props)=>{
                 <Link to='/painel/recrutador/sobre-empresa' ><Company />A Empresa</Link>
             </nav>
         </HeaderPainel>
-        <Main>
+        <Main p={p}>
            {children}
         </Main>
     </Container>

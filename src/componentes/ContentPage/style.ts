@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Container=styled.div`
 display: flex;
 flex-direction: column;
-padding:50px;
+padding:50px 150px;
 
 .content{
     min-height: 100vh;

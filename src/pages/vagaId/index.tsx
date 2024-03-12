@@ -32,35 +32,37 @@ export const VagaId=()=>{
     const {id}=params
 
     useEffect(()=>{
+        const verifyApplicationByIdJob=async()=>{
+            if(user !== null && jobId){
+              const list=await apiApplication.getApplications(user.id as number) as IApplication[]
+              const verify=list.some(i=>i.idjob === jobId.id && i.iduser === (user.id as number))
+              const applicationUser=list.find(i=>i.idjob === jobId.id && i.iduser === (user.id as number))
+             setHasApplication(verify)
+             setApplication(applicationUser as IApplication)
+          
+            }
+            
+      }
+     setTimeout(verifyApplicationByIdJob, 50);
+    })
+
+    useEffect(()=>{
         const getJobById=async()=>{
             const job=await apiJobs.getJobId(parseInt(id as string))
             setJobId(job)
             setLoadingJob(false)      
         }
-       setTimeout( getJobById,1000)
+      
+     setTimeout( getJobById,1000)
     },[])
 
-useEffect(()=>{
-    const verifyApplicationByIdJob=async()=>{
-        if(user !== null && jobId){
-          const list=await apiApplication.getApplications(user.id as number) as IApplication[]
-          const verify=list.some(i=>i.idjob === jobId.id && i.iduser === (user.id as number))
-          const applicationUser=list.find(i=>i.idjob === jobId.id && i.iduser === (user.id as number))
-         setHasApplication(verify)
-         setApplication(applicationUser as IApplication)
-         console.log(verify)
-        }
-        
-  }
-   setTimeout(verifyApplicationByIdJob,956)
-})
+
 
     useEffect(()=>{
         document.title='MyJobs/Vaga'
       },[])
 
-   
-
+      
 
     const ClickCandidateToJob=async()=>{
         const d=new Date()

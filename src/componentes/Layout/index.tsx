@@ -15,9 +15,7 @@ export const Layout=({children}:PropsApp)=>{
        <main>
         {children}
        </main>
-       <Modal>
-         <div>abriu o modal</div>
-       </Modal>
+       
        <Footer />
     </Container>
 }

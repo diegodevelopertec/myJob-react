@@ -1,3 +1,4 @@
+
 import styled from "styled-components";
 import { GlobalStyle } from "../../../globalStyle";
 
@@ -22,7 +23,6 @@ input,textarea{
     margin: 15px 0;
     .error{
         color: red;
-        font-size: 13px;
     }
 }
 .city-state{

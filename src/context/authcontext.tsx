@@ -82,7 +82,6 @@ useEffect(()=>{
         }
        
       }
-    
 
   setInterval(
     getCurriculumUser,1200

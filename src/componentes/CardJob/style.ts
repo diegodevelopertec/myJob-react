@@ -96,7 +96,9 @@ transition:all ease .3s;
             border-radius: 3px;
             &:hover{
                 box-shadow:0 0 9px #181D31;
-                background: #0E8388;
+               background-color: transparent;
+               color:${GlobalStyle.bgThemeSecondary};
+               outline: 1px solid  ${GlobalStyle.bgThemeSecondary};
                 
             }
         }

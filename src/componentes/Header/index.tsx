@@ -5,6 +5,7 @@ import MenuBurguerIcon from './../../assets/icons/menuburguer.png'
 import MenuCloseIcon from './../../assets/icons/close.png'
 import { useAuthContext } from "../../context/authContext"
 import Lupa from "../../assets/svgs/lupa"
+import Message from "../../assets/svgs/message"
 
 
 export const Header=()=>{
@@ -46,6 +47,7 @@ export const Header=()=>{
                     <Link to={'/candidaturas'} onClick={conditionLinkClick}>candidaturas</Link>
                     <Link to={'/cursos'} onClick={conditionLinkClick}>cursos</Link>
                     <Link to={'/meus_cursos'} onClick={conditionLinkClick}>meus cursos</Link>
+                    <Link to={'/mensagens'} onClick={conditionLinkClick}><Message />mensagens</Link>
                     <Link to={'/conta'} onClick={conditionLinkClick} >minha conta</Link>
                     </>
                     

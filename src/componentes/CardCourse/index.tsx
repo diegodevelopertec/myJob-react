@@ -2,7 +2,7 @@
 import {useNavigate } from "react-router-dom"
 import { Button } from "../Button"
 import { Container } from "./style"
-import { CursoType } from "../../types/data"
+
 
 
 type Props={

@@ -113,19 +113,19 @@ export const SectionDetailsJobs=styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #FFF;
-            padding:32px 22px;
+            color: #fff;
+            padding:22px 22px;
             font-size: 17px;
-            background-color:#0EA293;
+            background-color:#3559E0;
             width: 30%;
-            transition: all ease .4s;
+            transition: all ease .3s;
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 13px;
             border: none;
             &:hover{
-                background:#14C38E;
-                box-shadow: 0 0 12px ${GlobalStyle.colorTitles};
-                color: ${GlobalStyle.colorTitles};
+                background-color:#0D1282;
+                box-shadow: 0 0 12px #aaa;
+                color:white;
 
             }
         }

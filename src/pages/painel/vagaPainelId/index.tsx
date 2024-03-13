@@ -156,6 +156,21 @@ useEffect(()=>{
                <span onClick={()=>setOnListCandidates(false)}>x</span>
             </div>
             <section className="content">
+                <div className="filters">
+                    <legend>Filtre os resultados</legend>
+                    <div className="filter-item">
+                        <span><input type="radio" />Ensino Médio e Superior</span>
+                         <span> <input type="radio" />Ensino Superior</span>
+                         <span><input type="radio" />Sexo feminino</span>
+                        <span><input type="radio" />Sexo Masculino</span>
+                        <span><input type="radio" />Pessoa PCD</span>
+                        <span><input type="radio" />Somente Nivel Júnior </span>
+                        <span><input type="radio" />Somente Nivel Pleno </span>
+                        <span><input type="radio" />Somente Nivel Sênior </span>
+                      
+
+                    </div>
+                </div>
                  <div className="list-candidates">
                     {
                       jobId !== null &&   jobId?.applications.map((i,k)=>(

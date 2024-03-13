@@ -297,7 +297,7 @@ transition: all ease-in-out 0.3s;
     align-items: center;
     .title{
         font-size: 15px;
-        font-family: 'Montserrat';
+        font-family: 'Poppins';
         font-weight: 800;
         text-align: center;
         color: #fff;
@@ -320,15 +320,47 @@ transition: all ease-in-out 0.3s;
 }
 
 .content{
-    margin: 20px 0;
+    margin:90px  30px;
+    display: flex;
+    height: 100vh;
+    .filters{
+        border: 1px solid #dde;
+        border-radius: 8px;
+        height: 500px;
+        padding: 12px;
+        box-shadow: 0 0 5px #222 2px;
+        flex: 1;
+        legend{
+            font-size: 18px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #dde;
+        }
+        .filter-item{
+            display: flex;
+            flex-direction: column;
+            span{
+                margin: 5px 0;
+                font-size: 16px;
+                input {
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
     overflow-y: auto;
     .list-candidates{
+        width: 70%;
+        height: 670px;
+        overflow-y: auto;
+        box-shadow:0 0 8px #aaa;
+        margin: 0 12px;
+        border: 1px solid #dde;
         display: ${props=>props.onView ? 'block' :'none'};
         padding:33px 22px;
         .divider{
             margin: 5px 0;
             height: 1px;
-            background-color: #aaa;
+            background-color: #dde;
         }
         .profile{
             display: flex;

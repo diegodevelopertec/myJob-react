@@ -40,7 +40,7 @@ export const Candidaturas=()=>{
         )) 
       } 
       {
-        !loadingApplications && typeof application ===  null && <div>
+        !loadingApplications && application?.length == 0 && <div>
           <p>🫤 Você ainda não se candidatou á nenhuma vaga</p>
          </div>
       }

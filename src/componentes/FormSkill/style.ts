@@ -40,9 +40,8 @@ border: 1px solid grey;
 
         .box-skills{
                 display: grid;
-                margin: 12px 0;
+                margin: 4px 0;
                 gap: 4px;
-                min-height: 200px;
                 grid-template-columns: repeat(5,1fr);
                 li{
                     color: white;

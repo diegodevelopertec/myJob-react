@@ -38,6 +38,7 @@ type SigInType={
 
 type ContextType={
     user:User | null,
+    setUser:(user:User | null)=>void,
     curriculumContext:ICurriculum | null,
     setCurriculumContext:(curriculum:ICurriculum | null)=>void,
     SigIn:(user:User,token:string)=>void,
@@ -110,7 +111,7 @@ const SigOut=()=>{
 
 
 const values={
-    user,SigIn,SigOut,SigUp,curriculumContext,setCurriculumContext,company
+    user,setUser,SigIn,SigOut,SigUp,curriculumContext,setCurriculumContext,company
 }
     return <contextAuth.Provider value={values}>
         {children}

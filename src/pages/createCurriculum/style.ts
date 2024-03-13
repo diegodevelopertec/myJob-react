@@ -6,7 +6,7 @@ margin: 50px 20px;
 display: flex;
 align-items: center;
 flex-direction: column;
-form{
+.form{
     width: 70%;
     padding: 22px;
     .cx-btn{
@@ -68,7 +68,16 @@ form{
          font-weight: 33px;
          font-weight: 700;
          font-family: 'Arial';
-         
+         display: flex;
+         align-items: center;
+         .svg{
+            height: 45px;
+            width: 45px;
+            margin:0 3px;
+         }
+         .stroke{
+            fill:${GlobalStyle.bgTheme};
+         }
          span{
             font-size: 14px;
             margin: 0 12px;

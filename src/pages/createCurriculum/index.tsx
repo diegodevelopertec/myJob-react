@@ -10,6 +10,10 @@ import { useFormik } from "formik"
 import { schemaValidateCurriculum } from "../../validations/curriculum.validation"
 import { useAuthContext } from "../../context/authContext"
 import apiSkill from "../../actions/apiSkill"
+import FormSkill from "../../componentes/FormSkill"
+import FormTrainning from "../../componentes/FormTrainning"
+import FormExperience from "../../componentes/FormExperience"
+import User from "../../assets/svgs/user"
 
 interface State {
     id: number;
@@ -94,9 +98,9 @@ const AddNewExperience=async()=>{
         <ContentPage titlePage="Criar Curriculo">
             <Page>
                 <p>Preencha os campos para criar seu curriculo</p>
-                <form action='' onSubmit={Formik.handleSubmit}>
+                <form className="form" action='' onSubmit={Formik.handleSubmit}>
                     <fieldset>
-                        <legend>Dados Pessoais</legend>
+                        <legend><User />Dados Pessoais</legend>
                         <div className="cx-input">
                             <label htmlFor="">Nome</label>
                             <Input name="name" value={Formik.values.name} type="text" onChange={Formik.handleChange}/>
@@ -177,122 +181,20 @@ const AddNewExperience=async()=>{
                             <Input type="submit" bg="" bdRadius={'9px'} value='criar curriculo' />
                         </div>
                     </fieldset>
-                  
-                   {curriculum && <div>
-                    <fieldset>
-                        <legend>Habilidades 
-                            {!newSkill &&  <span onClick={()=>setNewSkill(true)}>adicionar nova</span>}
-                         </legend>
-                        <BoxNewExperienceAndTrainning newItem={newSkill}>
-                           <div className="header-box">
-                               <h2>Nova Habilidade</h2>
-                               <span onClick={()=>setNewSkill(false)}><Close /></span>
-                           </div>
-                            <div className="cx-input">
-                               <Input type="text" placeholder="digite uma habilidade ...Ex:Boa comunicação,pacote office,...." />
-                            </div>
-                        
-                            <div className="cx-btn">
-                                <button>Adicionar</button>
-                            </div>
-                            </BoxNewExperienceAndTrainning >
-                   </fieldset>
-                    <fieldset>
-                        <legend>Formação 
-                            {!newTrainning &&  <span onClick={()=>setNewTrainning(true)}>adicionar nova</span>}
-                         </legend>
-                        <BoxNewExperienceAndTrainning newItem={newTrainning}>
-                           <div className="header-box">
-                               <h2>Nova Formação</h2>
-                               <span onClick={()=>setNewTrainning(false)}><Close /></span>
-                           </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Nome</label>
-                               <Input type="text" placeholder="digite o nome do curso" />
-                            </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Instituição de Ensino</label>
-                               <Input type="text" placeholder="digite o nome da instituição" />
-                            </div>
-                            <div className="cx-dates">
-                                <div className="cx-date">
-                                    <label htmlFor="">Inicio</label>
-                                    <Input type="date" />
-                                </div>
-                                <div  className="cx-date">
-                                    <label htmlFor="">Conclusão:</label>
-                                    <Input type="date" />
-                                </div>
-                                <div className="radio">
-                                    <label htmlFor="">Cursando?</label>
-                                    <input type="radio" name="cursando" id="" />Sim
-                                    <input type="radio" name="cursando" id="" />Não
-                                </div>
-                            </div>
-                            <div className=" cx-radio">
-                               <label htmlFor="">Tipo</label>
-                                <span> <input type="radio" name="formacao" />Ensino Fundamental</span>
-                                <span> <input type="radio" name="formacao" />Ensino Fundamental</span>
-                                <span> <input type="radio" name="formacao"  />Ensino Superior</span>
-                                <span> <input type="radio" name="formacao"/>Curso Livre/Bootcamp</span>
-                            </div>
-                            <div className="cx-btn">
-                                <button>Adicionar</button>
-                            </div>
-                            </BoxNewExperienceAndTrainning >
-                    </fieldset>
-                    <fieldset>
-                        <legend>Experiência Profissional 
-                            {!newExperience &&  <span onClick={()=>setNewExperience(true)}>adicionar nova</span>}
-                        </legend>
-                        <BoxNewExperienceAndTrainning newItem={newExperience}>
-                           <div className="header-box">
-                               <h2>Nova Experiência</h2>
-                               <span onClick={()=>setNewExperience(false)}><Close /></span>
-                           </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Cargo</label>
-                               <Input type="text" placeholder="digite seu cargo"/>
-                            </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Empresa</label>
-                               <Input type="text" placeholder="digite o nome da empresa"  />
-                            </div>
-                            <div className="cx-dates">
-                                <div className="cx-date">
-                                    <label htmlFor="">Inicio</label>
-                                    <Input type="date" />
-                                </div>
-                                <div className="cx-date">
-                                    <label htmlFor="">Conclusão:</label>
-                                    <Input type="date" />
-                                </div>
-                                <div className="radio">
-                                    <label htmlFor="">Trabalha aqui?</label>
-                                    <input type="radio" name="" id="" />Sim
-                                    <input type="radio" name="" id="" />Não
-                                </div>
-                            </div>
-                            <div className="cx-input">
-                               <label htmlFor="">Sobre</label>
-                                <TextArea w="auto" placeholder="digite algo sobre essa sua experiencia..." h="240px"></TextArea>
-                            </div>
-                            <div className="cx-btn">
-                                <button>Adicionar</button>
-                            </div>
-                        </BoxNewExperienceAndTrainning>
-                        </fieldset>
-                        
-                      
+                  </form>
+              {
+                curriculum && <>
+                   <FormSkill />
+                <FormTrainning />
+                <FormExperience />
+                
+                
+                </>
+              }
+                 
+
                    
-                     <div className="cx-btn">
-                        <input type="submit" value={'Salvar informações'}/>
-                    </div>
-                   
-                   
-                   
-                   </div>}
-                </form>
+                
             </Page>
         </ContentPage>
     </Layout>

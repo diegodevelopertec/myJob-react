@@ -16,11 +16,15 @@ import Loading from "../../componentes/Loading"
 import { GlobalStyle } from "../../globalStyle"
 import { Input } from "../../componentes/Input"
 import { Button } from "../../componentes/Button"
+import { Formik, useFormik } from "formik"
+import { apiAuth } from "../../actions/auth.action"
+import { apiUsers } from "../../actions/users.action"
+import { schemaValidateUser } from "../../validations/user.validation"
 
 export const Conta=()=>{
     const [targetRef,setTargetRef]=useState(null)
     const getTargetElement =()=>document.getElementById('content-id') 
-    const {user,SigOut,setCurriculumContext}=useAuthContext()
+    const {user,setUser,SigOut,setCurriculumContext}=useAuthContext()
     const [curriculum,setCurriculum]=useState<ICurriculum | null>(null)
     const [hasCurriculum,setHasCurriculum]=useState(false)
     const navigate=useNavigate()
@@ -110,6 +114,34 @@ const SigOutUser=()=>{
 
 
 }
+
+const Formik=useFormik({
+ initialValues:{
+    name:user ? user.name : '',
+    lastname:user ? user.lastname : '',
+    tel:user ? user.tel: '',
+    email:user ? user.email : '',
+    password:user ? user.password : ''
+  },
+  onSubmit:async (values)=>{
+   if(user !== null ){
+      const data={
+        ...values,
+        type:user.type,
+        photo:user && user.photo ? user.photo : null
+      }
+      const result=await apiUsers.updateUser(user.id as number,data)
+      if(result){
+        setUser({id:user?.id,...data})
+        localStorage.setItem('@u',JSON.stringify({id:user?.id,...data}))
+        toast.success('Dados atualizado com sucesso')
+        handleStateModal(false)
+      }else{
+        toast.error('algo deu errado')
+      }
+   }
+  }
+})
 const deleteCurriculumUser=(id:number)=>{
   Swal({
       title:'Tem certeza?',
@@ -303,29 +335,31 @@ const deleteCurriculumUser=(id:number)=>{
          </div>
          <Modal>
           <ContentModal>
+            <form action="" onSubmit={Formik.handleSubmit}>
             <div className="cx-input">
               <label htmlFor="">Nome</label>
-              <Input value={user?.name} />
+              <Input type="text" name="name" value={Formik.values.name} onChange={Formik.handleChange} />
             </div>
             <div className="cx-input">
               <label htmlFor="">Sobrenome</label>
-              <Input value={user?.lastname} />
+              <Input type="text" name="lastname" value={Formik.values.lastname} onChange={Formik.handleChange} />
             </div>
             <div className="cx-input">
               <label htmlFor="">Email</label>
-              <Input value={user?.email} />
+              <Input type="email" name="email" value={Formik.values.email} onChange={Formik.handleChange} />
             </div>
             <div className="cx-input">
               <label htmlFor="">Telefone</label>
-              <Input value={user?.tel} />
+              <Input type="tel" name="tel" value={Formik.values.tel} onChange={Formik.handleChange}/>
             </div>
             <div className="cx-input">
               <label htmlFor="">Senha</label>
-              <Input value={user?.password} />
+              <Input type="password" name="password" value={Formik.values.password} onChange={Formik.handleChange} />
             </div>
            <div className="cx-btn">
-              <Button w='60%'  bgColor="#0C359E" p='22px' bgH="#1D24CA" text="Atualizar" />
+              <Button type="submit" w='60%'  bgColor="#0C359E" p='22px' bgH="#1D24CA" text="Atualizar" />
            </div>
+            </form>
           </ContentModal>
          </Modal>
         </Page>

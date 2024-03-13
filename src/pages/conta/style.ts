@@ -288,7 +288,7 @@ export const ContentModal=styled.div`
 width:880px;
 padding:12px 52px;
 .cx-input{
-    padding: 12px;
+    padding: 4px;
     label{
     max-width: 100px;
     margin-right:9px;
@@ -297,7 +297,6 @@ input{
     background-color: #DEDE;
     flex:1;
     padding: 9px;
-    margin: 3px 0;
 }
 
     

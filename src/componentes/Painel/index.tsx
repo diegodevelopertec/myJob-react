@@ -16,9 +16,11 @@ type Props={
     children:ReactNode,
     p?:string
 }
+
 export const Painel=({children,p}:Props)=>{
     const {user}=useAuthContext()
     const [companyName,setCompanyName]=useState<string>('')
+   
     useEffect(()=>{
         
      const getCompanyfromUser=async()=>{
@@ -28,7 +30,7 @@ export const Painel=({children,p}:Props)=>{
             setCompanyName(data.name)
             const companyStorage=localStorage.getItem('@companyid')
             const parsedCompanyStorage=JSON.parse(companyStorage as string)
-            console.log(parsedCompanyStorage) 
+            
         }
                     
                  

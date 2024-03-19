@@ -299,6 +299,11 @@ input{
     padding: 9px;
 }
 
+p{
+    margin: 5px 0;
+    color: #EE4266;
+    font-size: 13px;
+}
     
 }
 

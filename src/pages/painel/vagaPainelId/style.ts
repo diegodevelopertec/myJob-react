@@ -374,7 +374,8 @@ transition: all ease-in-out 0.3s;
               .data{
                 display: flex;
                align-items: center;
-               color: red;
+               color: #222;
+               font-weight: 700;
                 img{
                     background-color: #3876BF;
                     height: 34px;

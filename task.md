@@ -1,4 +1,4 @@
-[]criar curriculo
+[]criar curriculo - () Bug no envio de formulario e no reset form de usuarios
 []atualizar curriculo
 []atualizar usuario
 []recber mensagens
@@ -17,3 +17,6 @@
 []planos com stripe
 []host de banco de dados
 []host de site
+
+
+

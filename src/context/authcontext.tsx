@@ -3,6 +3,7 @@ import { ICurriculum } from "../interfaces/curriculum"
 import { apiCurriculum } from "../actions/apiCurriculum"
 import { CompanyInterface } from "../interfaces/company"
 import apiCompany from "../actions/apiCompany"
+import axios from "axios"
 
 
 type props={
@@ -68,6 +69,7 @@ useEffect(()=>{
  
 },[])
 
+
 useEffect(()=>{
     const getCurriculumUser=async()=>{
       if(user !== null){
@@ -90,6 +92,15 @@ useEffect(()=>{
 },[])
 
 
+useEffect(()=>{
+    const getPaylist=async ()=>{
+        const  url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PL41dMNqXopt85RhRgFp_jdoI5Bz7DUG-c&key=AIzaSyBjD3sffFjgdJa0d_9EWnBWifm6y8pnMKw`
+       const response=await axios.get(url)
+       console.log(response)
+    }
+getPaylist()
+
+},[])
 
 const SigIn=async(user:User,token:string)=>{
     localStorage.setItem('@u',JSON.stringify(user))
@@ -105,7 +116,7 @@ const SigUp=async(user:TUser,token:string)=>{
 const SigOut=()=>{
      setUser(null)
      setCurriculumContext(null)
-    localStorage.clear()
+     localStorage.clear()
 }
 
 

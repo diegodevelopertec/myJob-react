@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
 import { CardJobCompany, Page } from "./style"
 import { Link } from "react-router-dom"
 import { Painel } from "../../../componentes/Painel"
@@ -15,22 +14,25 @@ export const EmpresaPainel=()=>{
 
     useEffect(()=>{
        const getCompany=async()=>{
-        if(user){
-          const response=await apiCompany.getCompanyFromUser(user.id as number) as CompanyInterface
-          setCompanyId(response)
+          if(user){
+            const response=await apiCompany.getCompanyFromUser(user.id as number) as CompanyInterface
+            if(response.name){
+              setCompanyId(response)
+            }else{
+              setCompanyId(null)
+            }
+           }
         }
-              
-       }
-
-
-       getCompany()
+      getCompany()
     },[])
 
 
     
     return <Painel p="0">
       <Page>
-        <div className="header-page">
+        {
+          companyId ?  <>
+          <div className="header-page">
           <div className="logo-name">
               <img src={`${baseURL}public/images/${companyId?.logo}`} alt="" />
               <h2>{companyId?.name}</h2>
@@ -59,6 +61,11 @@ export const EmpresaPainel=()=>{
                 </section>
             </section>
           </main>
+          
+          
+          </> : <div>erro</div>
+        }
+       
         
        </Page>
     </Painel>

@@ -8,11 +8,30 @@ import apiCategory from "../../../actions/apiCategory"
 import { CategoryInterface } from "../../../interfaces/category"
 import { useFormik } from "formik"
 import { schemaValidationJobs } from "../../../validations/jobs.validation"
+import { CompanyInterface } from "../../../interfaces/company"
+import { useGlobalContext } from "../../../context/globalContext"
+import { ErrorCompany } from "../../../componentes/ErrorCompany"
 
 
 export const NovaVagaPainel=()=>{
   const [categorys,setCategorys]=useState<CategoryInterface[] | []>([])
   const [exclusivePCD,setExclusivePCD]=useState<string>('Nao')
+  const {handleStateModal}=useGlobalContext()
+ const [errorCompanyId,setErrorCompanyId]=useState(false)
+
+  useEffect(()=>{
+
+    const verifyCompanyid=()=>{
+      const companyStorage=localStorage.getItem('@companyid')
+      if(companyStorage !== 'undefined'){
+        const parsedCompanyStorage=JSON.parse(companyStorage as string) as CompanyInterface
+        setErrorCompanyId(false)
+      }else{
+        setErrorCompanyId(true)
+      }
+    }
+    setTimeout(verifyCompanyid,100)
+ },[])
 
   useEffect(()=>{
     const getListCategorys=async()=>{
@@ -134,6 +153,9 @@ export const NovaVagaPainel=()=>{
 
             </div>
           </Form>
+          {
+            errorCompanyId && <ErrorCompany />
+          }
         </Page>
         </ContentPage>
     </Painel>

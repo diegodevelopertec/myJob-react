@@ -16,21 +16,32 @@ import Loading from "../../componentes/Loading"
 import { GlobalStyle } from "../../globalStyle"
 import { Input } from "../../componentes/Input"
 import { Button } from "../../componentes/Button"
-import { Formik, useFormik } from "formik"
-import { apiAuth } from "../../actions/auth.action"
+import {  useFormik } from "formik"
 import { apiUsers } from "../../actions/users.action"
-import { schemaValidateUser } from "../../validations/user.validation"
+import { schemaValidateUpdateUser } from "../../validations/user.validation"
+
+
+
 
 export const Conta=()=>{
+
     const [targetRef,setTargetRef]=useState(null)
     const getTargetElement =()=>document.getElementById('content-id') 
     const {user,setUser,SigOut,setCurriculumContext}=useAuthContext()
     const [curriculum,setCurriculum]=useState<ICurriculum | null>(null)
     const [hasCurriculum,setHasCurriculum]=useState(false)
     const navigate=useNavigate()
-    const {handleStateModal}=useGlobalContext()
-   const [loadingCurriculum,setLoadingCurriculum]=useState(true)
+    const {handleStateModal,stateModal}=useGlobalContext()
+     const [loadingCurriculum,setLoadingCurriculum]=useState(true)
     const boxNotRef=useRef<HTMLDivElement | null>(null)
+
+    const [initialValues,setInitialValues]=useState({
+      name:user ? user.name : '',
+      lastname:user ? user.lastname : '',
+      tel:user ? user.tel: '',
+      email:user ? user.email : '',
+      password:user ? user.password : ''
+    })
 
     const stylePDF:Options = {
         method:'save',
@@ -49,7 +60,8 @@ export const Conta=()=>{
         generatePDF(getTargetElement,stylePDF)
         box.style.display='none'
       }
-      
+    
+    
 
     useEffect(()=>{
         const getCurriculumUser=async()=>{
@@ -58,7 +70,7 @@ export const Conta=()=>{
                if(typeof curriculumId !== 'string'){
                 setCurriculum(curriculumId)
                 setHasCurriculum(true)
-               setCurriculumContext(curriculumId)
+                setCurriculumContext(curriculumId)
                 setLoadingCurriculum(false)
                }else{
                   setHasCurriculum(false)
@@ -116,32 +128,31 @@ const SigOutUser=()=>{
 }
 
 const Formik=useFormik({
- initialValues:{
-    name:user ? user.name : '',
-    lastname:user ? user.lastname : '',
-    tel:user ? user.tel: '',
-    email:user ? user.email : '',
-    password:user ? user.password : ''
-  },
-  onSubmit:async (values)=>{
-   if(user !== null ){
-      const data={
-        ...values,
-        type:user.type,
-        photo:user && user.photo ? user.photo : null
-      }
-      const result=await apiUsers.updateUser(user.id as number,data)
-      if(result){
-        setUser({id:user?.id,...data})
-        localStorage.setItem('@u',JSON.stringify({id:user?.id,...data}))
-        toast.success('Dados atualizado com sucesso')
-        handleStateModal(false)
-      }else{
-        toast.error('algo deu errado')
-      }
-   }
+ initialValues:initialValues,
+  validationSchema:schemaValidateUpdateUser,
+  onSubmit:async (values,{resetForm})=>{
+    if(user !== null ){
+        const data={
+          ...values,
+          type:user.type,
+          photo:user && user.photo ? user.photo : null
+        }
+        const result=await apiUsers.updateUser(user.id as number,data)
+        if(result){
+          setUser({id:user?.id,...data})
+          localStorage.setItem('@u',JSON.stringify({id:user?.id,...data}))
+          toast.success('Dados atualizado com sucesso')
+          handleStateModal(false)
+          
+        }else{
+          toast.error('algo deu errado')
+        }
+    }
+    resetForm()
   }
 })
+
+
 const deleteCurriculumUser=(id:number)=>{
   Swal({
       title:'Tem certeza?',
@@ -168,7 +179,12 @@ const deleteCurriculumUser=(id:number)=>{
       ,
     }).then((result) => {
       if (result) {
-        
+        const deleteCurriculum=async()=>{
+          await apiCurriculum.deleteCurriculum(id)
+          setCurriculumContext(null)
+          setCurriculum(null)
+       }
+        deleteCurriculum()
         toast.success('curriculo deletado')
       } else {
           console.log(result)
@@ -339,22 +355,27 @@ const deleteCurriculumUser=(id:number)=>{
             <div className="cx-input">
               <label htmlFor="">Nome</label>
               <Input type="text" name="name" value={Formik.values.name} onChange={Formik.handleChange} />
+              {Formik.touched.name && <p>{Formik.errors.name}</p>}
             </div>
             <div className="cx-input">
               <label htmlFor="">Sobrenome</label>
               <Input type="text" name="lastname" value={Formik.values.lastname} onChange={Formik.handleChange} />
+              {Formik.touched.lastname && <p>{Formik.errors.lastname}</p>}
             </div>
             <div className="cx-input">
               <label htmlFor="">Email</label>
               <Input type="email" name="email" value={Formik.values.email} onChange={Formik.handleChange} />
+              {Formik.touched.email && <p>{Formik.errors.email}</p>}
             </div>
             <div className="cx-input">
               <label htmlFor="">Telefone</label>
               <Input type="tel" name="tel" value={Formik.values.tel} onChange={Formik.handleChange}/>
+              {Formik.touched.tel && <p>{Formik.errors.tel}</p>}
             </div>
             <div className="cx-input">
               <label htmlFor="">Senha</label>
               <Input type="password" name="password" value={Formik.values.password} onChange={Formik.handleChange} />
+              {Formik.touched.password && <p>{Formik.errors.password}</p>}
             </div>
            <div className="cx-btn">
               <Button type="submit" w='60%'  bgColor="#0C359E" p='22px' bgH="#1D24CA" text="Atualizar" />

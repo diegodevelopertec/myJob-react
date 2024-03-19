@@ -92,9 +92,9 @@ flex-direction: column;
         .cx-state-city{
             display: flex;
             margin: 22px 0;
+            justify-content: space-around;
             align-items: center;
             div{
-                flex: 1;
                 select{
                     width: 350px;
                     padding: 12px;
@@ -111,119 +111,28 @@ flex-direction: column;
     }
 }
 
-@media screen and (max-width:850px){
-    margin: 50px 5px;
-    form{
+@media screen and (max-width:890px){
+margin: 50px 5px;
+padding: 6px;
+
+
+.cx-state-city{
+    flex-direction: column;
+}
+    .form{
         width: 100%;
-        
-    }
-}
-`
-type props={
-    newItem:boolean
-}
-
-export const BoxNewExperienceAndTrainning=styled.div<props>`
-         display:${props=>props.newItem == true ? 'block' : 'none'};
-          margin: 22px;
-            border-radius: 5px;
-            box-shadow: 0 0 12px #000;
-            padding: 22px;
-            background-color: #F5F7F8;
-           .header-box{
-                display: flex;
-                border-bottom: 1px solid grey;
-                align-items:center;
-                justify-content:space-between;
-                h2{
-                    font-size: 19px;
-                    font-weight: 100;
-                    margin-bottom: 22px;
-               }
-               span{
-                    cursor: pointer;
-                 
-                    .svg{ 
-                        height: 35px;
-                    }
-               }
-
-           }
-            .cx-input{
-                margin: 9px 0;
-            }
-            .cx-radio{
-                display: flex;
-                margin: 8px 0;
-              
-                label{
-                    margin-right: 22px;
-                 
-                }
-                input{
-                    margin-right: 8px;
-                    font-size: 13px;
-                
-                }
-                span{
-                    margin-right: 12px;
-                }
-            }
-            .cx-dates{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                label{
-                    font-size: 13px;
-                }
-               
-                .cx-date{
-                    margin:0 22px;
-                    display: flex;
-                    align-items: center;
-                    flex-direction: column;
-                    input{
-                        width: auto;
-                        background-color: #DEDEDE;
-                    }
-                }
-                .radio{
-                    display: flex;
-                    align-items: center;
-                    label{
-                        margin: 0 22px;
-                    }
-                    input{
-                        margin: 12px;
-                    }
-                }
-            }
+        fieldset{
+            padding: 5px;
+            padding-bottom: 70px;
+            width: 100%;
             .cx-btn{
-                display: flex;
-                justify-content: center;
-                button{
-                    width:150px;
-                    border-radius: 12px;
-                    border: none;
-                    padding:12px 22px;
-                    transition: all ease .3s;
-                    color: white;
-                    font-size: 15px;
-                    margin: 32px 0;
-                    background-color: #387ADF;
-                    cursor: pointer;
-                    &:hover{
-                        background-color: #1D24CA;
+                input{
+                    width:90%;
+                    padding: 4px 23px;
                     }
-                }
             }
-        
-
-@media screen and (max-width:850px){
-    width: auto;
-    margin: 22px 4px;
-    .cx-radio,.cx-dates{
-        flex-direction: column;
-    }
-}
+         }
+       
+}}
 `
+

@@ -12,22 +12,41 @@ import Swal from "sweetalert"
 import { toast } from "react-toastify"
 import Loading from "../../../componentes/Loading"
 import { GlobalStyle } from "../../../globalStyle"
+import { useGlobalContext } from "../../../context/globalContext"
+import { ErrorCompany } from "../../../componentes/ErrorCompany"
 
 export const VagasPostadasPainel=()=>{
     const [jobsFromCompany,setJobsFromCompany]=useState<IJob[] | null>(null)
     const [loadingJobs,setLodingJobs]=useState<boolean>(true)
-
+    const {handleStateModal}=useGlobalContext()
+    
 
     useEffect(()=>{
-        const companyStorage=localStorage.getItem('@companyid')
-        const parsedCompanyStorage=JSON.parse(companyStorage as string) 
-        const getJobs=async()=>{
-            const jobsList=await apiJobs.getAllJobsFromCompany(parsedCompanyStorage)
-            setJobsFromCompany(jobsList as IJob[])
-            setLodingJobs(false)
-        }
-       
-         setInterval(getJobs,5600)
+      const companyStorage=localStorage.getItem('@companyid')
+      if(companyStorage !== 'undefined'){
+        handleStateModal(false)
+      }else{
+        handleStateModal(false)
+      }
+    },[])
+
+    useEffect(()=>{
+         const  getJobs=async()=>{
+            const companyStorage=localStorage.getItem('@companyid')
+              if(companyStorage !== 'undefined'){
+                const parsedCompanyStorage=JSON.parse(companyStorage as string) 
+                const jobsList=await apiJobs.getAllJobsFromCompany(parsedCompanyStorage)
+                setJobsFromCompany(jobsList as IJob[])
+                setLodingJobs(false)
+              }else{
+                setLodingJobs(false)
+                handleStateModal(true)
+                setJobsFromCompany(null)
+               
+              }
+          }
+
+      setInterval(getJobs,1200)
        },[])
        
 
@@ -61,7 +80,7 @@ const deleteJob=(id:number)=>{
                await apiJobs.deleteJobId(id)
            }
            deleteJobId()
-          toast.success('Vaga deletada')
+           toast.success('Vaga deletada')
         } else {
             console.log(result)
         }
@@ -107,10 +126,11 @@ const deleteJob=(id:number)=>{
 
 
 
-                    </Table>
+                    </Table> 
                    
                 }
-                
+               <ErrorCompany />
+               
             </Page>
         </ContentPage>
         <Tooltip id="my-tooltip"  />

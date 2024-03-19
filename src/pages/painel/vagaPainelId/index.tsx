@@ -180,7 +180,7 @@ useEffect(()=>{
                                 <span className="data">
                                     {i.user.photo !== null && <img src={`${baseURL}public/images/${i.user.photo}`} alt="" />} 
                                     {i.user.photo === null && <img src={`/assets/user.png`}  alt="" />}
-                                    {i?.user?.name}
+                                    {i?.user?.name} {i?.user?.lastname}
                                 </span>
                                
                             </div>
